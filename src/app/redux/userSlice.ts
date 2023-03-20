@@ -1,6 +1,6 @@
 'use client'
 
-import { IFullUser, IUser, IUserLog } from '@/types/types'
+import { IFullUser, IToken, IUser, IUserLog } from '@/types/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface CounterState {
@@ -9,7 +9,7 @@ export interface CounterState {
 
 interface initialState {
 	currentUser: IUser | null
-	tokens: { access: string; refresh: string } | null
+	tokens: IToken | null
 	isFetching: boolean
 	error: boolean
 }
@@ -72,6 +72,67 @@ export const userSlice = createSlice({
 			state.isFetching = false
 			state.error = true
 		},
+
+		restoreStart: state => {
+			state.isFetching = true
+			state.error = false
+		},
+		restoreSuccess: state => {
+			state.isFetching = false
+			state.error = false
+		},
+		restoreFailure: state => {
+			state.isFetching = false
+			state.error = true
+		},
+
+		forgotStart: state => {
+			state.isFetching = true
+			state.error = false
+		},
+		forgotSuccess: state => {
+			state.isFetching = false
+			state.error = false
+		},
+		forgotFailure: state => {
+			state.isFetching = false
+			state.error = true
+		},
+
+		changeStart: state => {
+			state.isFetching = true
+			state.error = false
+		},
+		changeSuccess: state => {
+			state.isFetching = false
+			state.error = false
+		},
+		changeFailure: state => {
+			state.isFetching = false
+			state.error = true
+		},
+
+		deleteStart: state => {
+			state.isFetching = true
+			state.error = false
+		},
+		deleteSuccess: state => {
+			state.isFetching = false
+			state.currentUser = null
+			state.tokens = null
+			state.error = false
+		},
+		deleteFailure: state => {
+			state.isFetching = false
+			state.error = true
+		},
+
+		logout: state => {
+			state.isFetching = false
+			state.error = false
+			state.currentUser = null
+			state.tokens = null
+		},
 	},
 })
 
@@ -85,5 +146,18 @@ export const {
 	refreshStart,
 	refreshSuccess,
 	refreshFailure,
+	restoreStart,
+	restoreSuccess,
+	restoreFailure,
+	forgotStart,
+	forgotSuccess,
+	forgotFailure,
+	changeStart,
+	changeSuccess,
+	changeFailure,
+	deleteStart,
+	deleteSuccess,
+	deleteFailure,
+	logout,
 } = userSlice.actions
 export default userSlice.reducer

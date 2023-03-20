@@ -30,7 +30,6 @@ const RegisterPage = () => {
 	console.log(error)
 
 	function handleRegister(e: any) {
-		e.preventDefault()
 		const user: IUserReg = {
 			username,
 			last_name,
@@ -82,11 +81,7 @@ const RegisterPage = () => {
 					<img
 						onClick={() => setIsVisPass(!isVisPass)}
 						className='w-6 text-end'
-						src={
-							isVisPass
-								? 'https://www.svgrepo.com/show/491155/visible.svg'
-								: 'https://www.svgrepo.com/show/491289/not-visible.svg'
-						}
+						src={isVisPass ? '/eye.svg' : '/close-eye.svg'}
 						alt=''
 					/>
 				</div>
@@ -101,11 +96,7 @@ const RegisterPage = () => {
 					<img
 						onClick={() => setIsVisPassConf(!isVisPassConf)}
 						className='w-6 text-end'
-						src={
-							isVisPassConf
-								? 'https://www.svgrepo.com/show/491155/visible.svg'
-								: 'https://www.svgrepo.com/show/491289/not-visible.svg'
-						}
+						src={isVisPassConf ? '/eye.svg' : '/close-eye.svg'}
 						alt=''
 					/>
 				</div>

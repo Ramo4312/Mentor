@@ -17,3 +17,17 @@ export interface IFullUser extends IUser {
 	access: string
 	refresh: string
 }
+
+export interface IRefresh {
+	refresh: string
+}
+
+export interface IToken extends IRefresh {
+	access: string
+}
+
+export interface INewPassword {
+	old_password: string
+	new_password: string
+	new_pass_confirm: string
+}
