@@ -3,9 +3,9 @@
 import { register } from '@/app/redux/apiCalls'
 import { useAppSelector } from '@/hooks/hooks'
 import { IUserReg } from '@/types/types'
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/navigation'
 
 const RegisterPage = () => {
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
@@ -22,6 +22,7 @@ const RegisterPage = () => {
 	// 	password: '',
 	// 	password_confirm: '',
 	// })
+	const router = useRouter()
 
 	const dispatch = useDispatch()
 	const { error } = useAppSelector(state => state.user)
@@ -29,7 +30,7 @@ const RegisterPage = () => {
 	// const router = useRouter()
 	console.log(error)
 
-	function handleRegister(e: any) {
+	function handleRegister(e: React.FormEvent) {
 		e.preventDefault()
 		const user: IUserReg = {
 			username,
@@ -40,7 +41,7 @@ const RegisterPage = () => {
 		}
 
 		register(dispatch, user)
-
+		router.push('/')
 		// error ? router.push('/account/login') : null
 	}
 

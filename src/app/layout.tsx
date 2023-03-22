@@ -1,5 +1,6 @@
 import './globals.css'
 import { Providers } from './redux/provider'
+import Navbar from '@/components/Navbar'
 
 export const metadata = {
 	title: 'Mentor',
@@ -14,7 +15,12 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body>
-				<Providers>{children}</Providers>
+				<Providers>
+					<div className='w-[90%] m-auto'>
+						<Navbar />
+						{children}
+					</div>
+				</Providers>
 			</body>
 		</html>
 	)
