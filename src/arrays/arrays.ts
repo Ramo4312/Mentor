@@ -1,0 +1,27 @@
+import { ISpecs } from '@/types/types'
+
+export const specializations: ISpecs[] = [
+	{ id: 1, value: 'Agile', label: 'Agile' },
+	{ id: 2, value: 'Android', label: 'Android' },
+	{ id: 3, value: 'Backend', label: 'Backend' },
+	{ id: 4, value: 'Cloud', label: 'Cloud' },
+	{ id: 5, value: 'Code Review', label: 'Code Review' },
+	{ id: 6, value: 'Content/Copy', label: 'Content/Copy' },
+	{ id: 7, value: 'Data Science/ML', label: 'Data Science/ML' },
+	{ id: 8, value: 'Databases', label: 'Databases' },
+	{ id: 9, value: 'Entrepreneurship', label: 'Entrepreneurship' },
+	{ id: 10, value: 'Frontend', label: 'Frontend' },
+	{ id: 11, value: 'HR', label: 'HR' },
+	{ id: 12, value: 'iOS', label: 'iOS' },
+	{ id: 13, value: 'Marketing', label: 'Marketing' },
+	{ id: 14, value: 'Product Management', label: 'Product Management' },
+	{ id: 15, value: 'Project Management', label: 'Project Management' },
+	{ id: 16, value: 'QA', label: 'QA' },
+	{ id: 17, value: 'System Design', label: 'System Design' },
+	{ id: 18, value: 'Team Lead/Management', label: 'Team Lead/Management' },
+	{ id: 19, value: 'UX/UI/Design', label: 'UX/UI/Design' },
+	{ id: 20, value: 'Аналитика', label: 'Аналитика' },
+	{ id: 21, value: 'Карьера', label: 'Карьера' },
+	{ id: 22, value: 'Собеседования', label: 'Собеседования' },
+	{ id: 23, value: 'Сети', label: 'Сети' },
+]

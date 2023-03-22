@@ -1,10 +1,9 @@
 export interface IUser {
 	email: string
-	username: string
 }
 
 export interface IUserReg extends IUser {
-	last_name: string
+	full_name: string
 	password: string
 	password_confirm: string
 }
@@ -30,4 +29,15 @@ export interface INewPassword {
 	old_password: string
 	new_password: string
 	new_pass_confirm: string
+}
+
+export interface ISpecs {
+	label: string
+	value: string
+	id: number
+}
+
+export interface IDispatch {
+	payload: undefined | string | IFullUser
+	type: string
 }

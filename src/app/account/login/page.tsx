@@ -1,35 +1,33 @@
 'use client'
 
-import { login } from '@/app/redux/apiCalls'
+import { deleteAccount, login, tokenRefresh } from '@/app/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
 import Footer from '@/components/footer/Footer'
 import Navbar from '@/components/navbar/Navbar'
 import { useAppSelector } from '@/hooks/hooks'
-import { IUserLog } from '@/types/types'
+import { IToken, IUserLog } from '@/types/types'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 const LoginPage = () => {
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
-	const [username, setUsername] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
 
 	const dispatch = useDispatch()
-	const { error } = useAppSelector(state => state.user)
+	const { error, currentUser, tokens } = useAppSelector(state => state.user)
 
 	const router = useRouter()
 
-	function handleLogin(e: any) {
+	function handleLogin() {
 		if (!email.trim() || !password.trim()) {
 			alert('inputs are empty')
 			return
 		}
 
-		let user: IUserLog = {
-			username,
+		const user: IUserLog = {
 			email,
 			password,
 		}
@@ -37,6 +35,23 @@ const LoginPage = () => {
 		login(dispatch, user)
 		if (!error) router.replace('/')
 	}
+
+	// function handleDelete() {
+	// 	const user: IUserLog = {
+	// 		email: currentUser?.email,
+	// 		password: password,
+	// 	}
+
+	// 	deleteAccount(dispatch, user, tokens)
+	// }
+
+	// function handleRefresh() {
+	// 	const token: IToken = {
+	// 		refresh: tokens?.refresh,
+	// 	}
+
+	// 	tokenRefresh(dispatch, token)
+	// }
 
 	return (
 		<>
@@ -87,8 +102,8 @@ const LoginPage = () => {
 						</Link>
 						<div className='flex justify-between'>
 							<button
-								onClick={e => {
-									handleLogin(e)
+								onClick={() => {
+									handleLogin()
 								}}
 								className='px-[4.8rem] py-4 rounded-xl text-white text-xl text-center bg-little-text'
 							>

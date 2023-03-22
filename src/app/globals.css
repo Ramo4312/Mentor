@@ -26,10 +26,22 @@ input:focus {
 	}
 
 	.reg-inputs {
-		@apply border rounded-md flex border-light-gray text-2xl h-12 justify-between px-3 focus:bg-tertiary focus:duration-200 duration-150;
+		@apply border rounded-md flex border-light-gray text-xl h-12 justify-between px-3 focus:bg-tertiary focus:duration-200 duration-150 w-full;
 	}
 
 	.pass-vis {
 		@apply cursor-pointer text-right text-blue-600 hover:text-blue-900;
+	}
+
+	label {
+		@apply text-little-text text-xl;
+	}
+
+	.big-inputs {
+		@apply rounded-2xl min-h-[10rem] py-2 w-[41.9rem];
+	}
+
+	.reg-select {
+		/* background: #bae8e8 !important; */
 	}
 }

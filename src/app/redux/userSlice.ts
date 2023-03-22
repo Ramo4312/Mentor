@@ -1,6 +1,6 @@
 'use client'
 
-import { IFullUser, IToken, IUser, IUserLog } from '@/types/types'
+import { IFullUser, IToken, IUser } from '@/types/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface CounterState {
@@ -35,7 +35,6 @@ export const userSlice = createSlice({
 			}
 			state.currentUser = {
 				email: action.payload.email,
-				username: action.payload.username,
 			}
 			state.error = false
 		},
