@@ -1,4 +1,5 @@
 import {
+	IDispatch,
 	INewPassword,
 	IRefresh,
 	IToken,
@@ -6,6 +7,7 @@ import {
 	IUserReg,
 } from '@/types/types'
 import axios from 'axios'
+import { Dispatch } from 'react'
 import {
 	loginFailure,
 	loginStart,
@@ -25,16 +27,21 @@ import {
 	deleteStart,
 	deleteSuccess,
 	deleteFailure,
-	logout,
+	refreshStart,
+	refreshSuccess,
+	refreshFailure,
 } from './userSlice'
 
-const API = 'http://localhost:8000/'
+const API = 'http://getservices.pythonanywhere.com/'
 
 export const publicReq = axios.create({
 	baseURL: API,
 })
 
-export const register = async (dispatch: any, user: IUserReg) => {
+export const register = async (
+	dispatch: Dispatch<IDispatch>,
+	user: IUserReg
+) => {
 	dispatch(registerStart())
 	try {
 		const res = await publicReq.post(`account/register/`, user)
@@ -46,7 +53,7 @@ export const register = async (dispatch: any, user: IUserReg) => {
 	}
 }
 
-export const login = async (dispatch: Function, user: IUserLog) => {
+export const login = async (dispatch: Dispatch<IDispatch>, user: IUserLog) => {
 	dispatch(loginStart())
 	try {
 		const res = await publicReq.post(`account/login/`, user)
@@ -59,22 +66,22 @@ export const login = async (dispatch: Function, user: IUserLog) => {
 }
 
 export const forgotPassword = async (
-	dispatch: Function,
-	email: string,
-	setEmailValid: Function
+	dispatch: Dispatch<IDispatch>,
+	email: string
+	// setEmailValid: SetStateAction<false | true>
 ) => {
 	dispatch(forgotStart())
-	setEmailValid(true)
 	try {
 		await publicReq.post(`account/restore-password/`, email)
 		dispatch(forgotSuccess())
+		// setEmailValid(true)
 	} catch (err) {
 		dispatch(forgotFailure())
 	}
 }
 
 export const restorePassword = async (
-	dispatch: Function,
+	dispatch: Dispatch<IDispatch>,
 	newPassword: INewPassword
 ) => {
 	dispatch(restoreStart())
@@ -85,18 +92,13 @@ export const restorePassword = async (
 		)
 		console.log('password restored', res.status)
 		dispatch(restoreSuccess())
-		// let newUser = {
-		// 	email: user.email,
-		// 	password: user.password,
-		// }
-		// login(dispatch, newUser, navigate)
 	} catch (err) {
 		dispatch(restoreFailure())
 	}
 }
 
 export const changePassword = async (
-	dispatch: Function,
+	dispatch: Dispatch<IDispatch>,
 	newPassword: INewPassword,
 	token: IToken | null
 ) => {
@@ -104,7 +106,7 @@ export const changePassword = async (
 
 	const Authorization = `Bearer ${token?.access}`
 
-	let config = {
+	const config = {
 		headers: {
 			Authorization: Authorization,
 		},
@@ -124,15 +126,23 @@ export const changePassword = async (
 	}
 }
 
-export const deleteAccount = async (dispatch: Function, email: string) => {
+export const deleteAccount = async (
+	dispatch: Dispatch<IDispatch>,
+	user: IUserLog,
+	token: IToken | null
+) => {
 	dispatch(deleteStart())
 
-	let user: Object = {
-		email: email,
-	}
-
 	try {
-		const res = await publicReq.delete(`account/delete-account/`, user)
+		const Authorization = `Bearer ${token?.access}`
+
+		const config = {
+			headers: {
+				Authorization: Authorization,
+			},
+		}
+
+		const res = await publicReq.delete(`account/delete-account/${user}`, config)
 		dispatch(deleteSuccess())
 
 		console.log('account deleted', res.status, res.statusText)
@@ -141,17 +151,16 @@ export const deleteAccount = async (dispatch: Function, email: string) => {
 	}
 }
 
-export const tokenRefresh = async (dispatch: Function, token: string) => {
-	dispatch(deleteStart())
-
-	let tokenToRefresh: Object = {
-		refresh: token,
-	}
+export const tokenRefresh = async (
+	dispatch: Dispatch<IDispatch>,
+	token: IRefresh
+) => {
+	dispatch(refreshStart())
 
 	try {
-		const res = await publicReq.delete(`account/token/refresh/`, tokenToRefresh)
-		dispatch(deleteSuccess())
+		const res = await publicReq.post(`account/token/refresh/`, token)
+		dispatch(refreshSuccess(res.data))
 	} catch (err) {
-		dispatch(deleteFailure())
+		dispatch(refreshFailure())
 	}
 }
