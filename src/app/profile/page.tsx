@@ -3,9 +3,12 @@
 import Footer from '@/components/footer/Footer'
 import Navbar from '@/components/navbar/Navbar'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 const Profile = () => {
+	const router = useRouter()
+
 	return (
 		<div>
 			<Navbar />
@@ -41,7 +44,12 @@ const Profile = () => {
 							<h3 className=''>Язык:</h3>
 							<Image src='/rus.svg' alt='' width={37} height={37} />
 						</div>
-						<button className='bg-accent rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'>
+						<button
+							onClick={() => {
+								router.push('/profile/request')
+							}}
+							className='bg-accent rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'
+						>
 							Оставить заявку
 						</button>
 					</div>
@@ -78,7 +86,12 @@ const Profile = () => {
 							</h4>
 						</div>
 					</div>
-					<button className='bg-accent rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'>
+					<button
+						onClick={() => {
+							router.push('/profile/request')
+						}}
+						className='bg-accent rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'
+					>
 						Оставить заявку
 					</button>
 				</div>

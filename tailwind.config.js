@@ -10,6 +10,12 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			zIndex: {
+				1: 1,
+				'-1': '-1',
+				2: 2,
+				'-2': '-2',
+			},
 			colors: {
 				'light-gray': 'rgb(72,81,116,0.7)',
 				paragraph: '#2D334A',

@@ -3,14 +3,17 @@
 import Footer from '@/components/footer/Footer'
 import Navbar from '@/components/navbar/Navbar'
 import Image from 'next/image'
-import React from 'react'
-import Select from 'react-select'
+import React, { useId, useState } from 'react'
 import CreatableSelect from 'react-select/creatable'
+import RequestModal from './modal'
 
 const Request = () => {
+	const [modal, setModal] = useState<boolean>(false)
+
 	return (
 		<div>
 			<Navbar />
+			<RequestModal modal={modal} setModal={setModal} />
 			<div className='w-full max-w-[1440px] px-[28.13rem]'>
 				<h1 className='mb-16'>Запись к ментору</h1>
 				<div className='flex gap-x-[3.8rem] mb-24'>
@@ -54,7 +57,7 @@ const Request = () => {
 						<label htmlFor='' className='label-in-register'>
 							Как вы оцениваете свой уровень?
 						</label>
-						<CreatableSelect isClearable />
+						<CreatableSelect instanceId={useId()} isClearable />
 					</div>
 					<div className='flex flex-col gap-y-[0.87rem] w-full mb-10'>
 						<label className='label-in-register' htmlFor=''>
@@ -62,7 +65,10 @@ const Request = () => {
 						</label>
 						<input type='text' className='reg-inputs' />
 					</div>
-					<button className='bg-accent rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'>
+					<button
+						onClick={() => setModal(!false)}
+						className='bg-accent rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'
+					>
 						Оставить заявку
 					</button>
 				</form>
