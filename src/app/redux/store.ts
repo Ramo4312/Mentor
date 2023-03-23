@@ -1,6 +1,5 @@
 'use client'
 
-import counterSlice from './counterSlice'
 import userReduce from './userSlice'
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import {
@@ -23,7 +22,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
 	user: userReduce,
-	counter: counterSlice,
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

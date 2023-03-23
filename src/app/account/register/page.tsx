@@ -22,7 +22,6 @@ interface IPhoto {
 }
 
 const RegisterPage = () => {
-	const [page, setPage] = useState<string>('')
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
 	const [isVisPassConf, setIsVisPassConf] = useState<boolean>(false)
 	const [image, setImage] = useState<File | IPhoto | null>()
@@ -67,7 +66,7 @@ const RegisterPage = () => {
 		<>
 			<Navbar />
 			<div className='relative overflow-hidden'>
-				<AbsoluteImages page={page} />
+				<AbsoluteImages />
 				<div className=''>
 					<h1 className='text-[3.44rem] text-center mt-11 mb-8 font-semibold text-title'>
 						Стань частью нашей <br /> команды

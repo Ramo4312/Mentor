@@ -1,16 +1,15 @@
+import { usePathname } from 'next/navigation'
 import React from 'react'
 
-interface PageProps {
-	page?: string
-}
+const AbsoluteImages = () => {
+	const pathname = usePathname()
 
-const AbsoluteImages = ({ page }: PageProps) => {
 	return (
 		<div className=''>
 			<img
 				className='absolute -left-[10.2rem]'
 				src={
-					page == 'register'
+					pathname == '/account/register'
 						? '/2 Creative run 1.png'
 						: '/2 Creative run 1-1.png'
 				}
@@ -18,7 +17,11 @@ const AbsoluteImages = ({ page }: PageProps) => {
 			/>
 			<img
 				className='absolute -right-[9rem]'
-				src={page == 'register' ? '/6 progress 2.png' : '/6 progress 2-1.png'}
+				src={
+					pathname == '/account/register'
+						? '/6 progress 2.png'
+						: '/6 progress 2-1.png'
+				}
 				alt=''
 			/>
 		</div>
