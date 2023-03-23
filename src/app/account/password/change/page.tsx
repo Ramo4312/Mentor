@@ -6,17 +6,15 @@ import Footer from '@/components/footer/Footer'
 import Navbar from '@/components/navbar/Navbar'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import { INewPassword } from '@/types/types'
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 const ChangePassword = () => {
 	const [isVisOldPass, setIsVisOldPass] = useState<boolean>(false)
-	const [isVisNewPass, setIsVisNewPass] = useState<boolean>(false)
 	const [isVisNewPassConf, setIsVisNewPassConf] = useState<boolean>(false)
 	const [old_password, setOld_password] = useState<string>('')
 	const [new_password, setNew_password] = useState<string>('')
 	const [new_pass_confirm, setNew_pass_confirm] = useState<string>('')
-	const [passValid, setPassValid] = useState<boolean>(true)
+	// const [passValid, setPassValid] = useState<boolean>(true)
 
 	const { tokens } = useAppSelector(state => state.user)
 	const dispatch = useAppDispatch()
@@ -31,27 +29,14 @@ const ChangePassword = () => {
 			return
 		}
 
-		let newPassword: INewPassword = {
+		const newPassword: INewPassword = {
 			old_password,
 			new_password,
 			new_pass_confirm,
 		}
 
-		let token = tokens
-
 		changePassword(dispatch, newPassword, tokens)
 	}
-
-	console.log(tokens)
-	// useEffect(() => {
-	// 	if (!new_password.trim()) {
-	// 		if (new_password !== new_pass_confirm) {
-	// 			setPassValid(false)
-	// 		} else {
-	// 			setPassValid(true)
-	// 		}
-	// 	}
-	// }, [new_password, new_pass_confirm])
 
 	return (
 		<>
@@ -95,12 +80,6 @@ const ChangePassword = () => {
 								className='reg-inputs'
 								type={isVisNewPassConf ? 'text' : 'password'}
 							/>
-							{/* <p
-								className='pass-vis'
-								onClick={() => setIsVisNewPass(!isVisNewPassConf)}
-							>
-								показать пароль
-							</p> */}
 						</div>
 						<div className='flex flex-col gap-y-3 text-start'>
 							<label htmlFor='' className='text-little-text text-lg'>
@@ -110,9 +89,7 @@ const ChangePassword = () => {
 								onChange={e => setNew_pass_confirm(e.target.value)}
 								value={new_pass_confirm}
 								name='password'
-								className={`reg-inputs ${
-									passValid ? 'border-light-gray' : 'border-red-500 border-2'
-								}`}
+								className={`reg-inputs`}
 								type={isVisNewPassConf ? 'text' : 'password'}
 							/>
 							<p

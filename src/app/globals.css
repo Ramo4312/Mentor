@@ -41,7 +41,8 @@ input:focus {
 		@apply rounded-2xl min-h-[10rem] py-2 w-[41.9rem];
 	}
 
-	.reg-select {
-		/* background: #bae8e8 !important; */
+	.file-input:hover ~ div {
+		background-color: #b3fffb;
+		transition: 0.2s;
 	}
 }

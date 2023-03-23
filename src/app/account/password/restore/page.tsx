@@ -5,7 +5,7 @@ import AbsoluteImages from '@/components/absoluteImages'
 import Footer from '@/components/footer/Footer'
 import Navbar from '@/components/navbar/Navbar'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 const PasswordRestore = () => {
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
@@ -25,7 +25,8 @@ const PasswordRestore = () => {
 			return
 		}
 
-		forgotPassword(dispatch, email, setEmailValid)
+		forgotPassword(dispatch, email)
+		if (!error) setEmailValid(true)
 	}
 
 	return (
@@ -60,7 +61,7 @@ const PasswordRestore = () => {
 								/>
 							</div>
 							<button
-								onClick={e => {
+								onClick={() => {
 									handleSend()
 								}}
 								className={`px-[4.8rem] py-4 rounded-xl text-white text-xl text-center bg-little-text mx-auto ${
@@ -126,7 +127,7 @@ const PasswordRestore = () => {
 								</p>
 							</div>
 							<button
-								onClick={e => {
+								onClick={() => {
 									handleSend()
 								}}
 								className='px-[4.8rem] mx-auto py-4 rounded-xl text-white text-xl text-center bg-little-text'

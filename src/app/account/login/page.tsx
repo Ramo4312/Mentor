@@ -1,11 +1,11 @@
 'use client'
 
-import { deleteAccount, login, tokenRefresh } from '@/app/redux/apiCalls'
+import { login } from '@/app/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
 import Footer from '@/components/footer/Footer'
 import Navbar from '@/components/navbar/Navbar'
 import { useAppSelector } from '@/hooks/hooks'
-import { IToken, IUserLog } from '@/types/types'
+import { IUserLog } from '@/types/types'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -17,7 +17,7 @@ const LoginPage = () => {
 	const [password, setPassword] = useState<string>('')
 
 	const dispatch = useDispatch()
-	const { error, currentUser, tokens } = useAppSelector(state => state.user)
+	const { error } = useAppSelector(state => state.user)
 
 	const router = useRouter()
 
@@ -38,7 +38,7 @@ const LoginPage = () => {
 
 	// function handleDelete() {
 	// 	const user: IUserLog = {
-	// 		email: currentUser?.email,
+	// 		email: currentUser.email,
 	// 		password: password,
 	// 	}
 
@@ -46,11 +46,13 @@ const LoginPage = () => {
 	// }
 
 	// function handleRefresh() {
-	// 	const token: IToken = {
-	// 		refresh: tokens?.refresh,
-	// 	}
+	// 	if (tokens) {
+	// 		const token: { refresh: string } = {
+	// 			refresh: tokens.refresh,
+	// 		}
 
-	// 	tokenRefresh(dispatch, token)
+	// 		tokenRefresh(dispatch, token)
+	// 	}
 	// }
 
 	return (
