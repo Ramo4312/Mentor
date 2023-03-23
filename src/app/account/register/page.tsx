@@ -68,7 +68,7 @@ const RegisterPage = () => {
 			<div className='relative overflow-hidden'>
 				<AbsoluteImages />
 				<div className=''>
-					<h1 className='text-[3.44rem] text-center mt-11 mb-8 font-semibold text-title'>
+					<h1>
 						Стань частью нашей <br /> команды
 					</h1>
 					<h6 className='bg-[#E3F6F580] w-[43.44rem] mx-auto rounded-2xl mb-20 px-4 py-[2.13rem] text-lg leading-7 text-paragraph font-normal text-center'>

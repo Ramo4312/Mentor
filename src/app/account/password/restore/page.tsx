@@ -36,9 +36,7 @@ const PasswordRestore = () => {
 			<div className='relative overflow-hidden text-center'>
 				<AbsoluteImages />
 				<div className=''>
-					<h1 className='text-[3.44rem] text-center mt-11 mb-16 font-semibold text-title'>
-						Восстановление пароля
-					</h1>
+					<h1>Восстановление пароля</h1>
 					<form
 						onSubmit={e => e.preventDefault()}
 						className='flex flex-col gap-y-7 mx-auto w-[35.6rem]'

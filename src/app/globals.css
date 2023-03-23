@@ -21,8 +21,12 @@ input:focus {
 }
 
 @layer components {
-	* {
-		/* @apply font-[Poppins]; */
+	*::-webkit-scrollbar {
+		@apply w-2;
+	}
+
+	*::-webkit-scrollbar-thumb {
+		@apply bg-[#a9a9a9] rounded-2xl;
 	}
 
 	.reg-inputs {
@@ -44,5 +48,9 @@ input:focus {
 	.file-input:hover ~ div {
 		background-color: #b3fffb;
 		transition: 0.2s;
+	}
+
+	h1 {
+		@apply text-[3.44rem] text-center mt-11 mb-8 font-semibold text-title;
 	}
 }
