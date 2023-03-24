@@ -1,10 +1,10 @@
 'use client'
 
-import React, { SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 
-interface StateProps {
+export interface StateProps {
 	modal: boolean
-	setModal: SetStateAction<boolean | undefined>
+	setModal: Dispatch<SetStateAction<boolean>>
 }
 
 export default function RequestModal({ modal, setModal }: StateProps) {
@@ -33,7 +33,7 @@ export default function RequestModal({ modal, setModal }: StateProps) {
 				<button
 					onClick={() => {
 						setModal(!true)
-						window.open('https://t.me/SaveYoutubeBot')
+						// window.open('https://t.me/SaveYoutubeBot')
 					}}
 					className='bg-little-text px-14 py-3 rounded-[0.63rem] text-xl text-[#fffffe]'
 				>

@@ -126,7 +126,7 @@ export const userSlice = createSlice({
 			state.error = true
 		},
 
-		logout: state => {
+		logoutSuccess: state => {
 			state.isFetching = false
 			state.error = false
 			state.currentUser = null
@@ -157,6 +157,6 @@ export const {
 	deleteStart,
 	deleteSuccess,
 	deleteFailure,
-	logout,
+	logoutSuccess,
 } = userSlice.actions
 export default userSlice.reducer

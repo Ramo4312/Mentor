@@ -41,3 +41,12 @@ export interface IDispatch {
 	payload: undefined | string | IFullUser
 	type: string
 }
+
+export interface IPages {
+	id: number
+	text: string
+	image: string
+	path: string
+	notifications?: number
+	image2: string
+}

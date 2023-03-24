@@ -1,8 +1,12 @@
 'use client'
 
+import Navbar from '@/components/navbar/Navbar'
+import SideBar from '@/components/sidebar'
+
 export default function Home() {
 	return (
-		<main className='flex gap-x-9 h-[100vh] justify-center items-center'>
+		<main className=''>
+			<Navbar />
 			{/* <span>{value}</span>
 
 			<button
@@ -23,6 +27,7 @@ export default function Home() {
 			>
 				add 2
 			</button> */}
+			<SideBar />
 		</main>
 	)
 }

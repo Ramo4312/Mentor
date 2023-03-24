@@ -1,4 +1,4 @@
-import { ISpecs } from '@/types/types'
+import { IPages, ISpecs } from '@/types/types'
 
 export const specializations: ISpecs[] = [
 	{ id: 1, value: 'Agile', label: 'Agile' },
@@ -24,4 +24,39 @@ export const specializations: ISpecs[] = [
 	{ id: 21, value: 'Карьера', label: 'Карьера' },
 	{ id: 22, value: 'Собеседования', label: 'Собеседования' },
 	{ id: 23, value: 'Сети', label: 'Сети' },
+]
+
+export const pages: IPages[] = [
+	{
+		id: 1,
+		text: 'Заявки',
+		image: '/trending_arrow.svg',
+		path: 'profile/my-requests',
+		notifications: 12,
+		image2: '/r/trending_arrow.svg',
+	},
+	{
+		id: 2,
+		text: 'Мои данные',
+		image: '/star.svg',
+		path: '/profile/my-profile',
+		notifications: 0,
+		image2: '/r/star.svg',
+	},
+	{
+		id: 3,
+		text: 'Настройки',
+		image: '/settings.svg',
+		path: '/profile/settings',
+		notifications: 0,
+		image2: '/r/settings.svg',
+	},
+	{
+		id: 4,
+		text: 'Выйти',
+		path: '',
+		image: '/exit.svg',
+		notifications: 0,
+		image2: '/r/exit.svg',
+	},
 ]

@@ -30,6 +30,7 @@ import {
 	refreshStart,
 	refreshSuccess,
 	refreshFailure,
+	logoutSuccess,
 } from './userSlice'
 
 const API = 'http://getservices.pythonanywhere.com/'
@@ -163,4 +164,8 @@ export const tokenRefresh = async (
 	} catch (err) {
 		dispatch(refreshFailure())
 	}
+}
+
+export const logout = (dispatch: Dispatch<IDispatch>) => {
+	dispatch(logoutSuccess())
 }
