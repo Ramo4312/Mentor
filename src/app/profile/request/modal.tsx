@@ -35,7 +35,7 @@ export default function RequestModal({ modal, setModal }: StateProps) {
 						setModal(!true)
 						// window.open('https://t.me/SaveYoutubeBot')
 					}}
-					className='bg-little-text px-14 py-3 rounded-[0.63rem] text-xl text-[#fffffe]'
+					className='bg-little-text px-14 py-3 rounded-[0.63rem] text-xl text-[#fffffe] hover:bg-tertiary hover:text-little-text active:bg-active hover:duration-150 duration-200'
 				>
 					Start
 				</button>

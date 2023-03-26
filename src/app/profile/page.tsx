@@ -48,7 +48,7 @@ const Profile = () => {
 							onClick={() => {
 								router.push('/profile/request')
 							}}
-							className='bg-accent rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'
+							className='bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200 rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'
 						>
 							Оставить заявку
 						</button>
@@ -90,7 +90,7 @@ const Profile = () => {
 						onClick={() => {
 							router.push('/profile/request')
 						}}
-						className='bg-accent rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'
+						className='bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200 rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'
 					>
 						Оставить заявку
 					</button>

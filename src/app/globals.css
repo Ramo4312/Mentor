@@ -4,6 +4,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+textarea {
+	resize: none;
+}
+
 * {
 	box-sizing: border-box;
 	font-family: 'Poppins', sans-serif;
@@ -30,7 +34,7 @@ input:focus {
 	}
 
 	.reg-inputs {
-		@apply border rounded-md flex border-light-gray text-xl h-12 justify-between px-3 focus:bg-tertiary focus:duration-200 duration-150 w-full;
+		@apply border rounded-md flex border-light-gray text-xl h-12 justify-between px-3 duration-150 w-full focus:border-[.1rem] focus:shadow-[3px_2.4px_5.8px_#485174] hover:border-[.17rem];
 	}
 
 	.pass-vis {

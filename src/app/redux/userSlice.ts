@@ -18,7 +18,10 @@ export const userSlice = createSlice({
 	name: 'user',
 	initialState: <initialState>{
 		currentUser: {},
-		tokens: {},
+		tokens: {
+			access: '',
+			refresh: '',
+		},
 		isFetching: false,
 		error: false,
 	},
@@ -132,6 +135,19 @@ export const userSlice = createSlice({
 			state.currentUser = null
 			state.tokens = null
 		},
+
+		updateStart: state => {
+			state.isFetching = true
+			state.error = false
+		},
+		updateSuccess: state => {
+			state.isFetching = false
+			state.error = false
+		},
+		updateFailure: state => {
+			state.isFetching = false
+			state.error = true
+		},
 	},
 })
 
@@ -158,5 +174,8 @@ export const {
 	deleteSuccess,
 	deleteFailure,
 	logoutSuccess,
+	updateStart,
+	updateSuccess,
+	updateFailure,
 } = userSlice.actions
 export default userSlice.reducer

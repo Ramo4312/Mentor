@@ -29,7 +29,7 @@ const LogoutModal = ({ modal, setModal }: StateProps) => {
 						onClick={() => {
 							setModal(!true), (logout(dispatch), router.push('/'))
 						}}
-						className='bg-white border border-little-text px-14 py-3 hover:bg-red-600 hover:border-red-600 hover:duration-200 duration-150 hover:text-black rounded-[0.63rem] text-lg text-little-text'
+						className='bg-white border border-little-text px-14 py-3 hover:bg-tertiary hover:duration-200 duration-150 hover:text-black rounded-[0.63rem] text-lg text-little-text'
 					>
 						Выйти
 					</button>
@@ -38,7 +38,7 @@ const LogoutModal = ({ modal, setModal }: StateProps) => {
 							setModal(!true)
 							// window.open('https://t.me/SaveYoutubeBot')
 						}}
-						className='bg-accent px-14 py-3 rounded-[0.63rem] text-lg text-little-text'
+						className='bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200 px-14 py-3 rounded-[0.63rem] text-lg text-little-text'
 					>
 						Остаться
 					</button>

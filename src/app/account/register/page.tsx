@@ -1,64 +1,101 @@
 'use client'
 
 import { register } from '@/app/redux/apiCalls'
-import { useAppSelector, useAppDispatch } from '@/hooks/hooks'
-import { IUserReg } from '@/types/types'
-import React, { useRef, useState } from 'react'
+import { useAppDispatch } from '@/hooks/hooks'
+import { ILanguage, IOption, IPhoto, ISpec } from '@/types/types'
+import React, { useState, useId } from 'react'
 import Navbar from '@/components/navbar/Navbar'
 import Footer from '@/components/footer/Footer'
-import Select from 'react-select'
+import Select, { OnChangeValue } from 'react-select'
 import makeAnimated from 'react-select/animated'
-import { specializations } from '@/arrays/arrays'
+import { experience, languages, prices, specializations } from '@/arrays/arrays'
 import Image from 'next/image'
 import AbsoluteImages from '@/components/absoluteImages'
-import { useRouter } from 'next/navigation'
+import CreatableSelect from 'react-select/creatable'
 
-interface IPhoto {
-	name: string
-	lastModifiedDate: Date
-	lastModified: number
-	size: number
-	webkitRelativePath: string
-}
-
-export const languages: { lang: string; image: string }[] = [
-	{ lang: 'Кыргызский ', image: '/kgz.svg' },
-	{ lang: 'Русский ', image: '/rus.svg' },
-]
+import '@/styles/custom-select.scss'
+import DefaultInputs from '@/components/inputs/default'
+import PasswordInputs from '@/components/inputs/password'
+import BigInputs from '@/components/inputs/big'
 
 const RegisterPage = () => {
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
 	const [isVisPassConf, setIsVisPassConf] = useState<boolean>(false)
-	const [image, setImage] = useState<File | IPhoto | null>()
-	const [full_name, setFull_name] = useState<string>('')
-	const [email, setEmail] = useState<string>('')
-	const [password, setPassword] = useState<string>('')
-	const [password_confirm, setPassword_confirm] = useState<string>('')
-	const [language, setLanguage] = useState<string>('')
 
-	const filePicker = useRef<null>(null)
-	const router = useRouter()
+	const [full_name, setFull_name] = useState<string>('qwerty')
+	const [email, setEmail] = useState<string>('qwerty')
+	const [password, setPassword] = useState<string>('qwerty')
+	const [password_confirm, setPassword_confirm] = useState<string>('qwerty')
+	const [image, setImage] = useState<File | IPhoto | null | undefined | Blob>()
+	const [post, setPost] = useState<string>('qwerty')
+	const [place_of_work, setPlace_of_work] = useState<string>('qwerty')
+	const [bio, setBio] = useState<string>('qwerty')
+	const [help, setHelp] = useState<string>('qwerty')
+	const [mentee_level, setMentee_level] = useState<string>('qwerty')
+	const [exp, setExp] = useState('qwerty')
+	const [spec, setSpec] = useState<string[]>([''])
+	const [specId, setSpecId] = useState<string[]>([])
+	const [skill, setSkill] = useState<string>('')
+	const [price, setPrice] = useState('qwerty')
+	const [language, setLanguage] = useState('qwerty')
+
+	// const router = useRouter()
 
 	const dispatch = useAppDispatch()
-	const { error } = useAppSelector(state => state.user)
+	// const { error } = useAppSelector(state => state.user)
 
 	const animatedComponents = makeAnimated()
 
-	// function handlePick() {
-	// 	filePicker.current.click()
-	// }
+	console.log(specId)
 
 	function handleRegister() {
-		const user: IUserReg = {
-			full_name,
-			email,
-			password,
-			password_confirm,
+		const formData: any = new FormData()
+		formData.append('username', full_name)
+		formData.append('email', email)
+		formData.append('password', password)
+		formData.append('password_confirm', password_confirm)
+		formData.append('image', image)
+		formData.append('position', post)
+		formData.append('place_of_work', place_of_work)
+		formData.append('about_me', bio)
+		formData.append('help', help)
+		formData.append('level_mentor', mentee_level)
+		formData.append('experience', exp)
+		formData.append('specialization', specId)
+		formData.append('skills', skill)
+		formData.append('price', price)
+		formData.append('language', language)
+
+		// console.log(formData)
+		register(dispatch, formData)
+
+		// error ? router.push('/account/login') : null
+	}
+
+	const getValue1 = () => {
+		return exp ? experience.find(c => c.value === exp) : ''
+	}
+
+	const onChange1 = (newValue: any) => {
+		if (newValue.value !== 'Нет опыта') {
+			setExp(newValue.value + ' ' + 'лет')
+		} else {
+			setExp(newValue.value)
 		}
+	}
 
-		register(dispatch, user)
+	const getValue2 = () => {
+		return spec ? specializations.filter(c => spec.indexOf(c.value) >= 0) : []
+	}
 
-		error ? router.push('/account/login') : null
+	const onChange2 = (newValue: OnChangeValue<IOption, boolean>) => {
+		// if (spec.length >= 5) return
+		setSpec((newValue as IOption[]).map(v => v.value))
+		setSpecId((newValue as ISpec[]).map(v => v.id.toString()))
+	}
+
+	const onChange4 = (newValue: any) => {
+		setPrice(newValue.value)
 	}
 
 	return (
@@ -80,60 +117,26 @@ const RegisterPage = () => {
 						onSubmit={e => e.preventDefault()}
 						className='flex flex-col gap-y-5 mx-auto w-[46.88rem]'
 					>
-						<div className='flex flex-col gap-y-[0.87rem]'>
-							<label className='label-in-register uppercase' htmlFor=''>
-								фио
-							</label>
-							<input
-								onChange={e => setFull_name(e.target.value)}
-								name='username'
-								className='reg-inputs'
-								type='text'
-							/>
-						</div>
-						<div className='flex flex-col gap-y-[0.87rem]'>
-							<label className='label-in-register' htmlFor=''>
-								Email
-							</label>
-							<input
-								onChange={e => setEmail(e.target.value)}
-								name='email'
-								className='reg-inputs'
-								type='text'
-							/>
-						</div>
-						<div className='flex flex-col gap-y-[0.87rem]'>
-							<label className='label-in-register' htmlFor=''>
-								Пароль
-							</label>
-							<input
-								onChange={e => setPassword(e.target.value)}
-								name='password'
-								className='reg-inputs'
-								type={isVisPass ? 'text' : 'password'}
-							/>
-							<p className='pass-vis' onClick={() => setIsVisPass(!isVisPass)}>
-								показать пароль
-							</p>
-						</div>
-						<div className='flex flex-col gap-y-[0.87rem]'>
-							<label className='label-in-register' htmlFor=''>
-								Повтор пароля
-							</label>
-
-							<input
-								onChange={e => setPassword_confirm(e.target.value)}
-								name='password_confirm'
-								className='reg-inputs'
-								type={isVisPassConf ? 'text' : 'password'}
-							/>
-							<p
-								className='pass-vis'
-								onClick={() => setIsVisPassConf(!isVisPassConf)}
-							>
-								показать пароль
-							</p>
-						</div>
+						<DefaultInputs
+							label='ФИО'
+							state={full_name}
+							setState={setFull_name}
+						/>
+						<DefaultInputs label='Email' state={email} setState={setEmail} />
+						<PasswordInputs
+							label='Пароль'
+							state={password}
+							setState={setPassword}
+							passVis={isVisPass}
+							setPassVis={setIsVisPass}
+						/>
+						<PasswordInputs
+							label='Повтор пароля'
+							state={password_confirm}
+							setState={setPassword_confirm}
+							passVis={isVisPassConf}
+							setPassVis={setIsVisPassConf}
+						/>
 						<div className='flex flex-col gap-y-[0.87rem] w-96'>
 							<label className='label-in-register'>
 								Ваша фотография для профиля
@@ -142,7 +145,7 @@ const RegisterPage = () => {
 								<input
 									type='file'
 									className='file-input w-full h-full z-20 absolute bg-transparent opacity-0'
-									ref={filePicker}
+									// ref={filePicker}
 									accept='image/*,.png,.jpg,.web'
 									size={2}
 									onChange={e =>
@@ -180,41 +183,36 @@ const RegisterPage = () => {
 							</div>
 							<p className='text[#485174B2] '>(пожалуйста, не более 2Мб)</p>
 						</div>
-						<div className='flex flex-col gap-y-[0.87rem]'>
-							<label className='label-in-register' htmlFor=''>
-								Должность
-							</label>
-							<input type='text' className='reg-inputs' />
-						</div>
-						<div className='flex flex-col gap-y-[0.87rem]'>
-							<label className='label-in-register' htmlFor=''>
-								Место работы
-							</label>
-							<input type='text' className='reg-inputs' />
-						</div>
-						<div className='flex flex-col gap-y-[0.87rem]'>
-							<label className='label-in-register' htmlFor=''>
-								О себе
-							</label>
-							<textarea className='reg-inputs big-inputs outline-none' />
-						</div>
-						<div className='flex flex-col gap-y-[0.87rem]'>
-							<label className='label-in-register' htmlFor=''>
-								С чем вы можете помочь?
-							</label>
-							<textarea className='reg-inputs big-inputs outline-none' />
-						</div>
-						<div className='flex flex-col gap-y-[0.87rem]'>
-							<label className='label-in-register' htmlFor=''>
-								Какого уровня менти могут обращаться к вам за помощью?
-							</label>
-							<textarea className='reg-inputs big-inputs outline-none' />
-						</div>
+						<DefaultInputs label='Должность' state={post} setState={setPost} />
+						<DefaultInputs
+							label='Место работы'
+							state={place_of_work}
+							setState={setPlace_of_work}
+						/>
+						<BigInputs label='О себе' state={bio} setState={setBio} />
+						<BigInputs
+							label='С чем вы можете помочь?'
+							state={help}
+							setState={setHelp}
+						/>
+						<BigInputs
+							label='Какого уровня менти могут обращаться к вам за помощью?'
+							state={mentee_level}
+							setState={setMentee_level}
+						/>
 						<div className='flex flex-col gap-y-[0.87rem] w-[30.38rem] mb-12'>
 							<label htmlFor='' className='label-in-register'>
 								Опыт
 							</label>
-							<Select components={animatedComponents} />
+							<Select
+								instanceId={useId()}
+								classNamePrefix='custom-select'
+								onChange={onChange1}
+								isSearchable={false}
+								value={getValue1()}
+								options={experience}
+								placeholder=''
+							/>
 						</div>
 						<div className='flex flex-col gap-y-[0.87rem] mb-11 w-[30.38rem]'>
 							<label htmlFor='' className='flex flex-col gap-y-1 w-[89%]'>
@@ -229,12 +227,15 @@ const RegisterPage = () => {
 								</p>
 							</label>
 							<Select
+								instanceId={useId()}
+								classNamePrefix='custom-select1'
+								onChange={onChange2}
+								value={getValue2()}
+								placeholder=''
+								isMulti
 								components={animatedComponents}
-								isMulti={true}
 								options={specializations}
 								className=' h-14'
-								// classNamePrefix='select'
-								isClearable={true}
 								isSearchable={true}
 								closeMenuOnSelect={true}
 							/>
@@ -250,15 +251,12 @@ const RegisterPage = () => {
 									Review. По ним менти смогут вас найти.
 								</p>
 							</label>
-							<Select
-								components={animatedComponents}
-								// isMulti={true}
-								// options={options}
-								className='spec-select bg-transparent'
-								// classNamePrefix='select'
-								// isClearable={true}
-								// isSearchable={true}
-								// closeMenuOnSelect={true}
+							<input
+								onChange={e => setSkill(e.target.value)}
+								value={skill}
+								name='username'
+								className='reg-inputs'
+								type='text'
 							/>
 						</div>
 						<div className='flex flex-col gap-y-[0.87rem] w-[30.38rem] mb-14'>
@@ -271,21 +269,27 @@ const RegisterPage = () => {
 									от случая, выберите “По договорённости”
 								</p>
 							</label>
-							<Select
+							<CreatableSelect
+								instanceId={useId()}
+								classNamePrefix='custom-select2'
+								onChange={onChange4}
+								// value={getValue4()}
+								options={prices}
+								placeholder=''
 								components={animatedComponents}
-								isMulti={true}
-								// options={specializations}
 								className='reg-select h-14'
-								// classNamePrefix='select'
 								isClearable={true}
 								isSearchable={true}
 								closeMenuOnSelect={true}
 							/>
 						</div>
 						<div className='flex flex-col gap-y-[0.87rem] mb-32'>
-							<label htmlFor='label-in-register'>Выберите язык</label>
+							<label htmlFor='label-in-register'>
+								Выберите язык на котором можете <br /> консультировать (можно
+								оба)
+							</label>
 							<div className='flex flex-col gap-y-[0.62rem] '>
-								{languages.map((item: { lang: string; image: string }) => (
+								{languages.map((item: ILanguage) => (
 									<div
 										className='border border-[#73737380] rounded-md flex justify-between py-2 px-6 w-[22.5rem]'
 										key={item.lang}
@@ -293,13 +297,13 @@ const RegisterPage = () => {
 									>
 										<div
 											className={`${
-												item.lang == 'Оба языка' ? 'ml-14 py-2' : ''
+												item.label == 'Оба языка' ? 'ml-14 py-2' : ''
 											} flex items-center gap-x-4`}
 										>
 											{item.image ? (
 												<Image src={item.image} width={37} height={37} alt='' />
 											) : null}
-											<p>{item.lang}</p>
+											<p>{item.label}</p>
 										</div>
 										<Image
 											src={
@@ -319,7 +323,7 @@ const RegisterPage = () => {
 							onClick={() => {
 								handleRegister()
 							}}
-							className='mx-auto text-lg font-medium px-[3.825rem] py-6 rounded-xl text-paragraph bg-accent'
+							className='mx-auto text-lg font-medium px-[3.825rem] py-6 rounded-xl text-paragraph bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200'
 						>
 							Оставить заявку
 						</button>

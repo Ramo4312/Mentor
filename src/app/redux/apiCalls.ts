@@ -7,7 +7,8 @@ import {
 	IUserReg,
 } from '@/types/types'
 import axios from 'axios'
-import { Dispatch } from 'react'
+import { Dispatch, SetStateAction } from 'react'
+import { IProps, IUser } from '../profile/my-profile/page'
 import {
 	loginFailure,
 	loginStart,
@@ -31,9 +32,12 @@ import {
 	refreshSuccess,
 	refreshFailure,
 	logoutSuccess,
+	updateStart,
+	updateSuccess,
+	updateFailure,
 } from './userSlice'
 
-const API = 'http://getservices.pythonanywhere.com/'
+export const API = 'https://mentorkgapi.pythonanywhere.com/'
 
 export const publicReq = axios.create({
 	baseURL: API,
@@ -60,6 +64,7 @@ export const login = async (dispatch: Dispatch<IDispatch>, user: IUserLog) => {
 		const res = await publicReq.post(`account/login/`, user)
 		console.log('login', res.status)
 		console.log(res.data)
+		localStorage.setItem('token', JSON.stringify(res.data))
 		dispatch(loginSuccess({ ...res.data, email: user.email }))
 	} catch (err) {
 		dispatch(loginFailure())
@@ -143,7 +148,7 @@ export const deleteAccount = async (
 			},
 		}
 
-		const res = await publicReq.delete(`account/delete-account/${user}`, config)
+		const res = await publicReq.post(`account/delete-account/`, user, config)
 		dispatch(deleteSuccess())
 
 		console.log('account deleted', res.status, res.statusText)
@@ -168,4 +173,48 @@ export const tokenRefresh = async (
 
 export const logout = (dispatch: Dispatch<IDispatch>) => {
 	dispatch(logoutSuccess())
+}
+
+export const getUser = async (
+	token: string | undefined,
+	setUser: Dispatch<SetStateAction<IUser | null>>
+) => {
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const { data }: IProps = await axios(`${API}base/personal-profile/`, config)
+
+		setUser(data)
+	} catch (err) {
+		console.log(err)
+	}
+}
+
+export const userUpdate = async (
+	dispatch: Dispatch<IDispatch>,
+	user: FormData,
+	token: string | undefined
+) => {
+	dispatch(updateStart())
+
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const res = await publicReq.patch(`account/update-user/`, user, config)
+
+		dispatch(updateSuccess())
+
+		console.log('user updated', res.status)
+	} catch (err) {
+		dispatch(updateFailure())
+		console.log(err)
+	}
 }

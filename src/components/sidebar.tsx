@@ -13,11 +13,8 @@ const SideBar = () => {
 	const pathname = usePathname()
 	const router = useRouter()
 
-	// const dispatch = useAppDispatch()
-
 	function handleLogout() {
 		setModal(true)
-		// logout(dispatch), router.push('/')
 	}
 
 	return (

@@ -62,7 +62,7 @@ const PasswordRestore = () => {
 								onClick={() => {
 									handleSend()
 								}}
-								className={`px-[4.8rem] py-4 rounded-xl text-white text-xl text-center bg-little-text mx-auto ${
+								className={`px-[4.8rem] py-4 rounded-xl text-white text-xl text-center bg-little-text hover:text-little-text hover:bg-tertiary active:bg-active hover:duration-150 duration-200 mx-auto ${
 									emailValid ? 'hidden' : ''
 								} `}
 							>
@@ -128,7 +128,7 @@ const PasswordRestore = () => {
 								onClick={() => {
 									handleSend()
 								}}
-								className='px-[4.8rem] mx-auto py-4 rounded-xl text-white text-xl text-center bg-little-text'
+								className='px-[4.8rem] mx-auto py-4 rounded-xl text-white text-xl text-center bg-little-text hover:text-little-text hover:bg-tertiary active:bg-active hover:duration-150 duration-200'
 							>
 								{/* Войти */}
 								Войти

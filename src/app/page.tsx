@@ -4,6 +4,10 @@ import Navbar from '@/components/navbar/Navbar'
 import SideBar from '@/components/sidebar'
 
 export default function Home() {
+	// if (!window._babelPolyfill) {
+	// 	require('babel-polyfill')
+	// }
+
 	return (
 		<main className=''>
 			<Navbar />

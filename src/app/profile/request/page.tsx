@@ -67,7 +67,7 @@ const Request = () => {
 					</div>
 					<button
 						onClick={() => setModal(!false)}
-						className='bg-accent rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'
+						className='bg-accent rounded-lg py-[1.57rem] px-14 text-lg font-medium hover:bg-tertiary active:bg-active hover:duration-150 duration-200 text-[#2D334A]'
 					>
 						Оставить заявку
 					</button>

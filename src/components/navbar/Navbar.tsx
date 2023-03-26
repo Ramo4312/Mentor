@@ -9,7 +9,7 @@ const Navbar = () => {
 			</div>
 			<div className='flex gap-x-9'>
 				<Link
-					className='px-3 py-2 rounded-xl text-dark-blue text-[1rem] text-center bg-accent'
+					className='px-3 py-2 rounded-xl text-dark-blue text-[1rem] text-center bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200'
 					href={''}
 				>
 					Стать ментором

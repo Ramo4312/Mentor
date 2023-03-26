@@ -98,7 +98,7 @@ const ChangePassword = () => {
 							</p>
 						</div>
 						<button
-							className='px-20 py-4 bg-little-text rounded-xl mx-auto font-semibold text-white'
+							className='px-20 py-4 bg-little-text hover:bg-tertiary active:bg-active hover:duration-150 duration-200 hover:text-little-text rounded-xl mx-auto font-semibold text-white'
 							onClick={handleChange}
 						>
 							Изменить

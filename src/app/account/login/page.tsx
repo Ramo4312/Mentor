@@ -105,7 +105,7 @@ const LoginPage = () => {
 								onClick={() => {
 									handleLogin()
 								}}
-								className='px-[4.8rem] py-4 rounded-xl text-white text-xl text-center bg-little-text'
+								className='px-[4.8rem] py-4 rounded-xl text-white text-xl text-center bg-little-text hover:text-little-text hover:bg-tertiary active:bg-active hover:duration-150 duration-200'
 							>
 								{/* Войти */}
 								Войти
@@ -115,7 +115,7 @@ const LoginPage = () => {
 								// onClick={e => {
 								// 	handleLogin(e)
 								// }}
-								className='px-[4.8rem] py-4 rounded-xl text-dark-blue text-xl text-center bg-accent'
+								className='px-[4.8rem] py-4 rounded-xl text-dark-blue text-xl text-center bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200'
 							>
 								{/* Войти */}
 								Стать ментором

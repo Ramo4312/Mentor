@@ -24,6 +24,7 @@ module.exports = {
 				tertiary: '#BAE8E8',
 				'little-text': '#485174',
 				title: '#272343',
+				active: '#C9FFFF',
 			},
 		},
 	},
