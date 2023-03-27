@@ -6,9 +6,11 @@ import HowItWork2 from '../../public/HowItWork2.svg'
 import HowItWork3 from '../../public/HowItWork3.svg'
 import MentorFilter from '@/components/mentor/MentorFilter'
 import MentorItem from '@/components/mentor/MentorItem'
+import Layout from '@/components/layout/Layout'
+
 export default function Home() {
 	return (
-		<main className=''>
+		<Layout>
 			<header className='relative flex justify-center '>
 				<Image
 					src={leftImage}
@@ -91,6 +93,6 @@ export default function Home() {
 				</div>
 				{/* <MentorItem /> */}
 			</div>
-		</main>
+		</Layout>
 	)
 }
