@@ -88,7 +88,7 @@ export default function Home() {
 					<h2 className='text-5xl text-title font-bold tracking-widest mb-24'>
 						Наши менторы
 					</h2>
-					<MentorFilter />
+					{/* <MentorFilter /> */}
 				</div>
 				<MentorItem />
 			</div>

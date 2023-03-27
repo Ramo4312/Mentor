@@ -89,7 +89,7 @@ export default function Home() {
 						Наши менторы
 					</h2>
 				</div>
-				<MentorItem />
+				{/* <MentorItem /> */}
 			</div>
 		</main>
 	)

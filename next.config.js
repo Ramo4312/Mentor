@@ -11,7 +11,7 @@ const nextConfig = {
 		remotePatterns: [
 			{
 				protocol: 'https',
-				hostname: 'getmentor.dev',
+				hostname: 'mentorkgapi.pythonanywhere.com',
 			},
 		],
 		// domains: ['snob.ru'],

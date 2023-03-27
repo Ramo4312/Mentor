@@ -15,6 +15,12 @@ module.exports = {
 		},
 
 		extend: {
+			zIndex: {
+				1: 1,
+				'-1': '-1',
+				2: 2,
+				'-2': '-2',
+			},
 			colors: {
 				'light-gray': 'rgb(72,81,116,0.7)',
 				paragraph: '#2D334A',
@@ -23,6 +29,7 @@ module.exports = {
 				tertiary: '#BAE8E8',
 				'little-text': '#485174',
 				title: '#272343',
+				active: '#C9FFFF',
 			},
 			width: {
 				container: '90%',

@@ -1,12 +1,5 @@
 export interface IUser {
 	email: string
-	username: string
-}
-
-export interface IUserReg extends IUser {
-	last_name: string
-	password: string
-	password_confirm: string
 }
 
 export interface IUserLog extends IUser {
@@ -30,4 +23,59 @@ export interface INewPassword {
 	old_password: string
 	new_password: string
 	new_pass_confirm: string
+}
+
+export interface IOption {
+	label: string
+	value: string
+}
+
+export interface IDispatch {
+	payload: undefined | string | IFullUser
+	type: string
+}
+
+export interface IPages {
+	id: number
+	text: string
+	image: string
+	path: string
+	notifications?: number
+	image2: string
+}
+
+export interface ILanguage {
+	lang: string
+	image: string
+	label: string
+}
+
+export interface IPhoto {
+	name: string
+	lastModifiedDate: Date
+	lastModified: number
+	size: number
+	webkitRelativePath: string
+}
+
+export interface IUserReg {
+	full_name: string
+	email: string
+	password: string
+	password_confirm: string
+	downloadURL: string
+	post: string
+	place_of_work: string
+	bio: string
+	help: string
+	mentee_level: string
+	exp: string
+	spec: string[]
+	skill: string[]
+	price: string
+	language: string
+}
+
+export interface ISpec extends IOption {
+	id: number
 }

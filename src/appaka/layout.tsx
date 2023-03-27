@@ -1,6 +1,6 @@
 import Navbar from '@/components/navbar/Navbar'
 import './globals.css'
-import { Providers } from './redux/provider'
+// import { Providers } from './redux/provider'
 import { Poppins } from 'next/font/google'
 
 export const metadata = {
@@ -21,10 +21,10 @@ export default function RootLayout({
 	return (
 		<html lang='en' className={poppins.className}>
 			<body>
-				<Providers>
-					<Navbar />
-					{children}
-				</Providers>
+				{/* <Providers> */}
+				<Navbar />
+				{children}
+				{/* </Providers> */}
 			</body>
 		</html>
 	)

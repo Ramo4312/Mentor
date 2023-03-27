@@ -1,19 +1,30 @@
+import { usePathname } from 'next/navigation'
 import React from 'react'
 
 const AbsoluteImages = () => {
+	const pathname = usePathname()
+
 	return (
-		<div className=''>
+		<>
 			<img
-				className='absolute -left-[10.2rem]'
-				src='/2 Creative run 1-1.png'
+				className='absolute -z-1 -left-[10.2rem]'
+				src={
+					pathname == '/account/register'
+						? '/2 Creative run 1.png'
+						: '/2 Creative run 1-1.png'
+				}
 				alt=''
 			/>
 			<img
-				className='absolute -right-[9rem]'
-				src='/6 progress 2-1.png'
+				className='absolute -z-1 -right-[9rem]'
+				src={
+					pathname == '/account/register'
+						? '/6 progress 2.png'
+						: '/6 progress 2-1.png'
+				}
 				alt=''
 			/>
-		</div>
+		</>
 	)
 }
 

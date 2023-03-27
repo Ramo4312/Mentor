@@ -21,12 +21,41 @@ input:focus {
 	outline: none;
 }
 
+textarea {
+	resize: none;
+}
+
 @layer components {
+	/* *::-webkit-scrollbar {
+		@apply w-2;
+	} */
+
+	/* *::-webkit-scrollbar-thumb {
+		@apply bg-[#a9a9a9] rounded-2xl;
+	} */
+
 	.reg-inputs {
-		@apply border rounded-md flex border-light-gray text-2xl h-12 justify-between px-3 focus:bg-tertiary focus:duration-200 duration-150;
+		@apply border rounded-md flex border-light-gray text-xl h-12 justify-between px-3 duration-150 w-full focus:border-[.1rem] focus:shadow-[3px_2.4px_5.8px_#485174] hover:border-[.17rem];
 	}
 
 	.pass-vis {
 		@apply cursor-pointer text-right text-blue-600 hover:text-blue-900;
+	}
+
+	label {
+		@apply text-little-text text-xl;
+	}
+
+	.big-inputs {
+		@apply rounded-2xl min-h-[10rem] py-2 w-[41.9rem];
+	}
+
+	.file-input:hover ~ div {
+		background-color: #b3fffb;
+		transition: 0.2s;
+	}
+
+	h1 {
+		@apply text-[3.44rem] text-center mt-11 mb-8 font-semibold text-title;
 	}
 }
