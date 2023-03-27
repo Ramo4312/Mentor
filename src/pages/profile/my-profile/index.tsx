@@ -8,6 +8,7 @@ import { IPhoto } from '@/types/types'
 // import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 export interface IUser {
 	username: string
@@ -34,6 +35,9 @@ export interface IProps {
 
 function MyProfile() {
 	const tokens = useAppSelector(state => state.user.tokens)
+
+	const router = useRouter()
+	console.log(router)
 
 	const [user, setUser] = useState<IUser | null>(null)
 	const [userImage, setUserImage] = useState('')
@@ -76,9 +80,13 @@ function MyProfile() {
 									</h5>
 								</div>
 								<div className=''>
-									<p className='cursor-default px-[0.82rem] py-[0.40rem] font-semibold text-tertiary bg-[#2D334A] rounded-full text-center mb-14'>
-										{user?.skills}
-									</p>
+									{user?.skills ? (
+										<p className='cursor-default px-[0.82rem] py-[0.40rem] font-semibold text-tertiary bg-[#2D334A] rounded-full text-center mb-14'>
+											{user?.skills}
+										</p>
+									) : (
+										''
+									)}
 								</div>
 							</div>
 							<ul className='mb-[1.13rem] flex flex-col gap-y-3'>

@@ -1,8 +1,9 @@
+// import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
-
 import '@/styles/globals.css'
 import { store } from '@/redux/store'
+import '@/styles/custom-select.scss'
 
 import { Poppins } from 'next/font/google'
 import Head from 'next/head'

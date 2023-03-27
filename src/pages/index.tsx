@@ -2,11 +2,11 @@ import leftImage from '../../public/Group129.svg'
 import rightImage from '../../public/Group136.svg'
 import Image from 'next/image'
 import HowItWork1 from '../../public/HowItWork1.svg'
-import HowItWork2 from '../../public/HowItWork2.svg'
 import HowItWork3 from '../../public/HowItWork3.svg'
-import MentorFilter from '@/components/mentor/MentorFilter'
-import MentorItem from '@/components/mentor/MentorItem'
+// import MentorFilter from '@/components/mentor/MentorFilter'
+// import MentorItem from '@/components/mentor/MentorItem'
 import Layout from '@/components/layout/Layout'
+import HowItWork2 from '../../public/HowItWork2.svg'
 
 export default function Home() {
 	return (
@@ -18,7 +18,7 @@ export default function Home() {
 					className='absolute w-[23vw] top-0 left-0'
 					priority
 				/>
-				<div className='flex flex-col items-center w-1/2 mt-14'>
+				<div className='flex flex-col items-center w-1/2 mt-4'>
 					<h1 className='font-semibold text-[3.5rem] text-center mb-9 text-title'>
 						Найди <span className='text-[#FB4868]'>своего</span> ментора
 					</h1>
@@ -73,7 +73,7 @@ export default function Home() {
 							<Image src={HowItWork3} alt='how-it-work' className='mb-8' />
 							<div className='flex flex-col w-[300px]'>
 								<h4 className='text-2xl font-semibold tracking-wider text-title mb-4'>
-									Дело за вами
+									Дело за малым
 								</h4>
 								<p className='text-xl text-little-text'>
 									Мы перешлём твою заявку ментору. Он оценит задачу и свяжется с

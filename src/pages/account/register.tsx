@@ -1,7 +1,8 @@
 import { register } from '@/redux/apiCalls'
 import { useAppDispatch } from '@/hooks/hooks'
 import { ILanguage, IOption, IPhoto, ISpec } from '@/types/types'
-import { useState, useId } from 'react'
+import React, { useState, useId } from 'react'
+import Navbar from '@/components/navbar/Navbar'
 import Footer from '@/components/footer/Footer'
 import Select, { OnChangeValue } from 'react-select'
 import makeAnimated from 'react-select/animated'
@@ -10,40 +11,38 @@ import Image from 'next/image'
 import AbsoluteImages from '@/components/absoluteImages'
 import CreatableSelect from 'react-select/creatable'
 
-// import '@/styles/custom-select.scss'
 import DefaultInputs from '@/components/inputs/default'
 import PasswordInputs from '@/components/inputs/password'
 import BigInputs from '@/components/inputs/big'
+import { useRouter } from 'next/router'
 
 const RegisterPage = () => {
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
 	const [isVisPassConf, setIsVisPassConf] = useState<boolean>(false)
 
-	const [full_name, setFull_name] = useState<string>('qwerty')
-	const [email, setEmail] = useState<string>('qwerty')
-	const [password, setPassword] = useState<string>('qwerty')
-	const [password_confirm, setPassword_confirm] = useState<string>('qwerty')
+	const [full_name, setFull_name] = useState<string>('')
+	const [email, setEmail] = useState<string>('')
+	const [password, setPassword] = useState<string>('')
+	const [password_confirm, setPassword_confirm] = useState<string>('')
 	const [image, setImage] = useState<File | IPhoto | null | undefined | Blob>()
-	const [post, setPost] = useState<string>('qwerty')
-	const [place_of_work, setPlace_of_work] = useState<string>('qwerty')
-	const [bio, setBio] = useState<string>('qwerty')
-	const [help, setHelp] = useState<string>('qwerty')
-	const [mentee_level, setMentee_level] = useState<string>('qwerty')
-	const [exp, setExp] = useState('qwerty')
+	const [post, setPost] = useState<string>('')
+	const [place_of_work, setPlace_of_work] = useState<string>('')
+	const [bio, setBio] = useState<string>('')
+	const [help, setHelp] = useState<string>('')
+	const [mentee_level, setMentee_level] = useState<string>('')
+	const [exp, setExp] = useState('')
 	const [spec, setSpec] = useState<string[]>([''])
 	const [specId, setSpecId] = useState<string[]>([])
 	const [skill, setSkill] = useState<string>('')
-	const [price, setPrice] = useState('qwerty')
-	const [language, setLanguage] = useState('qwerty')
-
-	// const router = useRouter()
+	const [price, setPrice] = useState('')
+	const [language, setLanguage] = useState('')
 
 	const dispatch = useAppDispatch()
-	// const { error } = useAppSelector(state => state.user)
 
 	const animatedComponents = makeAnimated()
 
-	console.log(specId)
+	const router = useRouter()
+	console.log(router)
 
 	function handleRegister() {
 		const formData: any = new FormData()
@@ -63,7 +62,6 @@ const RegisterPage = () => {
 		formData.append('price', price)
 		formData.append('language', language)
 
-		// console.log(formData)
 		register(dispatch, formData)
 
 		// error ? router.push('/account/login') : null
@@ -86,7 +84,7 @@ const RegisterPage = () => {
 	}
 
 	const onChange2 = (newValue: OnChangeValue<IOption, boolean>) => {
-		// if (spec.length >= 5) return
+		if (spec.length >= 5) return
 		setSpec((newValue as IOption[]).map(v => v.value))
 		setSpecId((newValue as ISpec[]).map(v => v.id.toString()))
 	}
@@ -97,6 +95,7 @@ const RegisterPage = () => {
 
 	return (
 		<>
+			<Navbar />
 			<div className='relative overflow-hidden'>
 				<AbsoluteImages />
 				<div className=''>

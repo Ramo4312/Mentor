@@ -30,10 +30,14 @@
 
 	&__multi-value__remove {
 		color: rgba(white, 0.8) !important;
+		transition: 0.3s;
+		border-radius: 0 9px 9px 0 !important;
 
 		&:hover {
+			transition: 0.3s;
 			background-color: transparent !important;
-			color: white !important;
+			color: black !important;
+			background-color: rgb(255, 0, 0, 0.7) !important;
 		}
 	}
 
@@ -45,11 +49,12 @@
 	}
 
 	&__multi-value {
-		background-color: rgba(#999aa5, 0.6) !important;
+		background-color: #2d334a !important;
 		border-radius: 0.6rem !important;
 	}
 
 	&__multi-value__label {
+		color: #bae8e8 !important;
 		font-size: 80% !important;
 		font-weight: 500;
 	}

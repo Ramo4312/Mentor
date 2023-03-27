@@ -1,5 +1,3 @@
-'use client'
-
 import { login } from '@/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
 import Footer from '@/components/footer/Footer'
@@ -7,7 +5,7 @@ import Navbar from '@/components/navbar/Navbar'
 import { useAppSelector } from '@/hooks/hooks'
 import { IUserLog } from '@/types/types'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -32,18 +30,9 @@ const LoginPage = () => {
 			password,
 		}
 
-		login(dispatch, user)
-		if (!error) router.replace('/')
+		login(dispatch, user, router)
+		// if (!error) router.replace('/')
 	}
-
-	// function handleDelete() {
-	// 	const user: IUserLog = {
-	// 		email: currentUser.email,
-	// 		password: password,
-	// 	}
-
-	// 	deleteAccount(dispatch, user, tokens)
-	// }
 
 	// function handleRefresh() {
 	// 	if (tokens) {

@@ -19,6 +19,13 @@ export interface IToken extends IRefresh {
 	access: string
 }
 
+export interface IPassToRestore {
+	email: string
+	code: string
+	new_password: string
+	new_pass_confirm: string
+}
+
 export interface INewPassword {
 	old_password: string
 	new_password: string

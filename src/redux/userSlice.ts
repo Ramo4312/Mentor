@@ -1,3 +1,5 @@
+'use client'
+
 import { IFullUser, IToken, IUser } from '@/types/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 

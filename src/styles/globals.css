@@ -2,14 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-	box-sizing: border-box;
-	padding: 0;
-	margin: 0;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+textarea {
+	resize: none;
 }
 
-body {
-	color: #2d334a;
+* {
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+	padding: 0;
+	margin: 0;
 }
 
 a {
@@ -21,16 +24,12 @@ input:focus {
 	outline: none;
 }
 
-textarea {
-	resize: none;
-}
-
 @layer components {
 	/* *::-webkit-scrollbar {
 		@apply w-2;
-	} */
+	}
 
-	/* *::-webkit-scrollbar-thumb {
+	*::-webkit-scrollbar-thumb {
 		@apply bg-[#a9a9a9] rounded-2xl;
 	} */
 

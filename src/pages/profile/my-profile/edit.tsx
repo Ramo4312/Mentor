@@ -9,11 +9,9 @@ import CreatableSelect from 'react-select/creatable'
 import Select, { OnChangeValue } from 'react-select'
 import { experience, languages, prices, specializations } from '@/arrays/arrays'
 import { getUser, userUpdate } from '@/redux/apiCalls'
-<<<<<<<< HEAD:src/pages/profile/my-profile/edit/index.tsx
-import { IUser } from '..'
-========
+
 import { IUser } from '.'
->>>>>>>> origin/main:src/pages/profile/my-profile/edit.tsx
+
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import DefaultInputs from '@/components/inputs/default'
 import BigInputs from '@/components/inputs/big'
