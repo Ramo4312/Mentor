@@ -1,5 +1,3 @@
-'use client'
-
 import { changePassword } from '@/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
 import Footer from '@/components/footer/Footer'
@@ -35,7 +33,7 @@ const ChangePassword = () => {
 			new_pass_confirm,
 		}
 
-		changePassword(dispatch, newPassword, tokens)
+		changePassword(dispatch, newPassword, tokens?.access)
 	}
 
 	return (

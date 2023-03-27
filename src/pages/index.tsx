@@ -2,10 +2,9 @@ import leftImage from '../../public/Group129.svg'
 import rightImage from '../../public/Group136.svg'
 import Image from 'next/image'
 import HowItWork1 from '../../public/HowItWork1.svg'
-import HowItWork2 from '../../public/HowItWork2.svg'
 import HowItWork3 from '../../public/HowItWork3.svg'
-import MentorFilter from '@/components/mentor/MentorFilter'
-import MentorItem from '@/components/mentor/MentorItem'
+import HowItWork2 from '../../public/HowItWork2.svg'
+
 export default function Home() {
 	return (
 		<main className=''>

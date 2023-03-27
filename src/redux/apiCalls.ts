@@ -1,14 +1,12 @@
 import {
 	IDispatch,
 	INewPassword,
+	IPassToRestore,
 	IRefresh,
-	IToken,
 	IUserLog,
 	IUserReg,
 } from '@/types/types'
 import axios from 'axios'
-import { Dispatch, SetStateAction } from 'react'
-import { IProps, IUser } from '../appaka/profile/my-profile/page'
 import {
 	loginFailure,
 	loginStart,
@@ -37,6 +35,10 @@ import {
 	updateFailure,
 } from './userSlice'
 
+import { toast } from 'react-hot-toast'
+import { Dispatch, SetStateAction } from 'react'
+import { IProps, IUser } from '@/pages/profile/my-profile'
+
 export const API = 'https://mentorkgapi.pythonanywhere.com/'
 
 export const publicReq = axios.create({
@@ -51,36 +53,77 @@ export const register = async (
 	try {
 		const res = await publicReq.post(`account/register/`, user)
 		console.log(res.status, res.data)
+		toast.success('Вы успешно зарегистрировались', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 		dispatch(registerSuccess())
 	} catch (err) {
 		console.log(err)
 		dispatch(registerFailure())
+		toast.error('Ошибка регистрации', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 	}
 }
 
-export const login = async (dispatch: Dispatch<IDispatch>, user: IUserLog) => {
+export const login = async (
+	dispatch: Dispatch<IDispatch>,
+	user: IUserLog,
+	router: any
+) => {
 	dispatch(loginStart())
 	try {
 		const res = await publicReq.post(`account/login/`, user)
 		console.log('login', res.status)
 		console.log(res.data)
+		toast.success('Вы успешно вошли', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 		localStorage.setItem('token', JSON.stringify(res.data))
 		dispatch(loginSuccess({ ...res.data, email: user.email }))
+		router.push('/profile/my-profile/')
 	} catch (err) {
 		dispatch(loginFailure())
+		toast.error('Ошибка входа', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 	}
 }
 
 export const forgotPassword = async (
 	dispatch: Dispatch<IDispatch>,
-	email: string
-	// setEmailValid: SetStateAction<false | true>
+	email: { email: string },
+	setEmailValid: Dispatch<SetStateAction<boolean>>
 ) => {
 	dispatch(forgotStart())
 	try {
 		await publicReq.post(`account/restore-password/`, email)
+		setEmailValid(true)
 		dispatch(forgotSuccess())
-		// setEmailValid(true)
 	} catch (err) {
 		dispatch(forgotFailure())
 	}
@@ -88,7 +131,7 @@ export const forgotPassword = async (
 
 export const restorePassword = async (
 	dispatch: Dispatch<IDispatch>,
-	newPassword: INewPassword
+	newPassword: IPassToRestore
 ) => {
 	dispatch(restoreStart())
 	try {
@@ -98,19 +141,38 @@ export const restorePassword = async (
 		)
 		console.log('password restored', res.status)
 		dispatch(restoreSuccess())
+		toast.success('Пароль восстановлен', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 	} catch (err) {
 		dispatch(restoreFailure())
+		console.log(1234)
+		toast.error('Пароль не восстанавливается', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 	}
 }
 
 export const changePassword = async (
 	dispatch: Dispatch<IDispatch>,
 	newPassword: INewPassword,
-	token: IToken | null
+	token: string | undefined
 ) => {
 	dispatch(changeStart())
 
-	const Authorization = `Bearer ${token?.access}`
+	const Authorization = `Bearer ${token}`
 
 	const config = {
 		headers: {
@@ -126,21 +188,39 @@ export const changePassword = async (
 		)
 		dispatch(changeSuccess())
 		console.log('password changed', res.status, res.statusText)
+		toast.success('пароль изменен', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 	} catch (err) {
 		dispatch(changeFailure())
 		console.log(err)
+		toast.error('Ошибка смены пароля', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 	}
 }
 
 export const deleteAccount = async (
 	dispatch: Dispatch<IDispatch>,
 	user: IUserLog,
-	token: IToken | null
+	token: string | undefined
 ) => {
 	dispatch(deleteStart())
 
 	try {
-		const Authorization = `Bearer ${token?.access}`
+		const Authorization = `Bearer ${token}`
 
 		const config = {
 			headers: {

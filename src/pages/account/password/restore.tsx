@@ -1,10 +1,9 @@
-'use client'
-
-import { forgotPassword } from '@/redux/apiCalls'
+import { forgotPassword, restorePassword } from '@/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
 import Footer from '@/components/footer/Footer'
 import Navbar from '@/components/navbar/Navbar'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
+import { IPassToRestore } from '@/types/types'
 import React, { useState } from 'react'
 
 const PasswordRestore = () => {
@@ -25,8 +24,31 @@ const PasswordRestore = () => {
 			return
 		}
 
-		forgotPassword(dispatch, email)
-		if (!error) setEmailValid(true)
+		const user = {
+			email,
+		}
+
+		forgotPassword(dispatch, user, setEmailValid)
+	}
+
+	function handleRestore() {
+		// if (
+		// 	!email.trim() ||
+		// 	!code.trim() ||
+		// 	!new_password.trim() ||
+		// 	!new_pass_confirm.trim()
+		// ) {
+		// 	return
+		// }
+
+		const user: IPassToRestore = {
+			email,
+			code,
+			new_password,
+			new_pass_confirm,
+		}
+
+		restorePassword(dispatch, user)
 	}
 
 	return (
@@ -125,9 +147,7 @@ const PasswordRestore = () => {
 								</p>
 							</div>
 							<button
-								onClick={() => {
-									handleSend()
-								}}
+								onClick={() => handleRestore}
 								className='px-[4.8rem] mx-auto py-4 rounded-xl text-white text-xl text-center bg-little-text hover:text-little-text hover:bg-tertiary active:bg-active hover:duration-150 duration-200'
 							>
 								{/* Войти */}

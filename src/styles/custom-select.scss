@@ -30,10 +30,21 @@
 
 	&__multi-value__remove {
 		color: rgba(white, 0.8) !important;
+<<<<<<< HEAD
 
 		&:hover {
 			background-color: transparent !important;
 			color: white !important;
+=======
+		transition: 0.3s;
+		border-radius: 0 9px 9px 0 !important;
+
+		&:hover {
+			transition: 0.3s;
+			background-color: transparent !important;
+			color: black !important;
+			background-color: rgb(255, 0, 0, 0.7) !important;
+>>>>>>> f46a519 (cleaned project)
 		}
 	}
 
@@ -45,11 +56,19 @@
 	}
 
 	&__multi-value {
+<<<<<<< HEAD
 		background-color: rgba(#999aa5, 0.6) !important;
+=======
+		background-color: #2d334a !important;
+>>>>>>> f46a519 (cleaned project)
 		border-radius: 0.6rem !important;
 	}
 
 	&__multi-value__label {
+<<<<<<< HEAD
+=======
+		color: #bae8e8 !important;
+>>>>>>> f46a519 (cleaned project)
 		font-size: 80% !important;
 		font-weight: 500;
 	}
