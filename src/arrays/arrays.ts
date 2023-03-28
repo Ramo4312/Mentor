@@ -44,7 +44,7 @@ export const pages: IPages[] = [
 		image2: '/r/star.svg',
 	},
 	{
-		id: 2,
+		id: 3,
 		text: 'Корзина',
 		image: '/trash.svg',
 		path: '/profile/trash',

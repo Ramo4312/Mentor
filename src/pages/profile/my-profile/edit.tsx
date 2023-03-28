@@ -18,6 +18,7 @@ import { ILanguage, IOption, ISpec } from '@/types/types'
 const ProfileEdit = () => {
 	const tokens = useAppSelector(state => state.user.tokens)
 
+	const [error, setError] = useState(true)
 	const [full_name, setFull_name] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
@@ -44,7 +45,7 @@ const ProfileEdit = () => {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		getUser(tokens?.access, setUser)
+		getUser(tokens?.access, setUser, setError)
 	}, [])
 
 	useEffect(() => {
@@ -73,11 +74,7 @@ const ProfileEdit = () => {
 	}
 
 	const onChange1 = (newValue: any) => {
-		if (newValue.value !== 'Нет опыта') {
-			setExp(newValue.value + ' ' + 'лет')
-		} else {
-			setExp(newValue.value)
-		}
+		setExp(newValue.value)
 	}
 
 	const getValue2 = () => {

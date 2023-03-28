@@ -1,8 +1,5 @@
 import { login } from '@/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
-import Footer from '@/components/footer/Footer'
-import Navbar from '@/components/navbar/Navbar'
-import { useAppSelector } from '@/hooks/hooks'
 import { IUserLog } from '@/types/types'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -10,6 +7,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import DefaultInputs from '@/components/inputs/default'
 import PasswordInputs from '@/components/inputs/password'
+import Layout from '@/components/layout/Layout'
 
 const LoginPage = () => {
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
@@ -17,7 +15,6 @@ const LoginPage = () => {
 	const [password, setPassword] = useState<string>('')
 
 	const dispatch = useDispatch()
-	const { error } = useAppSelector(state => state.user)
 
 	const router = useRouter()
 
@@ -33,7 +30,6 @@ const LoginPage = () => {
 		}
 
 		login(dispatch, user, router)
-		// if (!error) router.replace('/')
 	}
 
 	// function handleRefresh() {
@@ -47,8 +43,7 @@ const LoginPage = () => {
 	// }
 
 	return (
-		<>
-			<Navbar />
+		<Layout>
 			<div className='relative overflow-hidden text-center'>
 				<AbsoluteImages />
 				<div className=''>
@@ -95,8 +90,7 @@ const LoginPage = () => {
 					</form>
 				</div>
 			</div>
-			<Footer />
-		</>
+		</Layout>
 	)
 }
 

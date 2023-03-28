@@ -2,8 +2,6 @@ import { register } from '@/redux/apiCalls'
 import { useAppDispatch } from '@/hooks/hooks'
 import { ILanguage, IOption, IPhoto, ISpec } from '@/types/types'
 import React, { useState, useId } from 'react'
-import Navbar from '@/components/navbar/Navbar'
-import Footer from '@/components/footer/Footer'
 import Select, { OnChangeValue } from 'react-select'
 import makeAnimated from 'react-select/animated'
 import { experience, languages, prices, specializations } from '@/arrays/arrays'
@@ -16,9 +14,9 @@ import PasswordInputs from '@/components/inputs/password'
 import BigInputs from '@/components/inputs/big'
 import { useRouter } from 'next/router'
 import ActivationModal from './activationModal'
+import Layout from '@/components/layout/Layout'
 
 const RegisterPage = () => {
-	const [error, setError] = useState<boolean>(true)
 	const [modal, setModal] = useState<boolean>(false)
 
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
@@ -94,8 +92,7 @@ const RegisterPage = () => {
 	}
 
 	return (
-		<>
-			<Navbar />
+		<Layout>
 			<div className='relative overflow-hidden'>
 				<AbsoluteImages />
 				<ActivationModal
@@ -335,8 +332,7 @@ const RegisterPage = () => {
 					</form>
 				</div>
 			</div>
-			<Footer />
-		</>
+		</Layout>
 	)
 }
 

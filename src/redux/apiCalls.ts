@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
 	IDispatch,
 	INewPassword,
@@ -6,7 +7,6 @@ import {
 	IUserLog,
 	IUserReg,
 } from '@/types/types'
-import axios from 'axios'
 import {
 	loginFailure,
 	loginStart,
@@ -33,11 +33,15 @@ import {
 	updateStart,
 	updateSuccess,
 	updateFailure,
+	updateEmailStart,
+	updateEmailSuccess,
+	updateEmailFailure,
 } from './userSlice'
 
 // import { toast } from 'react-hot-toast'
 import { Dispatch, SetStateAction } from 'react'
 import { IProps, IUser } from '@/pages/profile/my-profile'
+import { toast } from 'react-hot-toast'
 
 export const API = 'https://mentorkgapi.pythonanywhere.com/'
 
@@ -305,13 +309,31 @@ export const userUpdate = async (
 	}
 }
 
-export const codeActivate = async (
-	code: { code: string },
-	setError: Dispatch<SetStateAction<boolean>>
+export const updateEmail = async (
+	dispatch: Dispatch<IDispatch>,
+	user: IUserLog,
+	token: string,
+	setIsEdit: Dispatch<SetStateAction<boolean>>,
+	setPassword: Dispatch<SetStateAction<string>>
 ) => {
+	dispatch(updateEmailStart())
+	;("''")
 	try {
-		const res = await publicReq.post(`account/activate/${code}/`)
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const res = await publicReq.post(`account/update-email/`, user, config)
+		toast.success('Почта изменена')
+
+		dispatch(updateEmailSuccess(user.email))
+		setPassword('')
+		console.log(res.data)
+		setIsEdit(false)
 	} catch (err) {
+		dispatch(updateEmailFailure())
 		console.log(err)
 	}
 }

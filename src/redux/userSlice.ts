@@ -9,7 +9,7 @@ export interface CounterState {
 
 interface initialState {
 	currentUser: IUser
-	tokens: IToken | null
+	tokens: IToken
 	isFetching: boolean
 	error: boolean
 }
@@ -123,7 +123,10 @@ export const userSlice = createSlice({
 		deleteSuccess: state => {
 			state.isFetching = false
 			state.currentUser.email = ''
-			state.tokens = null
+			state.tokens = {
+				access: '',
+				refresh: '',
+			}
 			state.error = false
 		},
 		deleteFailure: state => {
@@ -135,7 +138,10 @@ export const userSlice = createSlice({
 			state.isFetching = false
 			state.error = false
 			state.currentUser.email = ''
-			state.tokens = null
+			state.tokens = {
+				access: '',
+				refresh: '',
+			}
 		},
 
 		updateStart: state => {
@@ -147,6 +153,20 @@ export const userSlice = createSlice({
 			state.error = false
 		},
 		updateFailure: state => {
+			state.isFetching = false
+			state.error = true
+		},
+
+		updateEmailStart: state => {
+			state.isFetching = true
+			state.error = false
+		},
+		updateEmailSuccess: (state, action: PayloadAction<string>) => {
+			state.isFetching = false
+			state.currentUser.email = action.payload
+			state.error = false
+		},
+		updateEmailFailure: state => {
 			state.isFetching = false
 			state.error = true
 		},
@@ -179,5 +199,8 @@ export const {
 	updateStart,
 	updateSuccess,
 	updateFailure,
+	updateEmailStart,
+	updateEmailSuccess,
+	updateEmailFailure,
 } = userSlice.actions
 export default userSlice.reducer

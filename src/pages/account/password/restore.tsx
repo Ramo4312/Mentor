@@ -1,11 +1,10 @@
 import { forgotPassword, login, restorePassword } from '@/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
-import Footer from '@/components/footer/Footer'
-import Navbar from '@/components/navbar/Navbar'
-import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
+import { useAppDispatch } from '@/hooks/hooks'
 import { IPassToRestore } from '@/types/types'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
+import Layout from '@/components/layout/Layout'
 
 const PasswordRestore = () => {
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
@@ -66,9 +65,8 @@ const PasswordRestore = () => {
 	}
 
 	return (
-		<div className=''>
+		<Layout>
 			<div className=''></div>
-			<Navbar />
 			<div className='relative overflow-hidden text-center '>
 				<AbsoluteImages />
 				<div className=''>
@@ -171,8 +169,7 @@ const PasswordRestore = () => {
 					</form>
 				</div>
 			</div>
-			<Footer />
-		</div>
+		</Layout>
 	)
 }
 
