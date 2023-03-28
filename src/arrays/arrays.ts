@@ -101,3 +101,11 @@ export const devLvl: IOption[] = [
 	{ value: 'middle+', label: 'middle+' },
 	{ value: 'senior', label: 'senior' },
 ]
+
+export const devLvl: IOption[] = [
+	{ value: 'junior', label: 'junior ' },
+	{ value: 'strong junior', label: 'strong junior' },
+	{ value: 'middle', label: 'middle' },
+	{ value: 'middle+', label: 'middle+' },
+	{ value: 'senior', label: 'senior' },
+]
