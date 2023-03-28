@@ -170,6 +170,19 @@ export const userSlice = createSlice({
 			state.isFetching = false
 			state.error = true
 		},
+
+		requestStart: state => {
+			state.isFetching = true
+			state.error = false
+		},
+		requestSuccess: state => {
+			state.isFetching = false
+			state.error = false
+		},
+		requestFailure: state => {
+			state.isFetching = false
+			state.error = true
+		},
 	},
 })
 
@@ -202,5 +215,8 @@ export const {
 	updateEmailStart,
 	updateEmailSuccess,
 	updateEmailFailure,
+	requestStart,
+	requestSuccess,
+	requestFailure,
 } = userSlice.actions
 export default userSlice.reducer

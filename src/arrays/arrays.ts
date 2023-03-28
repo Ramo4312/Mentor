@@ -93,3 +93,11 @@ export const languages: ILanguage[] = [
 	{ lang: 'Кыргызский ', label: 'Кыргызский', image: '/kgz.svg' },
 	{ lang: 'Русский', label: 'Русский', image: '/rus.svg' },
 ]
+
+export const devLvl: IOption[] = [
+	{ value: 'junior', label: 'junior ' },
+	{ value: 'strong junior', label: 'strong junior' },
+	{ value: 'middle', label: 'middle' },
+	{ value: 'middle+', label: 'middle+' },
+	{ value: 'senior', label: 'senior' },
+]

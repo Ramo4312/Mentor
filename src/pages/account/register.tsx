@@ -70,11 +70,7 @@ const RegisterPage = () => {
 	}
 
 	const onChange1 = (newValue: any) => {
-		if (newValue.value !== 'Нет опыта') {
-			setExp(newValue.value + ' ' + 'лет')
-		} else {
-			setExp(newValue.value)
-		}
+		setExp(newValue.value)
 	}
 
 	const getValue2 = () => {

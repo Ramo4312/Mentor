@@ -86,3 +86,11 @@ export interface IUserReg {
 export interface ISpec extends IOption {
 	id: number
 }
+
+export interface IMentee {
+	email: string
+	name: string
+	description: string
+	my_level: string
+	telegram: string
+}

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {
 	IDispatch,
+	IMentee,
 	INewPassword,
 	IPassToRestore,
 	IRefresh,
@@ -36,6 +37,9 @@ import {
 	updateEmailStart,
 	updateEmailSuccess,
 	updateEmailFailure,
+	requestStart,
+	requestSuccess,
+	requestFailure,
 } from './userSlice'
 
 // import { toast } from 'react-hot-toast'
@@ -317,7 +321,6 @@ export const updateEmail = async (
 	setPassword: Dispatch<SetStateAction<string>>
 ) => {
 	dispatch(updateEmailStart())
-	;("''")
 	try {
 		const config = {
 			headers: {
@@ -326,7 +329,15 @@ export const updateEmail = async (
 		}
 
 		const res = await publicReq.post(`account/update-email/`, user, config)
-		toast.success('Почта изменена')
+		toast.success('Почта изменена', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 
 		dispatch(updateEmailSuccess(user.email))
 		setPassword('')
@@ -334,6 +345,42 @@ export const updateEmail = async (
 		setIsEdit(false)
 	} catch (err) {
 		dispatch(updateEmailFailure())
+		console.log(err)
+	}
+}
+
+export const request = async (
+	dispatch: Dispatch<IDispatch>,
+	mentee: IMentee,
+	setModal: Dispatch<SetStateAction<boolean>>
+) => {
+	dispatch(requestStart())
+	try {
+		const res = await publicReq.post(`statement/menti-statement/`, mentee)
+		toast.success('Ваша заявка отправлена', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
+
+		dispatch(requestSuccess())
+		console.log(res.data)
+		setModal(true)
+	} catch (err) {
+		toast.error('Произошла ошибка и ваша заявка не была отправлена', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
+		dispatch(requestFailure())
 		console.log(err)
 	}
 }
