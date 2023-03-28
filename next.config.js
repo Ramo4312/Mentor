@@ -5,16 +5,16 @@ const nextConfig = {
 		{ loader: '@next/font/google', options: { subsets: ['latin'] } },
 	],
 	images: {
-		dangerouslyAllowSVG: true,
-		contentDispositionType: 'attachment',
-		contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-		remotePatterns: [
-			{
-				protocol: 'https',
-				hostname: 'mentorkgapi.pythonanywhere.com',
-			},
-		],
-		// domains: ['snob.ru'],
+		// dangerouslyAllowSVG: true,
+		// contentDispositionType: 'attachment',
+		// contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+		// remotePatterns: [
+		// 	{
+		// 		protocol: 'https',
+		// 		hostname: 'mentorkgapi.pythonanywhere.com',
+		// 	},
+		// ],
+		domains: ['mentorkgapi.pythonanywhere.com'],
 	},
 }
 

@@ -3,22 +3,31 @@
 import { changePassword } from '@/redux/apiCalls'
 // import DefaultInputs from '@/components/inputs/default'
 import PasswordInputs from '@/components/inputs/password'
+import DefaultInputs from '@/components/inputs/default'
+
+import PasswordInput from '@/components/inputs/disabled/password'
+import DefaultInput from '@/components/inputs/disabled/default'
+
 import Navbar from '@/components/navbar/Navbar'
 import SideBar from '@/components/sidebar'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import { INewPassword } from '@/types/types'
 import { NextPage } from 'next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DeleteModal from './modal'
 
 import { toast, Toaster } from 'react-hot-toast'
+import Image from 'next/image'
 
 const Settings: NextPage = () => {
-	// const [email, setEmail] = useState<string>('')
-	// const [password, setPassword] = useState<string>('')
-	// const [isVisPass, setIsVisPass] = useState<boolean>(false)
+	const { tokens, error, currentUser } = useAppSelector(state => state.user)
+
+	const [email, setEmail] = useState<string>('')
+	const [password, setPassword] = useState<string>('')
+	const [isVisPass, setIsVisPass] = useState<boolean>(false)
 
 	const [modal, setModal] = useState<boolean>(false)
+	const [isEdit, setIsEdit] = useState<boolean>(false)
 
 	const [old_password, setOld_Password] = useState<string>('')
 	const [isVisOldPassConf, setIsVisOldPassConf] = useState<boolean>(false)
@@ -27,8 +36,11 @@ const Settings: NextPage = () => {
 	const [new_pass_confirm, setNew_pass_confirm] = useState<string>('')
 	// const [isVisNewPassConf, setIsVisNewPassConf] = useState<boolean>(false)
 
-	const { tokens, error } = useAppSelector(state => state.user)
 	const dispatch = useAppDispatch()
+
+	useEffect(() => {
+		setEmail(currentUser.email)
+	}, [])
 
 	function handleChange() {
 		if (
@@ -75,15 +87,45 @@ const Settings: NextPage = () => {
 					<SideBar />
 				</div>
 				<div className=''>
-					<div className=''>
-						{/* <DefaultInputs setState={setEmail} state={email} label='Email' />
-					<PasswordInputs
-					setState={setPassword}
-					state={password}
-					label='Пароль'
-					setPassVis={setIsVisPass}
-					passVis={isVisPass}
-				/> */}
+					<div
+						className={`${isEdit ? 'items-end' : 'items-start'} flex gap-x-16`}
+					>
+						<div className='w-[35.6rem] flex flex-col gap-y-[0.87rem]'>
+							<h2 className='text-xl text-paragraph font-semibold mb-4'>
+								Изменить почту
+							</h2>
+							<DefaultInput
+								isEdit={isEdit}
+								setState={setEmail}
+								state={email}
+								label='Email'
+							/>
+							<PasswordInput
+								isEdit={isEdit}
+								setState={setPassword}
+								state={password}
+								label='Пароль'
+								setPassVis={setIsVisPass}
+								passVis={isVisPass}
+							/>
+						</div>
+						{isEdit ? (
+							<button
+								onClick={handleChange}
+								className='mx-auto text-lg font-medium px-[2.38rem] py-[0.9rem] mb-9 rounded-xl text-paragraph bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200'
+							>
+								Сохранить
+							</button>
+						) : (
+							<Image
+								onClick={() => setIsEdit(true)}
+								src='/edit.svg'
+								alt=''
+								width={28}
+								height={28}
+								className='mt-[7.4rem]'
+							/>
+						)}
 					</div>
 					<h2 className='text-xl text-paragraph font-semibold mb-8'>
 						Изменить пароль

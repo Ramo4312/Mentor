@@ -1,10 +1,11 @@
-import { forgotPassword, restorePassword } from '@/redux/apiCalls'
+import { forgotPassword, login, restorePassword } from '@/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
 import Footer from '@/components/footer/Footer'
 import Navbar from '@/components/navbar/Navbar'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import { IPassToRestore } from '@/types/types'
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 
 const PasswordRestore = () => {
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
@@ -15,8 +16,11 @@ const PasswordRestore = () => {
 	const [new_password, setNew_password] = useState<string>('')
 	const [new_pass_confirm, setNew_pass_confirm] = useState<string>('')
 
+	const [error, setError] = useState<boolean>(false)
+
 	const dispatch = useAppDispatch()
-	const { error } = useAppSelector(state => state.user)
+
+	const router = useRouter()
 
 	function handleSend() {
 		if (!email.trim()) {
@@ -48,14 +52,24 @@ const PasswordRestore = () => {
 			new_pass_confirm,
 		}
 
-		restorePassword(dispatch, user)
+		const userToLogin = {
+			email,
+			password: new_pass_confirm,
+		}
+
+		setError(true)
+
+		restorePassword(dispatch, user, setError)
+		if (!error) {
+			login(dispatch, userToLogin, router)
+		}
 	}
 
 	return (
 		<div className=''>
 			<div className=''></div>
 			<Navbar />
-			<div className='relative overflow-hidden text-center'>
+			<div className='relative overflow-hidden text-center '>
 				<AbsoluteImages />
 				<div className=''>
 					<h1>Восстановление пароля</h1>
@@ -84,7 +98,7 @@ const PasswordRestore = () => {
 								onClick={() => {
 									handleSend()
 								}}
-								className={`px-[4.8rem] py-4 rounded-xl text-white text-xl text-center bg-little-text hover:text-little-text hover:bg-tertiary active:bg-active hover:duration-150 duration-200 mx-auto ${
+								className={`px-[4.8rem] mb-40 py-4 rounded-xl text-white text-xl text-center bg-little-text hover:text-little-text hover:bg-tertiary active:bg-active hover:duration-150 duration-200 mx-auto ${
 									emailValid ? 'hidden' : ''
 								} `}
 							>
@@ -147,7 +161,7 @@ const PasswordRestore = () => {
 								</p>
 							</div>
 							<button
-								onClick={() => handleRestore}
+								onClick={handleRestore}
 								className='px-[4.8rem] mx-auto py-4 rounded-xl text-white text-xl text-center bg-little-text hover:text-little-text hover:bg-tertiary active:bg-active hover:duration-150 duration-200'
 							>
 								{/* Войти */}

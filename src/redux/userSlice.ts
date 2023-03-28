@@ -8,7 +8,7 @@ export interface CounterState {
 }
 
 interface initialState {
-	currentUser: IUser | null
+	currentUser: IUser
 	tokens: IToken | null
 	isFetching: boolean
 	error: boolean
@@ -17,7 +17,9 @@ interface initialState {
 export const userSlice = createSlice({
 	name: 'user',
 	initialState: <initialState>{
-		currentUser: {},
+		currentUser: {
+			email: '',
+		},
 		tokens: {
 			access: '',
 			refresh: '',
@@ -120,7 +122,7 @@ export const userSlice = createSlice({
 		},
 		deleteSuccess: state => {
 			state.isFetching = false
-			state.currentUser = null
+			state.currentUser.email = ''
 			state.tokens = null
 			state.error = false
 		},
@@ -132,7 +134,7 @@ export const userSlice = createSlice({
 		logoutSuccess: state => {
 			state.isFetching = false
 			state.error = false
-			state.currentUser = null
+			state.currentUser.email = ''
 			state.tokens = null
 		},
 

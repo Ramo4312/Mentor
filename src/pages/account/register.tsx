@@ -15,11 +15,14 @@ import DefaultInputs from '@/components/inputs/default'
 import PasswordInputs from '@/components/inputs/password'
 import BigInputs from '@/components/inputs/big'
 import { useRouter } from 'next/router'
+import ActivationModal from './activationModal'
 
 const RegisterPage = () => {
+	const [error, setError] = useState<boolean>(true)
+	const [modal, setModal] = useState<boolean>(false)
+
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
 	const [isVisPassConf, setIsVisPassConf] = useState<boolean>(false)
-
 	const [full_name, setFull_name] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
@@ -32,7 +35,7 @@ const RegisterPage = () => {
 	const [mentee_level, setMentee_level] = useState<string>('')
 	const [exp, setExp] = useState('')
 	const [spec, setSpec] = useState<string[]>([''])
-	const [specId, setSpecId] = useState<string[]>([])
+	const [specId, setSpecId] = useState<number[]>([])
 	const [skill, setSkill] = useState<string>('')
 	const [price, setPrice] = useState('')
 	const [language, setLanguage] = useState('')
@@ -42,7 +45,6 @@ const RegisterPage = () => {
 	const animatedComponents = makeAnimated()
 
 	const router = useRouter()
-	console.log(router)
 
 	function handleRegister() {
 		const formData: any = new FormData()
@@ -57,14 +59,12 @@ const RegisterPage = () => {
 		formData.append('help', help)
 		formData.append('level_mentor', mentee_level)
 		formData.append('experience', exp)
-		formData.append('specialization', specId)
+		// formData.append('specialization', specId)
 		formData.append('skills', skill)
 		formData.append('price', price)
 		formData.append('language', language)
 
-		register(dispatch, formData)
-
-		// error ? router.push('/account/login') : null
+		register(dispatch, formData, setModal)
 	}
 
 	const getValue1 = () => {
@@ -86,7 +86,7 @@ const RegisterPage = () => {
 	const onChange2 = (newValue: OnChangeValue<IOption, boolean>) => {
 		if (spec.length >= 5) return
 		setSpec((newValue as IOption[]).map(v => v.value))
-		setSpecId((newValue as ISpec[]).map(v => v.id.toString()))
+		setSpecId((newValue as ISpec[]).map(v => v.id))
 	}
 
 	const onChange4 = (newValue: any) => {
@@ -98,6 +98,12 @@ const RegisterPage = () => {
 			<Navbar />
 			<div className='relative overflow-hidden'>
 				<AbsoluteImages />
+				<ActivationModal
+					modal={modal}
+					setModal={setModal}
+					email={email}
+					password={password}
+				/>
 				<div className=''>
 					<h1>
 						Стань частью нашей <br /> команды
@@ -117,7 +123,11 @@ const RegisterPage = () => {
 							state={full_name}
 							setState={setFull_name}
 						/>
-						<DefaultInputs label='Email' state={email} setState={setEmail} />
+						<DefaultInputs
+							label='Email'
+							state={email.toLocaleLowerCase()}
+							setState={setEmail}
+						/>
 						<PasswordInputs
 							label='Пароль'
 							state={password}
@@ -139,7 +149,7 @@ const RegisterPage = () => {
 							<div className='relative'>
 								<input
 									type='file'
-									className='file-input w-full h-full z-20 absolute bg-transparent opacity-0'
+									className='file-input w-full h-full z-1 absolute bg-transparent opacity-0'
 									// ref={filePicker}
 									accept='image/*,.png,.jpg,.web'
 									size={2}

@@ -35,7 +35,7 @@ import {
 	updateFailure,
 } from './userSlice'
 
-import { toast } from 'react-hot-toast'
+// import { toast } from 'react-hot-toast'
 import { Dispatch, SetStateAction } from 'react'
 import { IProps, IUser } from '@/pages/profile/my-profile'
 
@@ -47,34 +47,36 @@ export const publicReq = axios.create({
 
 export const register = async (
 	dispatch: Dispatch<IDispatch>,
-	user: IUserReg
+	user: IUserReg,
+	setModal: Dispatch<SetStateAction<boolean>>
 ) => {
 	dispatch(registerStart())
 	try {
 		const res = await publicReq.post(`account/register/`, user)
 		console.log(res.status, res.data)
-		toast.success('Вы успешно зарегистрировались', {
-			style: {
-				borderRadius: '6px',
-				background: '#333',
-				color: '#fff',
-				padding: '20px auto',
-				fontSize: '20px',
-			},
-		})
+		// toast.success('Вы успешно зарегистрировались', {
+		// 	style: {
+		// 		borderRadius: '6px',
+		// 		background: '#333',
+		// 		color: '#fff',
+		// 		padding: '20px auto',
+		// 		fontSize: '20px',
+		// 	},
+		// })
 		dispatch(registerSuccess())
+		setModal(true)
 	} catch (err) {
 		console.log(err)
 		dispatch(registerFailure())
-		toast.error('Ошибка регистрации', {
-			style: {
-				borderRadius: '6px',
-				background: '#333',
-				color: '#fff',
-				padding: '20px auto',
-				fontSize: '20px',
-			},
-		})
+		// toast.error('Ошибка регистрации', {
+		// 	style: {
+		// 		borderRadius: '6px',
+		// 		background: '#333',
+		// 		color: '#fff',
+		// 		padding: '20px auto',
+		// 		fontSize: '20px',
+		// 	},
+		// })
 	}
 }
 
@@ -88,29 +90,29 @@ export const login = async (
 		const res = await publicReq.post(`account/login/`, user)
 		console.log('login', res.status)
 		console.log(res.data)
-		toast.success('Вы успешно вошли', {
-			style: {
-				borderRadius: '6px',
-				background: '#333',
-				color: '#fff',
-				padding: '20px auto',
-				fontSize: '20px',
-			},
-		})
+		// toast.success('Вы успешно вошли', {
+		// 	style: {
+		// 		borderRadius: '6px',
+		// 		background: '#333',
+		// 		color: '#fff',
+		// 		padding: '20px auto',
+		// 		fontSize: '20px',
+		// 	},
+		// })
 		localStorage.setItem('token', JSON.stringify(res.data))
 		dispatch(loginSuccess({ ...res.data, email: user.email }))
 		router.push('/profile/my-profile/')
 	} catch (err) {
 		dispatch(loginFailure())
-		toast.error('Ошибка входа', {
-			style: {
-				borderRadius: '6px',
-				background: '#333',
-				color: '#fff',
-				padding: '20px auto',
-				fontSize: '20px',
-			},
-		})
+		// toast.error('Ошибка входа', {
+		// 	style: {
+		// 		borderRadius: '6px',
+		// 		background: '#333',
+		// 		color: '#fff',
+		// 		padding: '20px auto',
+		// 		fontSize: '20px',
+		// 	},
+		// })
 	}
 }
 
@@ -131,7 +133,8 @@ export const forgotPassword = async (
 
 export const restorePassword = async (
 	dispatch: Dispatch<IDispatch>,
-	newPassword: IPassToRestore
+	newPassword: IPassToRestore,
+	setError: Dispatch<SetStateAction<boolean>>
 ) => {
 	dispatch(restoreStart())
 	try {
@@ -141,27 +144,28 @@ export const restorePassword = async (
 		)
 		console.log('password restored', res.status)
 		dispatch(restoreSuccess())
-		toast.success('Пароль восстановлен', {
-			style: {
-				borderRadius: '6px',
-				background: '#333',
-				color: '#fff',
-				padding: '20px auto',
-				fontSize: '20px',
-			},
-		})
+		setError(false)
+		// toast.success('Пароль восстановлен', {
+		// 	style: {
+		// 		borderRadius: '6px',
+		// 		background: '#333',
+		// 		color: '#fff',
+		// 		padding: '20px auto',
+		// 		fontSize: '20px',
+		// 	},
+		// })
 	} catch (err) {
 		dispatch(restoreFailure())
 		console.log(1234)
-		toast.error('Пароль не восстанавливается', {
-			style: {
-				borderRadius: '6px',
-				background: '#333',
-				color: '#fff',
-				padding: '20px auto',
-				fontSize: '20px',
-			},
-		})
+		// toast.error('Пароль не восстанавливается', {
+		// 	style: {
+		// 		borderRadius: '6px',
+		// 		background: '#333',
+		// 		color: '#fff',
+		// 		padding: '20px auto',
+		// 		fontSize: '20px',
+		// 	},
+		// })
 	}
 }
 
@@ -188,27 +192,27 @@ export const changePassword = async (
 		)
 		dispatch(changeSuccess())
 		console.log('password changed', res.status, res.statusText)
-		toast.success('пароль изменен', {
-			style: {
-				borderRadius: '6px',
-				background: '#333',
-				color: '#fff',
-				padding: '20px auto',
-				fontSize: '20px',
-			},
-		})
+		// toast.success('пароль изменен', {
+		// 	style: {
+		// 		borderRadius: '6px',
+		// 		background: '#333',
+		// 		color: '#fff',
+		// 		padding: '20px auto',
+		// 		fontSize: '20px',
+		// 	},
+		// })
 	} catch (err) {
 		dispatch(changeFailure())
 		console.log(err)
-		toast.error('Ошибка смены пароля', {
-			style: {
-				borderRadius: '6px',
-				background: '#333',
-				color: '#fff',
-				padding: '20px auto',
-				fontSize: '20px',
-			},
-		})
+		// toast.error('Ошибка смены пароля', {
+		// 	style: {
+		// 		borderRadius: '6px',
+		// 		background: '#333',
+		// 		color: '#fff',
+		// 		padding: '20px auto',
+		// 		fontSize: '20px',
+		// 	},
+		// })
 	}
 }
 
@@ -257,7 +261,8 @@ export const logout = (dispatch: Dispatch<IDispatch>) => {
 
 export const getUser = async (
 	token: string | undefined,
-	setUser: Dispatch<SetStateAction<IUser | null>>
+	setUser: Dispatch<SetStateAction<IUser | null>>,
+	setError: Dispatch<SetStateAction<boolean>>
 ) => {
 	try {
 		const config = {
@@ -266,11 +271,12 @@ export const getUser = async (
 			},
 		}
 
-		const { data }: IProps = await axios(`${API}base/personal-profile/`, config)
+		const { data }: IProps = await publicReq(`base/personal-profile/`, config)
 
 		setUser(data)
 	} catch (err) {
 		console.log(err)
+		setError(true)
 	}
 }
 
@@ -295,6 +301,17 @@ export const userUpdate = async (
 		console.log('user updated', res.status)
 	} catch (err) {
 		dispatch(updateFailure())
+		console.log(err)
+	}
+}
+
+export const codeActivate = async (
+	code: { code: string },
+	setError: Dispatch<SetStateAction<boolean>>
+) => {
+	try {
+		const res = await publicReq.post(`account/activate/${code}/`)
+	} catch (err) {
 		console.log(err)
 	}
 }

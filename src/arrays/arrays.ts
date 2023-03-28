@@ -44,7 +44,15 @@ export const pages: IPages[] = [
 		image2: '/r/star.svg',
 	},
 	{
-		id: 3,
+		id: 2,
+		text: 'Корзина',
+		image: '/trash.svg',
+		path: '/profile/trash',
+		notifications: 0,
+		image2: '/r/star.svg',
+	},
+	{
+		id: 4,
 		text: 'Настройки',
 		image: '/settings.svg',
 		path: '/profile/settings',
@@ -52,7 +60,7 @@ export const pages: IPages[] = [
 		image2: '/r/settings.svg',
 	},
 	{
-		id: 4,
+		id: 5,
 		text: 'Выйти',
 		path: '',
 		image: '/exit.svg',

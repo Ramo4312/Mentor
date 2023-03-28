@@ -8,6 +8,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import DefaultInputs from '@/components/inputs/default'
+import PasswordInputs from '@/components/inputs/password'
 
 const LoginPage = () => {
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
@@ -55,34 +57,14 @@ const LoginPage = () => {
 						onSubmit={e => e.preventDefault()}
 						className='flex flex-col gap-y-7 mx-auto w-[35.6rem]'
 					>
-						<div className='flex flex-col gap-y-3'>
-							<label htmlFor='' className='text-little-text text-lg'>
-								Email
-							</label>
-							<input
-								onChange={e => setEmail(e.target.value)}
-								name='email'
-								// placeholder='Email'
-								className='reg-inputs w-full'
-								type='text'
-							/>
-						</div>
-						<div className='flex flex-col gap-y-3 text-start'>
-							<label htmlFor='' className='text-little-text text-lg'>
-								Введите новый пароль
-							</label>
-							<input
-								onChange={e => setPassword(e.target.value)}
-								value={password}
-								name='password'
-								className='reg-inputs'
-								type={isVisPass ? 'text' : 'password'}
-							/>
-							<p className='pass-vis' onClick={() => setIsVisPass(!isVisPass)}>
-								показать пароль
-							</p>
-						</div>
-
+						<DefaultInputs state={email} setState={setEmail} label='Email' />
+						<PasswordInputs
+							state={password}
+							setState={setPassword}
+							label='Введите пароль'
+							passVis={isVisPass}
+							setPassVis={setIsVisPass}
+						/>
 						<Link
 							href={'/account/password/restore'}
 							className='mb-[4.5rem] font-semibold underline hover:text-sky-600 inline-block text-left'
