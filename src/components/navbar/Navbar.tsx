@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import Logo from '../../../public/Logo.svg'
+import Logo from '@/images/Logo.svg'
 
 const Navbar = () => {
 	return (

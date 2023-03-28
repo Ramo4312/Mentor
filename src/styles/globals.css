@@ -24,6 +24,10 @@ input:focus {
 	outline: none;
 }
 
+body {
+	color: #2d334a;
+}
+
 @layer components {
 	/* *::-webkit-scrollbar {
 		@apply w-2;
