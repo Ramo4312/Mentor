@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: true,
-	fontLoaders: [
-		{ loader: '@next/font/google', options: { subsets: ['latin'] } },
-	],
+	// fontLoaders: [
+	// 	{ loader: '@next/font/google', options: { subsets: ['latin'] } },
+	// ],
 	images: {
 		dangerouslyAllowSVG: true,
 		contentDispositionType: 'attachment',
@@ -13,8 +13,12 @@ const nextConfig = {
 				protocol: 'https',
 				hostname: 'mentorkgapi.pythonanywhere.com',
 			},
+			{
+				protocol: 'http',
+				hostname: 'localhost:3000',
+			},
 		],
-		// domains: ['snob.ru'],
+		domains: ['localhost:3000'],
 	},
 }
 

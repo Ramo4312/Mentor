@@ -1,4 +1,4 @@
-import { ILanguage, IOption, IPages, ISpec } from '@/types/types'
+import { ILanguage, IOption, IPages, ISortMentors, ISpec } from '@/types/types'
 
 export const specializations: ISpec[] = [
 	{ id: 6, value: 'Agile', label: 'Agile' },
@@ -24,6 +24,46 @@ export const specializations: ISpec[] = [
 	{ id: 26, value: 'Карьера', label: 'Карьера' },
 	{ id: 27, value: 'Собеседования', label: 'Собеседования' },
 	{ id: 28, value: 'Сети', label: 'Сети' },
+]
+
+export const specializationsFilter = [
+	{
+		name: 'Development',
+		specializations: [
+			'Android',
+			'Backend',
+			'iOS',
+			'Frontend',
+			'System Design',
+			'Code Review',
+			'Data Science/ML',
+		],
+	},
+	{
+		name: 'Management',
+		specializations: [
+			'Agile',
+			'Product Management',
+			'Project Management',
+			'Team Lead/Management',
+		],
+	},
+	{
+		name: 'DevOps',
+		specializations: ['Databases', 'Сети', 'Cloud'],
+	},
+	{
+		name: 'HR',
+		specializations: ['HR', 'Карьера', 'Собеседования', 'Entrepreneurship'],
+	},
+	{
+		name: 'Marketing',
+		specializations: ['Content/Copy', 'Marketing'],
+	},
+	{
+		name: 'Другое',
+		specializations: ['QA', 'Аналитика', 'UX/UI/Design'],
+	},
 ]
 
 export const pages: IPages[] = [
@@ -58,6 +98,26 @@ export const pages: IPages[] = [
 		image: '/exit.svg',
 		notifications: 0,
 		image2: '/r/exit.svg',
+	},
+]
+
+export const sortMentors: ISortMentors[] = [
+	{
+		name: 'Язык',
+		options: ['Оба языка', 'Русский', 'Кыргызский'],
+	},
+	{
+		name: 'Цена',
+		options: [
+			'Бесплатно',
+			'По договоренности',
+			'По убыванию',
+			'По возрастанию',
+		],
+	},
+	{
+		name: 'Опыт',
+		options: ['10+', '5-10', '2-5', 'Нет опыта'],
 	},
 ]
 

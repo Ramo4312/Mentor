@@ -1,10 +1,16 @@
-import { IMentorData } from '@/types/mentor.interface'
-import { useState } from 'react'
+import { IMentor, IMentorData, IMentorSingle } from '@/types/mentor.interface'
+import { useEffect, useState } from 'react'
+import { specializations } from '@/arrays/arrays'
 
 // import { Mentor } from '../types/Mentor'
 // import { fetchMentors } from '../api/mentors'
 
-function Mentors({ mentors }: IMentorData) {
+interface IMentorFilter {
+	mentors: IMentor[]
+	setMentorData: any
+}
+
+function Mentors({ mentors }: IMentorFilter) {
 	const [query, setQuery] = useState('')
 	const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 	const filteredMentors = mentors
@@ -21,20 +27,14 @@ function Mentors({ mentors }: IMentorData) {
 		.filter(mentor => {
 			// Фильтруем по запросу
 			if (query.length > 0) {
-				const mentorName =
-					`${mentor.firstName} ${mentor.lastName}`.toLowerCase()
+				const mentorName = `${mentor.username}`.toLowerCase()
 				return mentorName.includes(query.toLowerCase())
 			} else {
 				return true
 			}
 		})
 
-	const specialization = [
-		'frontend',
-		'backend',
-		'fullstack',
-		// Добавляем другие категории по желанию
-	]
+	console.log(filteredMentors)
 
 	function handleCategorySelect(category: string) {
 		setSelectedCategories(prevSelectedCategories => {
@@ -57,28 +57,19 @@ function Mentors({ mentors }: IMentorData) {
 				<button onClick={() => setQuery('')}>Очистить</button>
 			</div>
 			<div>
-				{specialization.map(category => (
+				{specializations.map(category => (
 					<button
-						key={category}
-						onClick={() => handleCategorySelect(category)}
-						className={selectedCategories.includes(category) ? 'selected' : ''}
+						key={category.value}
+						onClick={() => handleCategorySelect(category.value)}
+						className={
+							selectedCategories.includes(category.value) ? 'selected' : ''
+						}
 					>
-						{category}
+						{category.value}
 					</button>
 				))}
 				<button onClick={() => setSelectedCategories([])}>Сбросить</button>
 			</div>
-			<ul>
-				{filteredMentors.map(mentor => (
-					<li key={mentor.id}>
-						<h2>
-							{mentor.firstName} {mentor.lastName}
-						</h2>
-						<p>{mentor.bio}</p>
-						<p>{mentor.specialization.join(', ')}</p>
-					</li>
-				))}
-			</ul>
 		</div>
 	)
 }

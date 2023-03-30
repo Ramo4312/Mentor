@@ -86,3 +86,27 @@ export interface IUserReg {
 export interface ISpec extends IOption {
 	id: number
 }
+
+export interface IChildren {
+	children: React.ReactNode
+}
+
+export interface ISpecializationsFilter {
+	name: string
+	specializations: string[]
+}
+
+export interface ISelectedData {
+	expirience: string | undefined
+	price: string | undefined
+	language: string | undefined
+}
+
+// export interface ISortMentors {
+// 	sortMentors: ISortMentor[]
+// }
+
+export interface ISortMentors {
+	name: string
+	options: string[]
+}
