@@ -9,7 +9,7 @@ import CreatableSelect from 'react-select/creatable'
 import Select, { OnChangeValue } from 'react-select'
 import { experience, languages, prices, specializations } from '@/arrays/arrays'
 import { getUser, userUpdate } from '@/redux/apiCalls'
-import { IUser } from '.'
+import { IUser } from './index'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import DefaultInputs from '@/components/inputs/default'
 import BigInputs from '@/components/inputs/big'
@@ -158,14 +158,14 @@ const ProfileEdit = () => {
 									<Image
 										width={28}
 										height={28}
-										src='/attachment_24px.svg'
+										src='/images/attachment_24px.svg'
 										alt=''
 										className='w-7'
 									/>
 									{image ? (
 										<Image
 											onClick={() => setImage(null)}
-											src='/trash-icon.svg'
+											src='/images/trash-icon.svg'
 											alt=''
 											width={22}
 											height={22}
@@ -284,8 +284,8 @@ const ProfileEdit = () => {
 										<Image
 											src={
 												language == item.lang
-													? '/checked.svg'
-													: '/no-checked.svg'
+													? '/images/checked.svg'
+													: '/images/no-checked.svg'
 											}
 											alt=''
 											width={20}

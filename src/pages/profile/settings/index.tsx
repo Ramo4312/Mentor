@@ -1,5 +1,3 @@
-'use client'
-
 import { changePassword, updateEmail } from '@/redux/apiCalls'
 // import DefaultInputs from '@/components/inputs/default'
 import PasswordInputs from '@/components/inputs/password'
@@ -13,11 +11,11 @@ import SideBar from '@/components/sidebar'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import { INewPassword, IUserLog } from '@/types/types'
 import { NextPage } from 'next'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import DeleteModal from './modal'
 
 import { toast, Toaster } from 'react-hot-toast'
-import Image from 'next/image'
+// import Image from 'next/image'
 
 const Settings: NextPage = () => {
 	const { tokens, error, currentUser } = useAppSelector(state => state.user)
@@ -145,7 +143,7 @@ const Settings: NextPage = () => {
 						) : (
 							<img
 								onClick={() => setIsEdit(true)}
-								src='/edit.svg'
+								src='/images/edit.svg'
 								alt=''
 								// width={28}
 								// height={28}

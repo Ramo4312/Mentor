@@ -1,5 +1,3 @@
-'use client'
-
 import { getUser } from '@/redux/apiCalls'
 import Navbar from '@/components/navbar/Navbar'
 import SideBar from '@/components/sidebar'

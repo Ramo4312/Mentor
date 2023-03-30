@@ -13,7 +13,7 @@ import DefaultInputs from '@/components/inputs/default'
 import PasswordInputs from '@/components/inputs/password'
 import BigInputs from '@/components/inputs/big'
 import { useRouter } from 'next/router'
-import ActivationModal from './activationModal'
+import ActivationModal from '../../components/activationModal'
 import Layout from '@/components/layout/Layout'
 
 const RegisterPage = () => {
@@ -161,14 +161,14 @@ const RegisterPage = () => {
 									<Image
 										width={28}
 										height={28}
-										src='/attachment_24px.svg'
+										src='/images/attachment_24px.svg'
 										alt=''
 										className='w-7'
 									/>
 									{image ? (
 										<Image
 											onClick={() => setImage(null)}
-											src='/trash-icon.svg'
+											src='/images/trash-icon.svg'
 											alt=''
 											width={22}
 											height={22}
@@ -306,8 +306,8 @@ const RegisterPage = () => {
 										<Image
 											src={
 												language == item.lang
-													? '/checked.svg'
-													: '/no-checked.svg'
+													? '/images/checked.svg'
+													: '/images/no-checked.svg'
 											}
 											alt=''
 											width={20}

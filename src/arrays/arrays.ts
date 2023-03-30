@@ -30,42 +30,42 @@ export const pages: IPages[] = [
 	{
 		id: 1,
 		text: 'Заявки',
-		image: '/trending_arrow.svg',
+		image: '/images/trending_arrow.svg',
 		path: 'profile/my-requests',
 		notifications: 12,
-		image2: '/r/trending_arrow.svg',
+		image2: '/images/r/trending_arrow.svg',
 	},
 	{
 		id: 2,
 		text: 'Мои данные',
-		image: '/star.svg',
+		image: '/images/star.svg',
 		path: '/profile/my-profile',
 		notifications: 0,
-		image2: '/r/star.svg',
+		image2: '/images/r/star.svg',
 	},
 	{
 		id: 3,
 		text: 'Корзина',
-		image: '/trash.svg',
+		image: '/images/trash.svg',
 		path: '/profile/trash',
 		notifications: 0,
-		image2: '/r/star.svg',
+		image2: '/images/r/star.svg',
 	},
 	{
 		id: 4,
 		text: 'Настройки',
-		image: '/settings.svg',
+		image: '/images/settings.svg',
 		path: '/profile/settings',
 		notifications: 0,
-		image2: '/r/settings.svg',
+		image2: '/images/r/settings.svg',
 	},
 	{
 		id: 5,
 		text: 'Выйти',
 		path: '',
-		image: '/exit.svg',
+		image: '/images/exit.svg',
 		notifications: 0,
-		image2: '/r/exit.svg',
+		image2: '/images/r/exit.svg',
 	},
 ]
 
@@ -90,8 +90,8 @@ export const skills: IOption[] = [
 
 export const languages: ILanguage[] = [
 	{ lang: 'Кыргызский/Русский', label: 'Оба языка', image: '' },
-	{ lang: 'Кыргызский ', label: 'Кыргызский', image: '/kgz.svg' },
-	{ lang: 'Русский', label: 'Русский', image: '/rus.svg' },
+	{ lang: 'Кыргызский ', label: 'Кыргызский', image: '/images/kgz.svg' },
+	{ lang: 'Русский', label: 'Русский', image: '/images/rus.svg' },
 ]
 
 export const devLvl: IOption[] = [

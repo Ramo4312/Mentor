@@ -25,10 +25,8 @@ export default function RequestModal({ modal, setModal }: StateProps) {
 				<p className='mt-11 mb-14 text-xl text-little-text font-medium'>
 					Уведомление о приеме/отказе, вашей заявки <br /> ментором придет на
 					почту. <br />
-					если хотите получить уведомление также в телеграм, <br /> то пройдите
-					по ссылке и активируйте Бот нажатием <br /> кнопки
 				</p>
-				<button
+				{/* <button
 					onClick={() => {
 						setModal(!true)
 						window.open('https://t.me/GetMentorKG_bot')
@@ -36,7 +34,7 @@ export default function RequestModal({ modal, setModal }: StateProps) {
 					className='bg-little-text px-14 py-3 rounded-[0.63rem] text-xl text-[#fffffe] hover:bg-tertiary hover:text-little-text active:bg-active hover:duration-150 duration-200'
 				>
 					Start
-				</button>
+				</button> */}
 			</div>
 		</div>
 	)

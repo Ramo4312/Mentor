@@ -70,7 +70,7 @@ const Request = () => {
 			<div className='w-full max-w-[1440px] px-[28.13rem]'>
 				<h1 className='mb-16'>Запись к ментору</h1>
 				<div className='flex gap-x-[3.8rem] mb-24'>
-					<Image src='/man.png' alt='' width={189} height={159} />
+					<Image src='/images/man.png' alt='' width={189} height={159} />
 					<div className='flex flex-col'>
 						<h3 className='text-[#272343] text-3xl font-semibold mb-[0.63rem]'>
 							Алексей Алтунин

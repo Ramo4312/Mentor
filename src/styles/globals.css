@@ -24,14 +24,18 @@ input:focus {
 	outline: none;
 }
 
+body {
+	color: #2d334a;
+}
+
 @layer components {
-	*::-webkit-scrollbar {
+	/* *::-webkit-scrollbar {
 		@apply w-2;
 	}
 
 	*::-webkit-scrollbar-thumb {
 		@apply bg-[#a9a9a9] rounded-2xl;
-	}
+	} */
 
 	.reg-inputs {
 		@apply border rounded-md flex border-light-gray text-xl h-12 justify-between px-3 duration-150 w-full focus:border-[.1rem] focus:shadow-[3px_2.4px_5.8px_#485174] hover:border-[.17rem];

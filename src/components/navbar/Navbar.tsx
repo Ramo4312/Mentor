@@ -1,24 +1,23 @@
 import Link from 'next/link'
-import React from 'react'
+import Image from 'next/image'
+import Logo from '@/images/Logo.svg'
 
 const Navbar = () => {
 	return (
-		<nav className='w-full py-3 flex justify-between px-20 my-4'>
+		<nav className='w-full desktop:w-[1440px] m-auto py-8 flex justify-between px-20 my-4'>
 			<div className=''>
-				<img src='/Logo.svg' alt='' />
+				<Image src={Logo} alt='logo' priority />
 			</div>
 			<div className='flex gap-x-9'>
-				<Link
-					className='px-3 py-2 rounded-xl text-dark-blue text-[1rem] text-center bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200'
-					href={''}
-				>
-					Стать ментором
+				<Link href={''}>
+					<button className='font-medium text-title text-base px-3 py-2 rounded-xl text-dark-blue text-center bg-accent'>
+						Стать ментором
+					</button>
 				</Link>
-				<Link
-					className='px-3 py-2 rounded-xl text-black text-[1rem] text-center bg-tertiary'
-					href={''}
-				>
-					Войти
+				<Link href={''}>
+					<button className='font-medium px-8 py-2 rounded-xl text-black text-base text-center bg-tertiary'>
+						Войти
+					</button>
 				</Link>
 			</div>
 		</nav>

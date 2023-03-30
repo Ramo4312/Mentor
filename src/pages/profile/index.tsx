@@ -1,5 +1,3 @@
-'use client'
-
 import Footer from '@/components/footer/Footer'
 import Navbar from '@/components/navbar/Navbar'
 import Image from 'next/image'
@@ -14,7 +12,7 @@ const Profile = () => {
 			<Navbar />
 			<div className='mt-20 w-full max-w-[1440px] px-[11.3125rem]'>
 				<div className='flex gap-x-28 mb-20'>
-					<Image src='/man.png' alt='' width={554} height={469} />
+					<Image src='/images/man.png' alt='' width={554} height={469} />
 					<div className='flex flex-col items-start'>
 						<div className=''>
 							<h3 className='text-[#272343] text-3xl font-semibold mb-[0.63rem]'>
@@ -42,7 +40,7 @@ const Profile = () => {
 						</ul>
 						<div className='flex gap-x-4 mb-9 items-center'>
 							<h3 className=''>Язык:</h3>
-							<Image src='/rus.svg' alt='' width={37} height={37} />
+							<Image src='/images/rus.svg' alt='' width={37} height={37} />
 						</div>
 						<button
 							onClick={() => {
