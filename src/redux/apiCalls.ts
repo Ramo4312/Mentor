@@ -61,29 +61,29 @@ export const register = async (
 	try {
 		const res = await publicReq.post(`account/register/`, user)
 		console.log(res.status, res.data)
-		// toast.success('Вы успешно зарегистрировались', {
-		// 	style: {
-		// 		borderRadius: '6px',
-		// 		background: '#333',
-		// 		color: '#fff',
-		// 		padding: '20px auto',
-		// 		fontSize: '20px',
-		// 	},
-		// })
+		toast.success('Вы успешно зарегистрировались', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 		dispatch(registerSuccess())
 		setModal(true)
 	} catch (err) {
 		console.log(err)
 		dispatch(registerFailure())
-		// toast.error('Ошибка регистрации', {
-		// 	style: {
-		// 		borderRadius: '6px',
-		// 		background: '#333',
-		// 		color: '#fff',
-		// 		padding: '20px auto',
-		// 		fontSize: '20px',
-		// 	},
-		// })
+		toast.error('Ошибка регистрации', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 	}
 }
 
@@ -97,29 +97,29 @@ export const login = async (
 		const res = await publicReq.post(`account/login/`, user)
 		console.log('login', res.status)
 		console.log(res.data)
-		// toast.success('Вы успешно вошли', {
-		// 	style: {
-		// 		borderRadius: '6px',
-		// 		background: '#333',
-		// 		color: '#fff',
-		// 		padding: '20px auto',
-		// 		fontSize: '20px',
-		// 	},
-		// })
+		toast.success('Вы успешно вошли', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 		localStorage.setItem('token', JSON.stringify(res.data))
 		dispatch(loginSuccess({ ...res.data, email: user.email }))
 		router.push('/profile/my-profile/')
 	} catch (err) {
 		dispatch(loginFailure())
-		// toast.error('Ошибка входа', {
-		// 	style: {
-		// 		borderRadius: '6px',
-		// 		background: '#333',
-		// 		color: '#fff',
-		// 		padding: '20px auto',
-		// 		fontSize: '20px',
-		// 	},
-		// })
+		toast.error('Ошибка входа', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 	}
 }
 
@@ -152,27 +152,27 @@ export const restorePassword = async (
 		console.log('password restored', res.status)
 		dispatch(restoreSuccess())
 		setError(false)
-		// toast.success('Пароль восстановлен', {
-		// 	style: {
-		// 		borderRadius: '6px',
-		// 		background: '#333',
-		// 		color: '#fff',
-		// 		padding: '20px auto',
-		// 		fontSize: '20px',
-		// 	},
-		// })
+		toast.success('Пароль восстановлен', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 	} catch (err) {
 		dispatch(restoreFailure())
 		console.log(1234)
-		// toast.error('Пароль не восстанавливается', {
-		// 	style: {
-		// 		borderRadius: '6px',
-		// 		background: '#333',
-		// 		color: '#fff',
-		// 		padding: '20px auto',
-		// 		fontSize: '20px',
-		// 	},
-		// })
+		toast.error('Пароль не восстанавливается', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 	}
 }
 
@@ -199,27 +199,27 @@ export const changePassword = async (
 		)
 		dispatch(changeSuccess())
 		console.log('password changed', res.status, res.statusText)
-		// toast.success('пароль изменен', {
-		// 	style: {
-		// 		borderRadius: '6px',
-		// 		background: '#333',
-		// 		color: '#fff',
-		// 		padding: '20px auto',
-		// 		fontSize: '20px',
-		// 	},
-		// })
+		toast.success('пароль изменен', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 	} catch (err) {
 		dispatch(changeFailure())
 		console.log(err)
-		// toast.error('Ошибка смены пароля', {
-		// 	style: {
-		// 		borderRadius: '6px',
-		// 		background: '#333',
-		// 		color: '#fff',
-		// 		padding: '20px auto',
-		// 		fontSize: '20px',
-		// 	},
-		// })
+		toast.error('Ошибка смены пароля', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
 	}
 }
 
@@ -289,7 +289,7 @@ export const getUser = async (
 
 export const userUpdate = async (
 	dispatch: Dispatch<IDispatch>,
-	user: FormData,
+	user: IUserReg,
 	token: string | undefined
 ) => {
 	dispatch(updateStart())

@@ -74,7 +74,7 @@ export const prices: IOption[] = [
 	{ value: 'По договоренности', label: 'По договоренности' },
 ]
 
-export const experience: IOption[] = [
+export const experiences: IOption[] = [
 	{ value: 'Нет опыта', label: 'Нет опыта' },
 	{ value: '2-5', label: '2-5' },
 	{ value: '5-10', label: '5-10' },

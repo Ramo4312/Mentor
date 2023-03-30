@@ -13,7 +13,7 @@ const MentorItem: FC<IMentorSingle> = ({ mentor }) => {
 		>
 			<div>
 				<Image
-					src={mentor.image}
+					src={mentor.photo}
 					alt='mentor'
 					className='w-full h-[12rem] mb-5 rounded-lg'
 					width={368}

@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 export interface IUser {
 	username: string
 	email: string
-	image: any
+	photo: string
 	position: string
 	place_of_work: string
 	about_me: string
@@ -49,11 +49,7 @@ function MyProfile() {
 		}
 	}, [user])
 
-	useEffect(() => {
-		user?.image
-			? setUserImage(`https://mentorkgapi.pythonanywhere.com${user.image}`)
-			: setUserImage('')
-	}, [user])
+	console.log(user?.photo)
 
 	return (
 		<div>
@@ -65,7 +61,7 @@ function MyProfile() {
 				<div className='w-[46.6rem] pb-44'>
 					<div className='flex gap-x-9 mb-9'>
 						<img
-							src={userImage}
+							src={user?.photo}
 							alt=''
 							width='209'
 							height='149'

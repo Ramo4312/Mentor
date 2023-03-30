@@ -75,7 +75,7 @@ const WritingMentor: FC<IMentorSingle> = ({ mentor }) => {
 				<h1 className='mb-16'>Запись к ментору</h1>
 				<div className='flex gap-x-[3.8rem] mb-24'>
 					<Image
-						src={`https://mentorkgapi.pythonanywhere.com${mentor.image}`}
+						src={`${mentor.photo}`}
 						alt=''
 						className='rounded-lg'
 						width={189}

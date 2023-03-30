@@ -66,19 +66,20 @@ export interface IPhoto {
 }
 
 export interface IUserReg {
-	full_name: string
+	username: string
 	email: string
 	password: string
 	password_confirm: string
-	downloadURL: string
-	post: string
+	image?: any
+	photo?: string
+	position: string
 	place_of_work: string
-	bio: string
+	about_me: string
 	help: string
-	mentee_level: string
-	exp: string
-	spec: string[]
-	skill: string[]
+	level_mentor: string
+	experience: string
+	specialization: string[]
+	skills: string
 	price: string
 	language: string
 }

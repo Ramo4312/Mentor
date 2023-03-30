@@ -12,7 +12,7 @@ const MentorDetail: FC<IMentorSingle> = ({ mentor }) => {
 			<div className='mt-20 w-full max-w-[1440px] px-[11.3125rem] '>
 				<div className='flex gap-x-28 mb-20'>
 					<Image
-						src={`https://mentorkgapi.pythonanywhere.com${mentor.image}`}
+						src={`${mentor.photo}`}
 						alt=''
 						className='rounded-xl'
 						width={554}
