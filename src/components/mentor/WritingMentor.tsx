@@ -1,18 +1,22 @@
 import { devLvl } from '@/arrays/arrays'
-import Footer from '@/components/footer/Footer'
-import BigInputs from '@/components/inputs/big'
-import DefaultInputs from '@/components/inputs/default'
-import Navbar from '@/components/navbar/Navbar'
 import { useAppDispatch } from '@/hooks/hooks'
+import RequestModal from '@/pages/profile/request/modal'
 import { request } from '@/redux/apiCalls'
+import { IMentorSingle } from '@/types/mentor.interface'
 import { IMentee } from '@/types/types'
 import Image from 'next/image'
-import React, { useId, useState } from 'react'
+import { FC, useId, useState } from 'react'
 import { toast, Toaster } from 'react-hot-toast'
 import Select from 'react-select'
-import RequestModal from './modal'
+import BigInputs from '../inputs/big'
+import DefaultInputs from '../inputs/default'
+import Layout from '../layout/Layout'
 
-const Request = () => {
+interface IMenteeWriting extends IMentee {
+	mentor_service: number
+}
+
+const WritingMentor: FC<IMentorSingle> = ({ mentor }) => {
 	const [modal, setModal] = useState<boolean>(false)
 
 	const [email, setEmail] = useState('')
@@ -43,12 +47,13 @@ const Request = () => {
 			return
 		}
 
-		const mentee: IMentee = {
+		const mentee: IMenteeWriting = {
 			email,
 			name,
 			description,
 			my_level,
 			telegram,
+			mentor_service: mentor.id,
 		}
 
 		request(dispatch, mentee, setModal)
@@ -63,24 +68,36 @@ const Request = () => {
 	}
 
 	return (
-		<div>
-			<Navbar />
+		<Layout>
 			<Toaster />
 			<RequestModal modal={modal} setModal={setModal} />
 			<div className='w-full max-w-[1440px] px-[28.13rem]'>
 				<h1 className='mb-16'>Запись к ментору</h1>
 				<div className='flex gap-x-[3.8rem] mb-24'>
-					<Image src='/images/man.png' alt='' width={189} height={159} />
+					<Image
+						src={`https://mentorkgapi.pythonanywhere.com${mentor.image}`}
+						alt=''
+						className='rounded-lg'
+						width={189}
+						height={159}
+					/>
 					<div className='flex flex-col'>
 						<h3 className='text-[#272343] text-3xl font-semibold mb-[0.63rem]'>
-							Алексей Алтунин
+							{mentor.username}
 						</h3>
 						<h5 className='text-[#485174] text-xl font-normal mb-6'>
 							QA Lead @Huspy (Dubai)
 						</h5>
 						<ul>
-							<li>Опыт: 10+ лет</li>
-							<li>Цена: 7000 руб</li>
+							<li>Опыт: {mentor.experience} лет</li>
+							<li>
+								{mentor.price == 'Бесплатно' ||
+								mentor.price == 'По договоренности' ? (
+									<p>💰 {mentor.price}</p>
+								) : (
+									<p>💰 {mentor.price} руб</p>
+								)}
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -88,13 +105,20 @@ const Request = () => {
 					className='flex flex-col items-start gap-y-8 w-[35.57rem]'
 					onSubmit={e => e.preventDefault()}
 				>
-					<DefaultInputs state={email} label='Email' setState={setEmail} />
 					<DefaultInputs
+						className='w-full'
+						state={email}
+						label='Email'
+						setState={setEmail}
+					/>
+					<DefaultInputs
+						className='w-full'
 						state={name}
 						label='Ваше имя и фамилия'
 						setState={setName}
 					/>
 					<BigInputs
+						className='w-full'
 						state={description}
 						label='О чём хотите поговорить?'
 						setState={setDescription}
@@ -105,7 +129,6 @@ const Request = () => {
 						</label>
 						<Select
 							classNamePrefix='custom-select2'
-							isClearable
 							instanceId={useId()}
 							options={devLvl}
 							onChange={onChange}
@@ -113,6 +136,7 @@ const Request = () => {
 						/>
 					</div>
 					<DefaultInputs
+						className='w-full'
 						state={telegram}
 						label='Telegram @username'
 						setState={setTelegram}
@@ -125,9 +149,8 @@ const Request = () => {
 					</button>
 				</form>
 			</div>
-			<Footer />
-		</div>
+		</Layout>
 	)
 }
 
-export default Request
+export default WritingMentor

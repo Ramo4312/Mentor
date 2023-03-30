@@ -1,5 +1,3 @@
-import Footer from '@/components/footer/Footer'
-import Navbar from '@/components/navbar/Navbar'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React from 'react'
@@ -9,7 +7,6 @@ const Profile = () => {
 
 	return (
 		<div>
-			<Navbar />
 			<div className='mt-20 w-full max-w-[1440px] px-[11.3125rem]'>
 				<div className='flex gap-x-28 mb-20'>
 					<Image src='/images/man.png' alt='' width={554} height={469} />
@@ -94,7 +91,6 @@ const Profile = () => {
 					</button>
 				</div>
 			</div>
-			<Footer />
 		</div>
 	)
 }

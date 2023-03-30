@@ -11,7 +11,7 @@ export const MentorService = {
 		return data
 	},
 	async getById(id: number) {
-		const { data } = await axios.get<IMentor>(`/base/mentors/${id}`)
+		const { data } = await axios.get<IMentor>(`/base/public-profile/${id}`)
 		return data
 	},
 }

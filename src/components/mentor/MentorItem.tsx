@@ -1,10 +1,16 @@
 import { IMentorSingle } from '@/types/mentor.interface'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import React, { FC } from 'react'
 
 const MentorItem: FC<IMentorSingle> = ({ mentor }) => {
+	const router = useRouter()
+
 	return (
-		<div className='bg-secondary w-[26rem] h-[33rem] p-[1.4rem] rounded-xl flex flex-col justify-between'>
+		<div
+			className='bg-secondary w-[26rem] h-[33rem] p-[1.4rem] rounded-xl flex flex-col justify-between'
+			onClick={() => router.push(`/mentor/${mentor.id}`)}
+		>
 			<div>
 				<Image
 					src={mentor.image}

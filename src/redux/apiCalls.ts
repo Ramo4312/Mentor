@@ -37,10 +37,9 @@ import {
 	updateEmailStart,
 	updateEmailSuccess,
 	updateEmailFailure,
-	requestStart,
-	requestSuccess,
-	requestFailure,
 } from './userSlice'
+
+import { requestStart, requestSuccess, requestFailure } from './mentorSlice'
 
 // import { toast } from 'react-hot-toast'
 import { Dispatch, SetStateAction } from 'react'

@@ -1,7 +1,5 @@
 import { changePassword, updateEmail } from '@/redux/apiCalls'
-// import DefaultInputs from '@/components/inputs/default'
 import PasswordInputs from '@/components/inputs/password'
-import DefaultInputs from '@/components/inputs/default'
 
 import PasswordInput from '@/components/inputs/disabled/password'
 import DefaultInput from '@/components/inputs/disabled/default'
