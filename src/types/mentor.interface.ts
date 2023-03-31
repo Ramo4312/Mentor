@@ -1,7 +1,7 @@
 export interface IMentor {
 	id: number
 	username: string
-	image: string
+	photo: string
 	position: string
 	place_of_work: string
 	about_me: string

@@ -40,11 +40,14 @@ const SideBar = () => {
 										pathname == item.path ? '' : 'hidden'
 									} w-2 h-7 bg-paragraph rounded-r-lg`}
 								></div>
-								<Image
+								<img
 									src={pathname == item.path ? item.image2 : item.image}
 									alt={item.text}
-									width={24}
-									height={24}
+									className={`${
+										item.image == '/trash.svg' || item.image2 == '/r/trash.svg'
+											? 'ml-[.1rem] mr-[.15rem]'
+											: ''
+									}`}
 								/>
 								<p
 									className={`${

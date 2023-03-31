@@ -1,13 +1,13 @@
 import { login } from '@/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
-import Footer from '@/components/footer/Footer'
-import Navbar from '@/components/navbar/Navbar'
-import { useAppSelector } from '@/hooks/hooks'
 import { IUserLog } from '@/types/types'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import DefaultInputs from '@/components/inputs/default'
+import PasswordInputs from '@/components/inputs/password'
+import Layout from '@/components/layout/Layout'
 
 const LoginPage = () => {
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
@@ -15,7 +15,6 @@ const LoginPage = () => {
 	const [password, setPassword] = useState<string>('')
 
 	const dispatch = useDispatch()
-	const { error } = useAppSelector(state => state.user)
 
 	const router = useRouter()
 
@@ -31,7 +30,6 @@ const LoginPage = () => {
 		}
 
 		login(dispatch, user, router)
-		// if (!error) router.replace('/')
 	}
 
 	// function handleRefresh() {
@@ -45,8 +43,7 @@ const LoginPage = () => {
 	// }
 
 	return (
-		<>
-			<Navbar />
+		<Layout>
 			<div className='relative overflow-hidden text-center'>
 				<AbsoluteImages />
 				<div className=''>
@@ -55,34 +52,14 @@ const LoginPage = () => {
 						onSubmit={e => e.preventDefault()}
 						className='flex flex-col gap-y-7 mx-auto w-[35.6rem]'
 					>
-						<div className='flex flex-col gap-y-3'>
-							<label htmlFor='' className='text-little-text text-lg'>
-								Email
-							</label>
-							<input
-								onChange={e => setEmail(e.target.value)}
-								name='email'
-								// placeholder='Email'
-								className='reg-inputs w-full'
-								type='text'
-							/>
-						</div>
-						<div className='flex flex-col gap-y-3 text-start'>
-							<label htmlFor='' className='text-little-text text-lg'>
-								Введите новый пароль
-							</label>
-							<input
-								onChange={e => setPassword(e.target.value)}
-								value={password}
-								name='password'
-								className='reg-inputs'
-								type={isVisPass ? 'text' : 'password'}
-							/>
-							<p className='pass-vis' onClick={() => setIsVisPass(!isVisPass)}>
-								показать пароль
-							</p>
-						</div>
-
+						<DefaultInputs state={email} setState={setEmail} label='Email' />
+						<PasswordInputs
+							state={password}
+							setState={setPassword}
+							label='Введите пароль'
+							passVis={isVisPass}
+							setPassVis={setIsVisPass}
+						/>
 						<Link
 							href={'/account/password/restore'}
 							className='mb-[4.5rem] font-semibold underline hover:text-sky-600 inline-block text-left'
@@ -113,8 +90,7 @@ const LoginPage = () => {
 					</form>
 				</div>
 			</div>
-			<Footer />
-		</>
+		</Layout>
 	)
 }
 

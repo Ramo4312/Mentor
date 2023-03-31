@@ -19,6 +19,12 @@ const MentorList: FC<IMentorData> = ({ mentors }) => {
 		price: '',
 	})
 	const [data, setData] = useState(mentors)
+	const [limit, setLimit] = useState<number>(4)
+	const mentorsData = data.slice(1, limit)
+	// useEffect(() => {
+	// 	mentorsData = data.slice(1, limit)
+	// 	console.log(limit)
+	// }, [limit])
 	useEffect(() => {
 		let filteredMentors = mentors
 			.filter(mentor => {
@@ -237,11 +243,14 @@ const MentorList: FC<IMentorData> = ({ mentors }) => {
 			</div>
 			<div className='flex flex-col items-center'>
 				<div className='flex flex-wrap gap-6 mb-28'>
-					{data.map(mentor => (
-						<MentorItem key={mentor.id} mentor={mentor} />
-					))}
+					{mentorsData.map(mentor => {
+						if (mentor.username === 'admin') return
+						return <MentorItem key={mentor.id} mentor={mentor} />
+					})}
 				</div>
-				<ButtonPrimary>Показать больше</ButtonPrimary>
+				<ButtonPrimary onClick={(prev: number) => setLimit(prev + limit)}>
+					Показать больше
+				</ButtonPrimary>
 			</div>
 		</>
 	)

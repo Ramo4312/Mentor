@@ -1,24 +1,29 @@
-'use client'
-
-import { changePassword } from '@/redux/apiCalls'
-// import DefaultInputs from '@/components/inputs/default'
+import { changePassword, updateEmail } from '@/redux/apiCalls'
 import PasswordInputs from '@/components/inputs/password'
+
+import PasswordInput from '@/components/inputs/disabled/password'
+import DefaultInput from '@/components/inputs/disabled/default'
+
 import Navbar from '@/components/navbar/Navbar'
 import SideBar from '@/components/sidebar'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
-import { INewPassword } from '@/types/types'
+import { INewPassword, IUserLog } from '@/types/types'
 import { NextPage } from 'next'
 import { useState } from 'react'
 import DeleteModal from './modal'
 
 import { toast, Toaster } from 'react-hot-toast'
+// import Image from 'next/image'
 
 const Settings: NextPage = () => {
-	// const [email, setEmail] = useState<string>('')
-	// const [password, setPassword] = useState<string>('')
-	// const [isVisPass, setIsVisPass] = useState<boolean>(false)
+	const { tokens, error, currentUser } = useAppSelector(state => state.user)
+
+	const [email, setEmail] = useState<string>(currentUser.email)
+	const [password, setPassword] = useState<string>('')
+	const [isVisPass, setIsVisPass] = useState<boolean>(false)
 
 	const [modal, setModal] = useState<boolean>(false)
+	const [isEdit, setIsEdit] = useState<boolean>(false)
 
 	const [old_password, setOld_Password] = useState<string>('')
 	const [isVisOldPassConf, setIsVisOldPassConf] = useState<boolean>(false)
@@ -27,7 +32,6 @@ const Settings: NextPage = () => {
 	const [new_pass_confirm, setNew_pass_confirm] = useState<string>('')
 	// const [isVisNewPassConf, setIsVisNewPassConf] = useState<boolean>(false)
 
-	const { tokens, error } = useAppSelector(state => state.user)
 	const dispatch = useAppDispatch()
 
 	function handleChange() {
@@ -37,7 +41,7 @@ const Settings: NextPage = () => {
 			!new_pass_confirm.trim()
 		) {
 			// alert('Some inputs are empty')
-			toast.error('Некоторые входы пусты', {
+			toast.error('Некоторые поля пусты', {
 				style: {
 					borderRadius: '6px',
 					background: '#333',
@@ -64,6 +68,28 @@ const Settings: NextPage = () => {
 		}
 	}
 
+	function handleEdit() {
+		if (!email.trim() || !password.trim()) {
+			toast.error('Некоторые поля пусты', {
+				style: {
+					borderRadius: '6px',
+					background: '#333',
+					color: '#fff',
+					padding: '20px auto',
+					fontSize: '20px',
+				},
+			})
+			return
+		}
+
+		const user: IUserLog = {
+			email,
+			password,
+		}
+
+		updateEmail(dispatch, user, tokens.access, setIsEdit, setPassword)
+	}
+
 	return (
 		<div>
 			<DeleteModal modal={modal} setModal={setModal} />
@@ -75,15 +101,53 @@ const Settings: NextPage = () => {
 					<SideBar />
 				</div>
 				<div className=''>
-					<div className=''>
-						{/* <DefaultInputs setState={setEmail} state={email} label='Email' />
-					<PasswordInputs
-					setState={setPassword}
-					state={password}
-					label='Пароль'
-					setPassVis={setIsVisPass}
-					passVis={isVisPass}
-				/> */}
+					<div
+						className={`${isEdit ? 'items-end' : 'items-start'} flex gap-x-16`}
+					>
+						<div className='w-[35.6rem] flex flex-col gap-y-[0.87rem]'>
+							<h2 className='text-xl text-paragraph font-semibold mb-4'>
+								Изменить почту
+							</h2>
+							<DefaultInput
+								isEdit={isEdit}
+								setState={setEmail}
+								state={email}
+								label='Email'
+							/>
+							<PasswordInput
+								isEdit={isEdit}
+								setState={setPassword}
+								state={password}
+								label='Пароль'
+								setPassVis={setIsVisPass}
+								passVis={isVisPass}
+							/>
+						</div>
+						{isEdit ? (
+							<div className='flex flex-col gap-y-11'>
+								<button
+									onClick={() => setIsEdit(false)}
+									className='px-[2.38rem] py-4 font-semibold text-white bg-paragraph rounded-xl hover:bg-tertiary active:bg-[#c9ffff] hover:duration-150 duration-200 hover:text-paragraph active:text-paragraph'
+								>
+									Отмена
+								</button>
+								<button
+									onClick={handleEdit}
+									className='mx-auto text-lg font-medium px-[2.38rem] py-[0.9rem] mb-9 rounded-xl text-paragraph bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200'
+								>
+									Сохранить
+								</button>
+							</div>
+						) : (
+							<img
+								onClick={() => setIsEdit(true)}
+								src='/images/edit.svg'
+								alt=''
+								// width={28}
+								// height={28}
+								className='mt-[6.4rem] hover:bg-[rgb(0,0,0,.4)] p-2 rounded-xl hover:duration-200 duration-150'
+							/>
+						)}
 					</div>
 					<h2 className='text-xl text-paragraph font-semibold mb-8'>
 						Изменить пароль

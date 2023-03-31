@@ -7,37 +7,50 @@ import React, { useState, useId, useEffect } from 'react'
 import makeAnimated from 'react-select/animated'
 import CreatableSelect from 'react-select/creatable'
 import Select, { OnChangeValue } from 'react-select'
-import { experience, languages, prices, specializations } from '@/arrays/arrays'
+import {
+	experiences,
+	languages,
+	prices,
+	specializations,
+} from '@/arrays/arrays'
 import { getUser, userUpdate } from '@/redux/apiCalls'
-
-import { IUser } from '.'
-
+import { IUser } from './index'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import DefaultInputs from '@/components/inputs/default'
 import BigInputs from '@/components/inputs/big'
-import { ILanguage, IOption, ISpec } from '@/types/types'
+import { ILanguage, IOption, IUserReg } from '@/types/types'
+
+import {
+	getStorage,
+	ref,
+	uploadBytesResumable,
+	getDownloadURL,
+} from 'firebase/storage'
+import app from '@/firebase'
 
 const ProfileEdit = () => {
 	const tokens = useAppSelector(state => state.user.tokens)
 
-	const [full_name, setFull_name] = useState<string>('')
+	const [error, setError] = useState(true)
+	const [username, setFull_name] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
 	const [password_confirm, setPassword_confirm] = useState<string>('')
-	const [image, setImage] = useState<any>()
-	const [post, setPost] = useState<string>('')
+	const [photo, setImage] = useState<any>()
+	const [position, setPost] = useState<string>('')
 	const [place_of_work, setPlace_of_work] = useState<string>('')
-	const [bio, setBio] = useState<string>('')
+	const [about_me, setBio] = useState<string>('')
 	const [help, setHelp] = useState<string>('')
-	const [mentee_level, setMentee_level] = useState<string>('')
-	const [exp, setExp] = useState('')
-	const [spec, setSpec] = useState<string[]>([''])
-	const [specId, setSpecId] = useState<number[]>([])
-	const [skill, setSkill] = useState<string>('')
+	const [level_mentor, setMentee_level] = useState<string>('')
+	const [experience, setExp] = useState('')
+	const [specialization, setSpec] = useState<string[]>([''])
+	const [skills, setSkill] = useState<string>('')
 	const [price, setPrice] = useState('')
 	const [language, setLanguage] = useState('')
 
 	const [user, setUser] = useState<IUser | null>(null)
+
+	const [loaded, setLoaded] = useState('Сохранить изменения')
 
 	// const router = useRouter()
 	// const dispatch = useAppDispatch()
@@ -46,7 +59,7 @@ const ProfileEdit = () => {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		getUser(tokens?.access, setUser)
+		getUser(tokens?.access, setUser, setError)
 	}, [])
 
 	useEffect(() => {
@@ -55,7 +68,7 @@ const ProfileEdit = () => {
 			setEmail(user.email)
 			setPassword(user.password)
 			setPassword_confirm(user.password_confirm)
-			// setImage(user.image)
+			setImage(user.photo)
 			setPost(user.position)
 			setPlace_of_work(user.place_of_work)
 			setBio(user.about_me)
@@ -63,7 +76,6 @@ const ProfileEdit = () => {
 			setMentee_level(user.level_mentor)
 			setExp(user.experience)
 			setSpec(user.specialization)
-			// setSpecId(user.specId)
 			setSkill(user.skills)
 			setPrice(user.price)
 			setLanguage(user.language)
@@ -71,54 +83,76 @@ const ProfileEdit = () => {
 	}, [user])
 
 	const getValue1 = () => {
-		return exp ? experience.find(c => c.value === exp) : ''
+		return experience ? experiences.find(c => c.value === experience) : ''
 	}
 
 	const onChange1 = (newValue: any) => {
-		if (newValue.value !== 'Нет опыта') {
-			setExp(newValue.value + ' ' + 'лет')
-		} else {
-			setExp(newValue.value)
-		}
+		setExp(newValue.value)
 	}
 
 	const getValue2 = () => {
-		return spec ? specializations.filter(c => spec.indexOf(c.value) >= 0) : []
+		return specialization
+			? specializations.filter(c => specialization.indexOf(c.value) >= 0)
+			: []
 	}
 
 	const onChange2 = (newValue: OnChangeValue<IOption, boolean>) => {
-		// if (spec.length >= 5) return
+		if (specialization.length >= 5) return
 		setSpec((newValue as IOption[]).map(v => v.value))
-		setSpecId((newValue as ISpec[]).map(v => v.id))
 	}
-
-	// const getValue4 = () => {
-	// 	return price ? prices.find(c => c.value === price) : ''
-	// }
 
 	const onChange4 = (newValue: any) => {
 		setPrice(newValue.value)
 	}
 
 	function handleEdit() {
-		const formData = new FormData()
-		formData.append('username', full_name)
-		formData.append('email', email)
-		formData.append('password', password)
-		formData.append('password_confirm', password_confirm)
-		formData.append('image', image)
-		formData.append('position', post)
-		formData.append('place_of_work', place_of_work)
-		formData.append('about_me', bio)
-		formData.append('help', help)
-		formData.append('level_mentor', mentee_level)
-		formData.append('experience', exp)
-		formData.append('skills', skill)
-		formData.append('price', price)
-		formData.append('language', language)
-		// formData.append('specialization', specId)
+		const fileName = new Date().getTime() + photo.name
+		const storage = getStorage(app)
+		const storageRef = ref(storage, fileName)
+		const uploadTask = uploadBytesResumable(storageRef, photo)
 
-		userUpdate(dispatch, formData, tokens?.access)
+		uploadTask.on(
+			'state_changed',
+			snapshot => {
+				const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+				setLoaded('Загруска выполнена на ' + progress + '%')
+
+				switch (snapshot.state) {
+					case 'paused':
+						console.log('Upload is paused')
+						break
+					case 'running':
+						console.log('Upload is running')
+						break
+					default:
+				}
+			},
+			error => {
+				console.log(error)
+			},
+			() => {
+				getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+					const user: IUserReg = {
+						username,
+						email,
+						password,
+						password_confirm,
+						photo: downloadURL,
+						position,
+						place_of_work,
+						about_me,
+						help,
+						level_mentor,
+						experience,
+						specialization,
+						skills,
+						price,
+						language,
+					}
+					userUpdate(dispatch, user, tokens.access)
+				})
+			}
+		)
 	}
 
 	return (
@@ -135,7 +169,7 @@ const ProfileEdit = () => {
 					>
 						<DefaultInputs
 							label='ФИО'
-							state={full_name}
+							state={username}
 							setState={setFull_name}
 						/>
 						<div className='flex flex-col gap-y-[0.87rem] w-96'>
@@ -155,22 +189,22 @@ const ProfileEdit = () => {
 								<div className='flex justify-between cursor-pointer bg-[#E3F6F5] pl-7 pr-3 py-4 rounded-md'>
 									<p
 										className={`${
-											image ? 'text-black' : ''
+											photo ? 'text-black' : ''
 										} text-[#485174B2] text-lg`}
 									>
-										{image ? image.name : 'Attach file'}
+										{photo ? photo.name : 'Attach file'}
 									</p>
 									<Image
 										width={28}
 										height={28}
-										src='/attachment_24px.svg'
+										src='/images/attachment_24px.svg'
 										alt=''
 										className='w-7'
 									/>
-									{image ? (
+									{photo ? (
 										<Image
 											onClick={() => setImage(null)}
-											src='/trash-icon.svg'
+											src='/images/trash-icon.svg'
 											alt=''
 											width={22}
 											height={22}
@@ -183,13 +217,17 @@ const ProfileEdit = () => {
 							</div>
 							<p className='text[#485174B2] '>(пожалуйста, не более 2Мб)</p>
 						</div>
-						<DefaultInputs label='Должность' state={post} setState={setPost} />
+						<DefaultInputs
+							label='Должность'
+							state={position}
+							setState={setPost}
+						/>
 						<DefaultInputs
 							label='Место работы'
 							state={place_of_work}
 							setState={setPlace_of_work}
 						/>
-						<BigInputs label='О себе' state={bio} setState={setBio} />
+						<BigInputs label='О себе' state={about_me} setState={setBio} />
 						<BigInputs
 							label='С чем вы можете помочь?'
 							state={help}
@@ -197,7 +235,7 @@ const ProfileEdit = () => {
 						/>
 						<BigInputs
 							label='Какого уровня менти могут обращаться к вам за помощью?'
-							state={mentee_level}
+							state={level_mentor}
 							setState={setMentee_level}
 						/>
 						<div className='flex flex-col gap-y-[0.87rem] w-[30.38rem] mb-12'>
@@ -210,7 +248,7 @@ const ProfileEdit = () => {
 								onChange={onChange1}
 								isSearchable={false}
 								value={getValue1()}
-								options={experience}
+								options={experiences}
 								placeholder=''
 							/>
 						</div>
@@ -238,7 +276,7 @@ const ProfileEdit = () => {
 							</label>
 							<input
 								onChange={e => setSkill(e.target.value)}
-								value={skill}
+								value={skills}
 								name='username'
 								className='reg-inputs'
 								type='text'
@@ -289,8 +327,8 @@ const ProfileEdit = () => {
 										<Image
 											src={
 												language == item.lang
-													? '/checked.svg'
-													: '/no-checked.svg'
+													? '/images/checked.svg'
+													: '/images/no-checked.svg'
 											}
 											alt=''
 											width={20}

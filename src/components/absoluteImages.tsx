@@ -10,8 +10,8 @@ const AbsoluteImages = () => {
 				className='absolute -z-1 -left-[10.2rem]'
 				src={
 					pathname == '/account/register'
-						? '/2 Creative run 1.png'
-						: '/2 Creative run 1-1.png'
+						? '/images/2 Creative run 1.png'
+						: '/images/2 Creative run 1-1.png'
 				}
 				alt=''
 			/>
@@ -19,8 +19,8 @@ const AbsoluteImages = () => {
 				className='absolute -z-1 -right-[9rem]'
 				src={
 					pathname == '/account/register'
-						? '/6 progress 2.png'
-						: '/6 progress 2-1.png'
+						? '/images/6 progress 2.png'
+						: '/images/6 progress 2-1.png'
 				}
 				alt=''
 			/>

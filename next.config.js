@@ -17,6 +17,14 @@ const nextConfig = {
 				protocol: 'http',
 				hostname: 'localhost:3000',
 			},
+			{
+				protocol: 'https',
+				hostname: 'getmentor.dev',
+			},
+			{
+				protocol: 'https',
+				hostname: 'getmentor.blob.core.windows.net',
+			},
 		],
 		domains: ['localhost:3000'],
 	},

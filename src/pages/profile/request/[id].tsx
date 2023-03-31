@@ -1,12 +1,11 @@
-import MentorDetail from '@/components/mentor/MentorDetail'
+import WritingMentor from '@/components/mentor/WritingMentor'
+import { MentorService } from '@/pages/services/car.services'
 import { IMentorSingle } from '@/types/mentor.interface'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import React from 'react'
-import { MentorService } from '../services/car.services'
 
-const MentorPage: NextPage<IMentorSingle> = ({ mentor }) => {
-	return <MentorDetail mentor={mentor} />
+const Request: NextPage<IMentorSingle> = ({ mentor }) => {
+	return <WritingMentor mentor={mentor} />
 }
 
 interface Params extends ParsedUrlQuery {
@@ -36,4 +35,4 @@ export const getStaticProps: GetStaticProps<IMentorSingle> = async ({
 	}
 }
 
-export default MentorPage
+export default Request

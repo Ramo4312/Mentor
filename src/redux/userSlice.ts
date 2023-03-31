@@ -6,8 +6,8 @@ export interface CounterState {
 }
 
 interface initialState {
-	currentUser: IUser | null
-	tokens: IToken | null
+	currentUser: IUser
+	tokens: IToken
 	isFetching: boolean
 	error: boolean
 }
@@ -15,7 +15,9 @@ interface initialState {
 export const userSlice = createSlice({
 	name: 'user',
 	initialState: <initialState>{
-		currentUser: {},
+		currentUser: {
+			email: '',
+		},
 		tokens: {
 			access: '',
 			refresh: '',
@@ -118,8 +120,11 @@ export const userSlice = createSlice({
 		},
 		deleteSuccess: state => {
 			state.isFetching = false
-			state.currentUser = null
-			state.tokens = null
+			state.currentUser.email = ''
+			state.tokens = {
+				access: '',
+				refresh: '',
+			}
 			state.error = false
 		},
 		deleteFailure: state => {
@@ -130,8 +135,11 @@ export const userSlice = createSlice({
 		logoutSuccess: state => {
 			state.isFetching = false
 			state.error = false
-			state.currentUser = null
-			state.tokens = null
+			state.currentUser.email = ''
+			state.tokens = {
+				access: '',
+				refresh: '',
+			}
 		},
 
 		updateStart: state => {
@@ -143,6 +151,20 @@ export const userSlice = createSlice({
 			state.error = false
 		},
 		updateFailure: state => {
+			state.isFetching = false
+			state.error = true
+		},
+
+		updateEmailStart: state => {
+			state.isFetching = true
+			state.error = false
+		},
+		updateEmailSuccess: (state, action: PayloadAction<string>) => {
+			state.isFetching = false
+			state.currentUser.email = action.payload
+			state.error = false
+		},
+		updateEmailFailure: state => {
 			state.isFetching = false
 			state.error = true
 		},
@@ -175,5 +197,8 @@ export const {
 	updateStart,
 	updateSuccess,
 	updateFailure,
+	updateEmailStart,
+	updateEmailSuccess,
+	updateEmailFailure,
 } = userSlice.actions
 export default userSlice.reducer

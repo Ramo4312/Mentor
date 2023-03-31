@@ -1,12 +1,13 @@
+import axios from 'axios'
 import {
 	IDispatch,
+	IMentee,
 	INewPassword,
 	IPassToRestore,
 	IRefresh,
 	IUserLog,
 	IUserReg,
 } from '@/types/types'
-import axios from 'axios'
 import {
 	loginFailure,
 	loginStart,
@@ -33,11 +34,17 @@ import {
 	updateStart,
 	updateSuccess,
 	updateFailure,
+	updateEmailStart,
+	updateEmailSuccess,
+	updateEmailFailure,
 } from './userSlice'
 
-import { toast } from 'react-hot-toast'
+import { requestStart, requestSuccess, requestFailure } from './mentorSlice'
+
+// import { toast } from 'react-hot-toast'
 import { Dispatch, SetStateAction } from 'react'
 import { IProps, IUser } from '@/pages/profile/my-profile'
+import { toast } from 'react-hot-toast'
 
 export const API = 'https://mentorkgapi.pythonanywhere.com/'
 
@@ -47,7 +54,8 @@ export const publicReq = axios.create({
 
 export const register = async (
 	dispatch: Dispatch<IDispatch>,
-	user: IUserReg
+	user: IUserReg,
+	setModal: Dispatch<SetStateAction<boolean>>
 ) => {
 	dispatch(registerStart())
 	try {
@@ -63,6 +71,7 @@ export const register = async (
 			},
 		})
 		dispatch(registerSuccess())
+		setModal(true)
 	} catch (err) {
 		console.log(err)
 		dispatch(registerFailure())
@@ -131,7 +140,8 @@ export const forgotPassword = async (
 
 export const restorePassword = async (
 	dispatch: Dispatch<IDispatch>,
-	newPassword: IPassToRestore
+	newPassword: IPassToRestore,
+	setError: Dispatch<SetStateAction<boolean>>
 ) => {
 	dispatch(restoreStart())
 	try {
@@ -141,6 +151,7 @@ export const restorePassword = async (
 		)
 		console.log('password restored', res.status)
 		dispatch(restoreSuccess())
+		setError(false)
 		toast.success('Пароль восстановлен', {
 			style: {
 				borderRadius: '6px',
@@ -257,7 +268,8 @@ export const logout = (dispatch: Dispatch<IDispatch>) => {
 
 export const getUser = async (
 	token: string | undefined,
-	setUser: Dispatch<SetStateAction<IUser | null>>
+	setUser: Dispatch<SetStateAction<IUser | null>>,
+	setError: Dispatch<SetStateAction<boolean>>
 ) => {
 	try {
 		const config = {
@@ -266,17 +278,18 @@ export const getUser = async (
 			},
 		}
 
-		const { data }: IProps = await axios(`${API}base/personal-profile/`, config)
+		const { data }: IProps = await publicReq(`base/personal-profile/`, config)
 
 		setUser(data)
 	} catch (err) {
 		console.log(err)
+		setError(true)
 	}
 }
 
 export const userUpdate = async (
 	dispatch: Dispatch<IDispatch>,
-	user: FormData,
+	user: IUserReg,
 	token: string | undefined
 ) => {
 	dispatch(updateStart())
@@ -295,6 +308,78 @@ export const userUpdate = async (
 		console.log('user updated', res.status)
 	} catch (err) {
 		dispatch(updateFailure())
+		console.log(err)
+	}
+}
+
+export const updateEmail = async (
+	dispatch: Dispatch<IDispatch>,
+	user: IUserLog,
+	token: string,
+	setIsEdit: Dispatch<SetStateAction<boolean>>,
+	setPassword: Dispatch<SetStateAction<string>>
+) => {
+	dispatch(updateEmailStart())
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const res = await publicReq.post(`account/update-email/`, user, config)
+		toast.success('Почта изменена', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
+
+		dispatch(updateEmailSuccess(user.email))
+		setPassword('')
+		console.log(res.data)
+		setIsEdit(false)
+	} catch (err) {
+		dispatch(updateEmailFailure())
+		console.log(err)
+	}
+}
+
+export const request = async (
+	dispatch: Dispatch<IDispatch>,
+	mentee: IMentee,
+	setModal: Dispatch<SetStateAction<boolean>>
+) => {
+	dispatch(requestStart())
+	try {
+		const res = await publicReq.post(`statement/menti-statement/`, mentee)
+		toast.success('Ваша заявка отправлена', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
+
+		dispatch(requestSuccess())
+		console.log(res.data)
+		setModal(true)
+	} catch (err) {
+		toast.error('Произошла ошибка и ваша заявка не была отправлена', {
+			style: {
+				borderRadius: '6px',
+				background: '#333',
+				color: '#fff',
+				padding: '20px auto',
+				fontSize: '20px',
+			},
+		})
+		dispatch(requestFailure())
 		console.log(err)
 	}
 }

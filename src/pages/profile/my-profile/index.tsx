@@ -1,19 +1,16 @@
-'use client'
-
 import { getUser } from '@/redux/apiCalls'
 import Navbar from '@/components/navbar/Navbar'
 import SideBar from '@/components/sidebar'
 import { useAppSelector } from '@/hooks/hooks'
-import { IPhoto } from '@/types/types'
-// import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+// import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 export interface IUser {
 	username: string
 	email: string
-	image: any
+	photo: string
 	position: string
 	place_of_work: string
 	about_me: string
@@ -34,24 +31,25 @@ export interface IProps {
 }
 
 function MyProfile() {
-	const tokens = useAppSelector(state => state.user.tokens)
-
 	const router = useRouter()
-	console.log(router)
+
+	const [error, setError] = useState<boolean>(false)
 
 	const [user, setUser] = useState<IUser | null>(null)
 	const [userImage, setUserImage] = useState('')
-	// const { tokens } = useAppSelector(state => state.user)
-	// try {
+	const { tokens } = useAppSelector(state => state.user)
+
 	useEffect(function () {
-		getUser(tokens?.access, setUser)
+		getUser(tokens?.access, setUser, setError)
 	}, [])
 
 	useEffect(() => {
-		user?.image
-			? setUserImage(`https://mentorkgapi.pythonanywhere.com${user.image}`)
-			: setUserImage('')
+		if (error) {
+			router.push('/')
+		}
 	}, [user])
+
+	console.log(user?.photo)
 
 	return (
 		<div>
@@ -63,11 +61,12 @@ function MyProfile() {
 				<div className='w-[46.6rem] pb-44'>
 					<div className='flex gap-x-9 mb-9'>
 						<img
-							src={userImage}
+							src={user?.photo}
 							alt=''
 							width='209'
 							height='149'
-							loading='lazy'
+							loading='eager'
+							className='rounded-2xl'
 						/>
 						<div className='flex gap-x-10'>
 							<div className='flex flex-col items-start'>
@@ -75,14 +74,14 @@ function MyProfile() {
 									<h3 className='text-[#272343] text-2xl font-semibold mb-[0.63rem]'>
 										{user?.username}
 									</h3>
-									<h5 className='text-[#485174] text-lg font-normal mb-6'>
+									{/* <h5 className='text-[#485174] text-lg font-normal mb-6'>
 										QA Lead @Huspy (Dubai)
-									</h5>
+									</h5> */}
 								</div>
 								<div className=''>
-									{user?.skills ? (
+									{user?.specialization ? (
 										<p className='cursor-default px-[0.82rem] py-[0.40rem] font-semibold text-tertiary bg-[#2D334A] rounded-full text-center mb-14'>
-											{user?.skills}
+											{user.specialization}
 										</p>
 									) : (
 										''
@@ -94,11 +93,11 @@ function MyProfile() {
 									<strong>Опыт: </strong> {user?.experience}
 								</li>
 								<li className='list-disc text-xl'>
-									<strong>Цена: </strong> 7000 руб
+									<strong>Цена: </strong> {user?.price}
 								</li>
-								<li className='list-disc text-xl'>
+								{/* <li className='list-disc text-xl'>
 									2 человека получили <br /> помощь
-								</li>
+								</li> */}
 							</ul>
 						</div>
 					</div>

@@ -2,7 +2,6 @@ import { login } from '@/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
 import Footer from '@/components/footer/Footer'
 import Navbar from '@/components/navbar/Navbar'
-import { useAppSelector } from '@/hooks/hooks'
 import { IUserLog } from '@/types/types'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -15,7 +14,6 @@ const LoginPage = () => {
 	const [password, setPassword] = useState<string>('')
 
 	const dispatch = useDispatch()
-	const { error } = useAppSelector(state => state.user)
 
 	const router = useRouter()
 
