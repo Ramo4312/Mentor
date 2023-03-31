@@ -14,7 +14,11 @@ const nextConfig = {
 		// 		hostname: 'mentorkgapi.pythonanywhere.com',
 		// 	},
 		// ],
-		domains: ['mentorkgapi.pythonanywhere.com'],
+		domains: [
+			'mentorkgapi.pythonanywhere.com',
+			'getmentor.dev',
+			'getmentor.blob.core.windows.net',
+		],
 	},
 }
 

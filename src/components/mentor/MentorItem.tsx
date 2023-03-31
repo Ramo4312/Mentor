@@ -8,12 +8,14 @@ const MentorItem: FC<IMentorSingle> = ({ mentor }) => {
 
 	return (
 		<div
-			className='bg-secondary w-[26rem] h-[33rem] p-[1.4rem] rounded-xl flex flex-col justify-between'
+			className={`bg-secondary w-[26rem] h-[33rem] p-[1.4rem] rounded-xl flex flex-col justify-between ${
+				mentor.username == 'admin' ? 'hidden' : ''
+			}`}
 			onClick={() => router.push(`/mentor/${mentor.id}`)}
 		>
 			<div>
 				<Image
-					src={mentor.photo}
+					src={mentor.photo ? mentor.photo : ''}
 					alt='mentor'
 					className='w-full h-[12rem] mb-5 rounded-lg'
 					width={368}
@@ -28,9 +30,11 @@ const MentorItem: FC<IMentorSingle> = ({ mentor }) => {
 				</div>
 			</div>
 			<div>
-				<button className='bg-paragraph rounded-[140px] text-secondary py-1 px-3'>
-					{mentor.specialization.map(specialization => specialization)}
-				</button>
+				{mentor.specialization.map(specialization => (
+					<button className='bg-paragraph rounded-[140px] mr-2 mb-2 text-secondary py-1 px-3'>
+						{specialization}
+					</button>
+				))}
 			</div>
 		</div>
 	)
