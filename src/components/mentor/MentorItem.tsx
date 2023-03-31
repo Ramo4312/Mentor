@@ -30,11 +30,11 @@ const MentorItem: FC<IMentorSingle> = ({ mentor }) => {
 				</div>
 			</div>
 			<div>
-				{mentor.specialization.map(specialization => (
-					<button className='bg-paragraph rounded-[140px] mr-2 mb-2 text-secondary py-1 px-3'>
-						{specialization}
-					</button>
-				))}
+				<button className='bg-paragraph rounded-[140px] text-secondary py-1 px-3'>
+					{mentor?.specialization[0]}
+					{mentor.specialization[1] ? `/${mentor.specialization[1]}` : ''}
+					{/* {mentor.specialization[2] ? `/${mentor.specialization[2]}` : ''} */}
+				</button>
 			</div>
 		</div>
 	)

@@ -12,7 +12,7 @@ export interface IMentor {
 	status: string
 	price: string
 	language: string
-	specialization: number[]
+	specialization: string[]
 }
 
 export interface IMentorData {
