@@ -1,5 +1,5 @@
 import WritingMentor from '@/components/mentor/WritingMentor'
-import { MentorService } from '@/pages/services/car.services'
+import { MentorService } from '@/pages/services/mentor.services'
 import { IMentorSingle } from '@/types/mentor.interface'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { ParsedUrlQuery } from 'querystring'

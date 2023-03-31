@@ -58,4 +58,12 @@ body {
 	h1 {
 		@apply text-[3.44rem] text-center mt-11 mb-8 font-semibold text-title;
 	}
+
+	.accent-btn {
+		@apply px-[4.8rem] py-4 rounded-xl text-little-text text-xl text-center bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200;
+	}
+
+	.little-text-btn {
+		@apply px-[4.8rem] py-4 rounded-xl text-white text-xl text-center bg-little-text hover:text-little-text hover:bg-tertiary active:bg-active hover:duration-150 duration-200;
+	}
 }

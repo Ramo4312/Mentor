@@ -39,7 +39,7 @@ import {
 	updateEmailFailure,
 } from './userSlice'
 
-import { requestStart, requestSuccess, requestFailure } from './mentorSlice'
+import { writingStart, writingSuccess, writingFailure } from './mentorSlice'
 
 // import { toast } from 'react-hot-toast'
 import { Dispatch, SetStateAction } from 'react'
@@ -106,7 +106,6 @@ export const login = async (
 				fontSize: '20px',
 			},
 		})
-		localStorage.setItem('token', JSON.stringify(res.data))
 		dispatch(loginSuccess({ ...res.data, email: user.email }))
 		router.push('/profile/my-profile/')
 	} catch (err) {
@@ -348,12 +347,12 @@ export const updateEmail = async (
 	}
 }
 
-export const request = async (
+export const writing = async (
 	dispatch: Dispatch<IDispatch>,
 	mentee: IMentee,
 	setModal: Dispatch<SetStateAction<boolean>>
 ) => {
-	dispatch(requestStart())
+	dispatch(writingStart())
 	try {
 		const res = await publicReq.post(`statement/menti-statement/`, mentee)
 		toast.success('Ваша заявка отправлена', {
@@ -366,7 +365,7 @@ export const request = async (
 			},
 		})
 
-		dispatch(requestSuccess())
+		dispatch(writingSuccess())
 		console.log(res.data)
 		setModal(true)
 	} catch (err) {
@@ -379,7 +378,7 @@ export const request = async (
 				fontSize: '20px',
 			},
 		})
-		dispatch(requestFailure())
+		dispatch(writingFailure())
 		console.log(err)
 	}
 }

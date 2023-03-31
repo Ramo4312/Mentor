@@ -49,8 +49,6 @@ function MyProfile() {
 		}
 	}, [user])
 
-	console.log(user?.photo)
-
 	return (
 		<div>
 			<Navbar />
@@ -78,22 +76,26 @@ function MyProfile() {
 										QA Lead @Huspy (Dubai)
 									</h5> */}
 								</div>
-								<div className=''>
-									{user?.specialization ? (
-										<p className='cursor-default px-[0.82rem] py-[0.40rem] font-semibold text-tertiary bg-[#2D334A] rounded-full text-center mb-14'>
-											{user.specialization}
+								<div className='w-96 pr-7 flex flex-wrap mb-14 gap-4'>
+									{user?.specialization.map(specialization => (
+										<p className='cursor-default px-[0.82rem] py-[0.40rem] font-semibold text-tertiary bg-[#2D334A] rounded-full text-center'>
+											{specialization}
 										</p>
-									) : (
-										''
-									)}
+									))}
 								</div>
 							</div>
-							<ul className='mb-[1.13rem] flex flex-col gap-y-3'>
+							<ul className='w-40 mb-[1.13rem] flex flex-col gap-y-3'>
+								{user?.experience == 'Нет опыта' ? (
+									<li className='list-disc text-xl'>
+										<strong>Опыт: </strong> {user?.experience}
+									</li>
+								) : (
+									<li className='list-disc text-xl'>
+										<strong>Опыт: </strong> {user?.experience} лет
+									</li>
+								)}
 								<li className='list-disc text-xl'>
-									<strong>Опыт: </strong> {user?.experience}
-								</li>
-								<li className='list-disc text-xl'>
-									<strong>Цена: </strong> {user?.price}
+									<strong>Цена: </strong> {user?.price} сом
 								</li>
 								{/* <li className='list-disc text-xl'>
 									2 человека получили <br /> помощь
@@ -117,7 +119,7 @@ function MyProfile() {
 							</div>
 							<div>
 								<h4 className='text-xl italic text-paragraph'>
-									<span className='text-2xl'>Компетенции:</span>
+									<span className='text-2xl'>Компетенции:</span> <br /> <br />
 									{user?.specialization}
 								</h4>
 							</div>

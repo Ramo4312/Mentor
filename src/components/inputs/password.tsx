@@ -17,7 +17,7 @@ const PasswordInputs = ({
 }: IProps) => {
 	return (
 		<div className='flex flex-col gap-y-[0.87rem]'>
-			<label className='label-in-register' htmlFor=''>
+			<label className='label-in-register text-left' htmlFor=''>
 				{label}
 			</label>
 			<input

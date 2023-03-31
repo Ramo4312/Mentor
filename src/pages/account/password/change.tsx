@@ -37,7 +37,7 @@ const ChangePassword = () => {
 
 	return (
 		<Layout>
-			<div className='relative overflow-hidden text-center'>
+			<div className='relative overflow-hidden text-center mb-44'>
 				<AbsoluteImages />
 				<div className=''>
 					<h1>Изменить пароль</h1>

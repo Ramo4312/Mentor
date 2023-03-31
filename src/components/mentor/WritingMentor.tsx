@@ -1,7 +1,7 @@
 import { devLvl } from '@/arrays/arrays'
 import { useAppDispatch } from '@/hooks/hooks'
-import RequestModal from '@/pages/profile/request/modal'
-import { request } from '@/redux/apiCalls'
+import RequestModal from '@/pages/writing/modal'
+import { writing } from '@/redux/apiCalls'
 import { IMentorSingle } from '@/types/mentor.interface'
 import { IMentee } from '@/types/types'
 import Image from 'next/image'
@@ -56,7 +56,7 @@ const WritingMentor: FC<IMentorSingle> = ({ mentor }) => {
 			mentor_service: mentor.id,
 		}
 
-		request(dispatch, mentee, setModal)
+		writing(dispatch, mentee, setModal)
 	}
 
 	const getValue = () => {
@@ -71,7 +71,7 @@ const WritingMentor: FC<IMentorSingle> = ({ mentor }) => {
 		<Layout>
 			<Toaster />
 			<RequestModal modal={modal} setModal={setModal} />
-			<div className='w-full max-w-[1440px] px-[28.13rem]'>
+			<div className='w-full max-w-[1440px] px-[28.13rem] mb-44'>
 				<h1 className='mb-16'>Запись к ментору</h1>
 				<div className='flex gap-x-[3.8rem] mb-24'>
 					<Image

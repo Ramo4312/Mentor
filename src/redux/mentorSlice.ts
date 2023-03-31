@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 export interface CounterState {
 	value: number
@@ -16,21 +16,21 @@ export const mentorSlice = createSlice({
 		error: false,
 	},
 	reducers: {
-		requestStart: state => {
+		writingStart: state => {
 			state.isFetching = true
 			state.error = false
 		},
-		requestSuccess: state => {
+		writingSuccess: state => {
 			state.isFetching = false
 			state.error = false
 		},
-		requestFailure: state => {
+		writingFailure: state => {
 			state.isFetching = false
 			state.error = true
 		},
 	},
 })
 
-export const { requestStart, requestSuccess, requestFailure } =
+export const { writingStart, writingSuccess, writingFailure } =
 	mentorSlice.actions
 export default mentorSlice.reducer
