@@ -1,5 +1,3 @@
-'use client'
-
 import { pages } from '@/arrays/arrays'
 // import { useAppDispatch } from '@/hooks/hooks'
 import Image from 'next/image'
@@ -20,8 +18,12 @@ const SideBar = () => {
 	return (
 		<>
 			<LogoutModal modal={modal} setModal={setModal} />
-			<div className='w-72 py-28 bg-secondary rounded-[0.63rem] fixed'>
-				<ul className='flex flex-col gap-y-[1.13rem]'>
+			<div
+				className={`w-72 py-[4.6rem] bg-secondary rounded-[0.63rem] ${
+					pathname === '/profile/my-requests' ? '' : 'fixed'
+				}`}
+			>
+				<ul className='flex flex-col gap-y-[2.4rem]'>
 					{pages?.map(item => (
 						<li
 							key={item.id}
@@ -40,11 +42,14 @@ const SideBar = () => {
 										pathname == item.path ? '' : 'hidden'
 									} w-2 h-7 bg-paragraph rounded-r-lg`}
 								></div>
-								<Image
+								<img
 									src={pathname == item.path ? item.image2 : item.image}
 									alt={item.text}
-									width={24}
-									height={24}
+									className={`${
+										item.image == '/trash.svg' || item.image2 == '/r/trash.svg'
+											? 'ml-[.1rem] mr-[.15rem]'
+											: ''
+									}`}
 								/>
 								<p
 									className={`${

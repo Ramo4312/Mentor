@@ -1,10 +1,9 @@
 import { changePassword } from '@/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
-import Footer from '@/components/footer/Footer'
-import Navbar from '@/components/navbar/Navbar'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import { INewPassword } from '@/types/types'
 import React, { useState } from 'react'
+import Layout from '@/components/layout/Layout'
 
 const ChangePassword = () => {
 	const [isVisOldPass, setIsVisOldPass] = useState<boolean>(false)
@@ -37,8 +36,7 @@ const ChangePassword = () => {
 	}
 
 	return (
-		<>
-			<Navbar />
+		<Layout>
 			<div className='relative overflow-hidden text-center'>
 				<AbsoluteImages />
 				<div className=''>
@@ -104,8 +102,7 @@ const ChangePassword = () => {
 					</form>
 				</div>
 			</div>
-			<Footer />
-		</>
+		</Layout>
 	)
 }
 

@@ -1,12 +1,15 @@
 import { register } from '@/redux/apiCalls'
 import { useAppDispatch } from '@/hooks/hooks'
-import { ILanguage, IOption, IPhoto, ISpec } from '@/types/types'
+import { ILanguage, IOption, IPhoto, IUserReg } from '@/types/types'
 import React, { useState, useId } from 'react'
-import Navbar from '@/components/navbar/Navbar'
-import Footer from '@/components/footer/Footer'
 import Select, { OnChangeValue } from 'react-select'
 import makeAnimated from 'react-select/animated'
-import { experience, languages, prices, specializations } from '@/arrays/arrays'
+import {
+	prices,
+	languages,
+	experiences,
+	specializations,
+} from '@/arrays/arrays'
 import Image from 'next/image'
 import AbsoluteImages from '@/components/absoluteImages'
 import CreatableSelect from 'react-select/creatable'
@@ -14,90 +17,165 @@ import CreatableSelect from 'react-select/creatable'
 import DefaultInputs from '@/components/inputs/default'
 import PasswordInputs from '@/components/inputs/password'
 import BigInputs from '@/components/inputs/big'
-import { useRouter } from 'next/router'
+import ActivationModal from '../../components/activationModal'
+import Layout from '@/components/layout/Layout'
+
+import {
+	getStorage,
+	ref,
+	uploadBytesResumable,
+	getDownloadURL,
+} from 'firebase/storage'
+import app from '@/firebase'
+import { toast, Toaster } from 'react-hot-toast'
 
 const RegisterPage = () => {
+	const [modal, setModal] = useState<boolean>(false)
+
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
 	const [isVisPassConf, setIsVisPassConf] = useState<boolean>(false)
-
-	const [full_name, setFull_name] = useState<string>('')
+	const [username, setFull_name] = useState<string>('')
 	const [email, setEmail] = useState<string>('')
 	const [password, setPassword] = useState<string>('')
 	const [password_confirm, setPassword_confirm] = useState<string>('')
-	const [image, setImage] = useState<File | IPhoto | null | undefined | Blob>()
-	const [post, setPost] = useState<string>('')
+	const [image, setImage] = useState<any>(null)
+	const [position, setPost] = useState<string>('')
 	const [place_of_work, setPlace_of_work] = useState<string>('')
-	const [bio, setBio] = useState<string>('')
+	const [about_me, setBio] = useState<string>('')
 	const [help, setHelp] = useState<string>('')
-	const [mentee_level, setMentee_level] = useState<string>('')
-	const [exp, setExp] = useState('')
-	const [spec, setSpec] = useState<string[]>([''])
-	const [specId, setSpecId] = useState<string[]>([])
-	const [skill, setSkill] = useState<string>('')
-	const [price, setPrice] = useState('')
+	const [level_mentor, setMentee_level] = useState<string>('')
+	const [experience, setExp] = useState('')
+	const [specialization, setSpec] = useState<string[]>([''])
+	const [skills, setSkill] = useState<string>('')
+	const [price, setPrice] = useState<string>('')
 	const [language, setLanguage] = useState('')
+	// const [specId, setSpecId] = useState<number[]>([])
+
+	const [loaded, setLoaded] = useState('Сохранить изменения')
 
 	const dispatch = useAppDispatch()
 
 	const animatedComponents = makeAnimated()
 
-	const router = useRouter()
-	console.log(router)
-
 	function handleRegister() {
-		const formData: any = new FormData()
-		formData.append('username', full_name)
-		formData.append('email', email)
-		formData.append('password', password)
-		formData.append('password_confirm', password_confirm)
-		formData.append('image', image)
-		formData.append('position', post)
-		formData.append('place_of_work', place_of_work)
-		formData.append('about_me', bio)
-		formData.append('help', help)
-		formData.append('level_mentor', mentee_level)
-		formData.append('experience', exp)
-		formData.append('specialization', specId)
-		formData.append('skills', skill)
-		formData.append('price', price)
-		formData.append('language', language)
+		if (
+			!username.trim() ||
+			!email.trim() ||
+			!password.trim() ||
+			!password_confirm.trim() ||
+			// !image.trim() ||
+			!position.trim() ||
+			!place_of_work.trim() ||
+			!about_me.trim() ||
+			!help.trim() ||
+			!level_mentor.trim() ||
+			!experience.trim() ||
+			specialization.length == 0 ||
+			!skills.trim() ||
+			!price.trim() ||
+			!language.trim()
+		) {
+			toast.error('Некоторые поля не заполнены', {
+				style: {
+					borderRadius: '6px',
+					background: '#333',
+					color: '#fff',
+					padding: '20px auto',
+					fontSize: '20px',
+				},
+			})
+			return
+		}
+		const fileName = new Date().getTime() + image.name
+		const storage = getStorage(app)
+		const storageRef = ref(storage, fileName)
+		const uploadTask = uploadBytesResumable(storageRef, image)
 
-		register(dispatch, formData)
+		uploadTask.on(
+			'state_changed',
+			snapshot => {
+				const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+				setLoaded('Загруска выполнена на ' + progress + '%')
 
-		// error ? router.push('/account/login') : null
+				switch (snapshot.state) {
+					case 'paused':
+						console.log('Upload is paused')
+						break
+					case 'running':
+						console.log('Upload is running')
+						break
+					default:
+				}
+			},
+			error => {
+				console.log(error)
+			},
+			() => {
+				getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
+					const user: IUserReg = {
+						username,
+						email,
+						password,
+						password_confirm,
+						photo: downloadURL,
+						position,
+						place_of_work,
+						about_me,
+						help,
+						level_mentor,
+						experience,
+						specialization,
+						skills,
+						price,
+						language,
+					}
+					register(dispatch, user, setModal)
+				})
+			}
+		)
 	}
 
+	// console.log(image)
+
 	const getValue1 = () => {
-		return exp ? experience.find(c => c.value === exp) : ''
+		return experience ? experiences.find(c => c.value === experience) : ''
 	}
 
 	const onChange1 = (newValue: any) => {
-		if (newValue.value !== 'Нет опыта') {
-			setExp(newValue.value + ' ' + 'лет')
-		} else {
-			setExp(newValue.value)
-		}
+		setExp(newValue.value)
 	}
 
 	const getValue2 = () => {
-		return spec ? specializations.filter(c => spec.indexOf(c.value) >= 0) : []
+		return specialization
+			? specializations.filter(c => specialization.indexOf(c.value) >= 0)
+			: []
 	}
 
 	const onChange2 = (newValue: OnChangeValue<IOption, boolean>) => {
-		if (spec.length >= 5) return
+		if (specialization.length >= 5) return
 		setSpec((newValue as IOption[]).map(v => v.value))
-		setSpecId((newValue as ISpec[]).map(v => v.id.toString()))
+		// setSpecId((newValue as ISpec[]).map(v => v.id))
 	}
 
 	const onChange4 = (newValue: any) => {
-		setPrice(newValue.value)
+		// if (price !== null) {
+		// }
+		setPrice(newValue.value!)
 	}
 
+	console.log(price)
+
 	return (
-		<>
-			<Navbar />
+		<Layout>
+			<Toaster />
 			<div className='relative overflow-hidden'>
 				<AbsoluteImages />
+				<ActivationModal
+					modal={modal}
+					setModal={setModal}
+					email={email}
+					password={password}
+				/>
 				<div className=''>
 					<h1>
 						Стань частью нашей <br /> команды
@@ -112,12 +190,22 @@ const RegisterPage = () => {
 						onSubmit={e => e.preventDefault()}
 						className='flex flex-col gap-y-5 mx-auto w-[46.88rem]'
 					>
+						<input
+							type='text'
+							className='reg-inputs'
+							autoComplete='true'
+							aria-autocomplete='none'
+						/>
 						<DefaultInputs
 							label='ФИО'
-							state={full_name}
+							state={username}
 							setState={setFull_name}
 						/>
-						<DefaultInputs label='Email' state={email} setState={setEmail} />
+						<DefaultInputs
+							label='Email'
+							state={email.toLocaleLowerCase()}
+							setState={setEmail}
+						/>
 						<PasswordInputs
 							label='Пароль'
 							state={password}
@@ -139,7 +227,7 @@ const RegisterPage = () => {
 							<div className='relative'>
 								<input
 									type='file'
-									className='file-input w-full h-full z-20 absolute bg-transparent opacity-0'
+									className='file-input w-full h-full z-1 absolute bg-transparent opacity-0'
 									// ref={filePicker}
 									accept='image/*,.png,.jpg,.web'
 									size={2}
@@ -158,14 +246,14 @@ const RegisterPage = () => {
 									<Image
 										width={28}
 										height={28}
-										src='/attachment_24px.svg'
+										src='/images/attachment_24px.svg'
 										alt=''
 										className='w-7'
 									/>
 									{image ? (
 										<Image
 											onClick={() => setImage(null)}
-											src='/trash-icon.svg'
+											src='/images/trash-icon.svg'
 											alt=''
 											width={22}
 											height={22}
@@ -178,13 +266,17 @@ const RegisterPage = () => {
 							</div>
 							<p className='text[#485174B2] '>(пожалуйста, не более 2Мб)</p>
 						</div>
-						<DefaultInputs label='Должность' state={post} setState={setPost} />
+						<DefaultInputs
+							label='Должность'
+							state={position}
+							setState={setPost}
+						/>
 						<DefaultInputs
 							label='Место работы'
 							state={place_of_work}
 							setState={setPlace_of_work}
 						/>
-						<BigInputs label='О себе' state={bio} setState={setBio} />
+						<BigInputs label='О себе' state={about_me} setState={setBio} />
 						<BigInputs
 							label='С чем вы можете помочь?'
 							state={help}
@@ -192,7 +284,7 @@ const RegisterPage = () => {
 						/>
 						<BigInputs
 							label='Какого уровня менти могут обращаться к вам за помощью?'
-							state={mentee_level}
+							state={level_mentor}
 							setState={setMentee_level}
 						/>
 						<div className='flex flex-col gap-y-[0.87rem] w-[30.38rem] mb-12'>
@@ -205,7 +297,7 @@ const RegisterPage = () => {
 								onChange={onChange1}
 								isSearchable={false}
 								value={getValue1()}
-								options={experience}
+								options={experiences}
 								placeholder=''
 							/>
 						</div>
@@ -248,7 +340,7 @@ const RegisterPage = () => {
 							</label>
 							<input
 								onChange={e => setSkill(e.target.value)}
-								value={skill}
+								value={skills}
 								name='username'
 								className='reg-inputs'
 								type='text'
@@ -303,8 +395,8 @@ const RegisterPage = () => {
 										<Image
 											src={
 												language == item.lang
-													? '/checked.svg'
-													: '/no-checked.svg'
+													? '/images/checked.svg'
+													: '/images/no-checked.svg'
 											}
 											alt=''
 											width={20}
@@ -325,8 +417,7 @@ const RegisterPage = () => {
 					</form>
 				</div>
 			</div>
-			<Footer />
-		</>
+		</Layout>
 	)
 }
 

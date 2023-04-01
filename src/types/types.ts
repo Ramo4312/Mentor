@@ -19,8 +19,6 @@ export interface IToken extends IRefresh {
 	access: string
 }
 
-<<<<<<< HEAD
-=======
 export interface IPassToRestore {
 	email: string
 	code: string
@@ -28,7 +26,6 @@ export interface IPassToRestore {
 	new_pass_confirm: string
 }
 
->>>>>>> f46a519 (cleaned project)
 export interface INewPassword {
 	old_password: string
 	new_password: string
@@ -69,23 +66,82 @@ export interface IPhoto {
 }
 
 export interface IUserReg {
-	full_name: string
+	username: string
 	email: string
 	password: string
 	password_confirm: string
-	downloadURL: string
-	post: string
+	image?: any
+	photo?: string
+	position: string
 	place_of_work: string
-	bio: string
+	about_me: string
 	help: string
-	mentee_level: string
-	exp: string
-	spec: string[]
-	skill: string[]
+	level_mentor: string
+	experience: string
+	specialization: string[]
+	skills: string
 	price: string
 	language: string
 }
 
 export interface ISpec extends IOption {
 	id: number
+}
+
+export interface IChildren {
+	children: React.ReactNode
+}
+
+export interface ISpecializationsFilter {
+	name: string
+	specializations: string[]
+}
+
+export interface ISelectedData {
+	expirience: string | undefined
+	price: string | undefined
+	language: string | undefined
+}
+
+// export interface ISortMentors {
+// 	sortMentors: ISortMentor[]
+// }
+
+export interface ISortMentors {
+	name: string
+	options: string[]
+}
+
+export interface IMentee {
+	email: string
+	name: string
+	description: string
+	my_level: string
+	telegram: string
+}
+
+export interface IUserStatus {
+	telegram_status: boolean
+}
+
+export interface IRequest {
+	id: number
+	my_level: string
+	name: string
+	email: string
+	telegram: string
+	description: string
+	create_at: string
+	accepted: string
+	denied: string
+	mentor_service: string
+}
+
+export interface IRequest2 {
+	my_level: string
+	name: string
+	email: string
+	telegram: string
+	description: string
+	mentor_service: string
 }

@@ -1,4 +1,4 @@
-import { ILanguage, IOption, IPages, ISpec } from '@/types/types'
+import { ILanguage, IOption, IPages, ISortMentors, ISpec } from '@/types/types'
 
 export const specializations: ISpec[] = [
 	{ id: 6, value: 'Agile', label: 'Agile' },
@@ -26,38 +26,106 @@ export const specializations: ISpec[] = [
 	{ id: 28, value: 'Сети', label: 'Сети' },
 ]
 
+export const specializationsFilter = [
+	{
+		name: 'Development',
+		specializations: [
+			'Android',
+			'Backend',
+			'iOS',
+			'Frontend',
+			'System Design',
+			'Code Review',
+			'Data Science/ML',
+		],
+	},
+	{
+		name: 'Management',
+		specializations: [
+			'Agile',
+			'Product Management',
+			'Project Management',
+			'Team Lead/Management',
+		],
+	},
+	{
+		name: 'DevOps',
+		specializations: ['Databases', 'Сети', 'Cloud'],
+	},
+	{
+		name: 'HR',
+		specializations: ['HR', 'Карьера', 'Собеседования', 'Entrepreneurship'],
+	},
+	{
+		name: 'Marketing',
+		specializations: ['Content/Copy', 'Marketing'],
+	},
+	{
+		name: 'Другое',
+		specializations: ['QA', 'Аналитика', 'UX/UI/Design'],
+	},
+]
+
 export const pages: IPages[] = [
 	{
 		id: 1,
 		text: 'Заявки',
-		image: '/trending_arrow.svg',
-		path: 'profile/my-requests',
+		image: '/images/trending_arrow.svg',
+		path: '/profile/my-requests',
 		notifications: 12,
-		image2: '/r/trending_arrow.svg',
+		image2: '/images/r/trending_arrow.svg',
 	},
 	{
 		id: 2,
 		text: 'Мои данные',
-		image: '/star.svg',
+		image: '/images/star.svg',
 		path: '/profile/my-profile',
 		notifications: 0,
-		image2: '/r/star.svg',
+		image2: '/images/r/star.svg',
 	},
 	{
 		id: 3,
-		text: 'Настройки',
-		image: '/settings.svg',
-		path: '/profile/settings',
+		text: 'Корзина',
+		image: '/images/trash.svg',
+		path: '/profile/requests-trash',
 		notifications: 0,
-		image2: '/r/settings.svg',
+		image2: '/images/r/star.svg',
 	},
 	{
 		id: 4,
+		text: 'Настройки',
+		image: '/images/settings.svg',
+		path: '/profile/settings',
+		notifications: 0,
+		image2: '/images/r/settings.svg',
+	},
+	{
+		id: 5,
 		text: 'Выйти',
 		path: '',
-		image: '/exit.svg',
+		image: '/images/exit.svg',
 		notifications: 0,
-		image2: '/r/exit.svg',
+		image2: '/images/r/exit.svg',
+	},
+]
+
+export const sortMentors: ISortMentors[] = [
+	{
+		name: 'Язык',
+		options: ['Оба языка', 'Русский', 'Кыргызский'],
+	},
+	{
+		name: 'Цена',
+		options: [
+			'Бесплатно',
+			'По договоренности',
+			'По убыванию',
+			'По возрастанию',
+		],
+	},
+	{
+		name: 'Опыт',
+		options: ['10+', '5-10', '2-5', 'Нет опыта'],
 	},
 ]
 
@@ -66,7 +134,7 @@ export const prices: IOption[] = [
 	{ value: 'По договоренности', label: 'По договоренности' },
 ]
 
-export const experience: IOption[] = [
+export const experiences: IOption[] = [
 	{ value: 'Нет опыта', label: 'Нет опыта' },
 	{ value: '2-5', label: '2-5' },
 	{ value: '5-10', label: '5-10' },
@@ -82,6 +150,14 @@ export const skills: IOption[] = [
 
 export const languages: ILanguage[] = [
 	{ lang: 'Кыргызский/Русский', label: 'Оба языка', image: '' },
-	{ lang: 'Кыргызский ', label: 'Кыргызский', image: '/kgz.svg' },
-	{ lang: 'Русский', label: 'Русский', image: '/rus.svg' },
+	{ lang: 'Кыргызский ', label: 'Кыргызский', image: '/images/kgz.svg' },
+	{ lang: 'Русский', label: 'Русский', image: '/images/rus.svg' },
+]
+
+export const devLvl: IOption[] = [
+	{ value: 'junior', label: 'junior ' },
+	{ value: 'strong junior', label: 'strong junior' },
+	{ value: 'middle', label: 'middle' },
+	{ value: 'middle+', label: 'middle+' },
+	{ value: 'senior', label: 'senior' },
 ]

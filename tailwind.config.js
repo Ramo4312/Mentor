@@ -7,7 +7,9 @@ module.exports = {
 
 		// Or if using `src` directory:
 		'./src/**/*.{js,ts,jsx,tsx}',
+		'./node_modules/tw-elements/dist/js/**/*.js',
 	],
+	plugins: [require('tw-elements/dist/plugin')],
 	theme: {
 		screens: {
 			desktop: '1440px',
@@ -36,5 +38,4 @@ module.exports = {
 			},
 		},
 	},
-	plugins: [],
 }

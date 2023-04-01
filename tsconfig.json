@@ -20,7 +20,7 @@
 			}
 		],
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*", "./public/*"]
 		}
 	},
 	"include": [
@@ -28,7 +28,8 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		"src/appaka/todos/page.tsx"
+		"src/appaka/todos/page.tsx",
+		"index.d.ts"
 	],
 	"exclude": ["node_modules"]
 }
