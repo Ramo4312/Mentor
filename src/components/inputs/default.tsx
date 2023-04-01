@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction } from 'react'
 interface IProps {
 	label: string
 	state: string
-	setState: Dispatch<SetStateAction<string>>
+	setState: Dispatch<SetStateAction<string | undefined>>
 	className?: string
 }
 

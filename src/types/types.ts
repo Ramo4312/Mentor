@@ -38,7 +38,7 @@ export interface IOption {
 }
 
 export interface IDispatch {
-	payload: undefined | string | IFullUser
+	payload: undefined | string | IFullUser | IUserReg
 	type: string
 }
 
@@ -66,22 +66,22 @@ export interface IPhoto {
 }
 
 export interface IUserReg {
-	username: string
-	email: string
-	password: string
-	password_confirm: string
+	username: string | undefined
+	email: string | undefined
+	password: string | undefined
+	password_confirm: string | undefined
 	image?: any
-	photo?: string
-	position: string
-	place_of_work: string
-	about_me: string
-	help: string
-	level_mentor: string
-	experience: string
-	specialization: string[]
-	skills: string
-	price: string
-	language: string
+	photo?: string | undefined
+	position: string | undefined
+	place_of_work: string | undefined
+	about_me: string | undefined
+	help: string | undefined
+	level_mentor: string | undefined
+	experience: string | undefined
+	specialization: string[] | undefined
+	skills: string | undefined
+	price: string | undefined
+	language: string | undefined
 }
 
 export interface ISpec extends IOption {

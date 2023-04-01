@@ -1,4 +1,4 @@
-import { IFullUser, IToken, IUser } from '@/types/types'
+import { IFullUser, IToken, IUser, IUserReg } from '@/types/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface CounterState {
@@ -6,7 +6,8 @@ export interface CounterState {
 }
 
 interface initialState {
-	currentUser: IUser
+	email: string
+	currentUser: IUserReg | null
 	tokens: IToken
 	isFetching: boolean
 	error: boolean
@@ -15,9 +16,8 @@ interface initialState {
 export const userSlice = createSlice({
 	name: 'user',
 	initialState: <initialState>{
-		currentUser: {
-			email: '',
-		},
+		email: '',
+		currentUser: null,
 		tokens: {
 			access: '',
 			refresh: '',
@@ -36,9 +36,7 @@ export const userSlice = createSlice({
 				access: action.payload.access,
 				refresh: action.payload.refresh,
 			}
-			state.currentUser = {
-				email: action.payload.email,
-			}
+			state.email = action.payload.email
 			state.error = false
 		},
 		loginFailure: state => {
@@ -120,7 +118,7 @@ export const userSlice = createSlice({
 		},
 		deleteSuccess: state => {
 			state.isFetching = false
-			state.currentUser.email = ''
+			state.email = ''
 			state.tokens = {
 				access: '',
 				refresh: '',
@@ -135,7 +133,7 @@ export const userSlice = createSlice({
 		logoutSuccess: state => {
 			state.isFetching = false
 			state.error = false
-			state.currentUser.email = ''
+			state.email = ''
 			state.tokens = {
 				access: '',
 				refresh: '',
@@ -161,10 +159,24 @@ export const userSlice = createSlice({
 		},
 		updateEmailSuccess: (state, action: PayloadAction<string>) => {
 			state.isFetching = false
-			state.currentUser.email = action.payload
+			state.email = action.payload
 			state.error = false
 		},
 		updateEmailFailure: state => {
+			state.isFetching = false
+			state.error = true
+		},
+
+		getStart: state => {
+			state.isFetching = true
+			state.error = false
+		},
+		getSuccess: (state, action: PayloadAction<IUserReg>) => {
+			state.isFetching = false
+			state.currentUser = action.payload
+			state.error = false
+		},
+		getFailure: state => {
 			state.isFetching = false
 			state.error = true
 		},
@@ -200,5 +212,8 @@ export const {
 	updateEmailStart,
 	updateEmailSuccess,
 	updateEmailFailure,
+	getStart,
+	getSuccess,
+	getFailure,
 } = userSlice.actions
 export default userSlice.reducer

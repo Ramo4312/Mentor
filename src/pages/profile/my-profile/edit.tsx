@@ -14,7 +14,6 @@ import {
 	specializations,
 } from '@/arrays/arrays'
 import { getUser, userUpdate } from '@/redux/apiCalls'
-import { IUser } from './index'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import DefaultInputs from '@/components/inputs/default'
 import BigInputs from '@/components/inputs/big'
@@ -29,26 +28,25 @@ import {
 import app from '@/firebase'
 
 const ProfileEdit = () => {
-	const tokens = useAppSelector(state => state.user.tokens)
+	const { currentUser, tokens } = useAppSelector(state => state.user)
 
-	const [error, setError] = useState(true)
-	const [username, setFull_name] = useState<string>('')
-	const [email, setEmail] = useState<string>('')
-	const [password, setPassword] = useState<string>('')
-	const [password_confirm, setPassword_confirm] = useState<string>('')
-	const [photo, setImage] = useState<any>()
-	const [position, setPost] = useState<string>('')
-	const [place_of_work, setPlace_of_work] = useState<string>('')
-	const [about_me, setBio] = useState<string>('')
-	const [help, setHelp] = useState<string>('')
-	const [level_mentor, setMentee_level] = useState<string>('')
-	const [experience, setExp] = useState('')
+	const [username, setFull_name] = useState(currentUser?.username)
+	const [email, setEmail] = useState(currentUser?.email)
+	const [password, setPassword] = useState(currentUser?.password)
+	const [password_confirm, setPassword_confirm] = useState(
+		currentUser?.password_confirm
+	)
+	const [photo, setImage] = useState<any>(currentUser?.photo)
+	const [position, setPost] = useState(currentUser?.position)
+	const [place_of_work, setPlace_of_work] = useState(currentUser?.place_of_work)
+	const [about_me, setBio] = useState(currentUser?.about_me)
+	const [help, setHelp] = useState(currentUser?.help)
+	const [level_mentor, setMentee_level] = useState(currentUser?.level_mentor)
+	const [experience, setExp] = useState(currentUser?.experience)
 	const [specialization, setSpec] = useState<string[]>([''])
-	const [skills, setSkill] = useState<string>('')
-	const [price, setPrice] = useState('')
-	const [language, setLanguage] = useState('')
-
-	const [user, setUser] = useState<IUser | null>(null)
+	const [skills, setSkill] = useState(currentUser?.skills)
+	const [price, setPrice] = useState(currentUser?.price)
+	const [language, setLanguage] = useState(currentUser?.language)
 
 	const [loaded, setLoaded] = useState('Сохранить изменения')
 
@@ -59,28 +57,8 @@ const ProfileEdit = () => {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
-		getUser(tokens?.access, setUser, setError)
+		getUser(dispatch, tokens?.access)
 	}, [])
-
-	useEffect(() => {
-		if (user) {
-			setFull_name(user.username)
-			setEmail(user.email)
-			setPassword(user.password)
-			setPassword_confirm(user.password_confirm)
-			setImage(user.photo)
-			setPost(user.position)
-			setPlace_of_work(user.place_of_work)
-			setBio(user.about_me)
-			setHelp(user.help)
-			setMentee_level(user.level_mentor)
-			setExp(user.experience)
-			setSpec(user.specialization)
-			setSkill(user.skills)
-			setPrice(user.price)
-			setLanguage(user.language)
-		}
-	}, [user])
 
 	const getValue1 = () => {
 		return experience ? experiences.find(c => c.value === experience) : ''
@@ -169,7 +147,7 @@ const ProfileEdit = () => {
 					>
 						<DefaultInputs
 							label='ФИО'
-							state={username}
+							state={username ? username : ''}
 							setState={setFull_name}
 						/>
 						<div className='flex flex-col gap-y-[0.87rem] w-96'>
@@ -219,23 +197,27 @@ const ProfileEdit = () => {
 						</div>
 						<DefaultInputs
 							label='Должность'
-							state={position}
+							state={position ? position : ''}
 							setState={setPost}
 						/>
 						<DefaultInputs
 							label='Место работы'
-							state={place_of_work}
+							state={place_of_work ? place_of_work : ''}
 							setState={setPlace_of_work}
 						/>
-						<BigInputs label='О себе' state={about_me} setState={setBio} />
+						<BigInputs
+							label='О себе'
+							state={about_me ? about_me : ''}
+							setState={setBio}
+						/>
 						<BigInputs
 							label='С чем вы можете помочь?'
-							state={help}
+							state={help ? help : ''}
 							setState={setHelp}
 						/>
 						<BigInputs
 							label='Какого уровня менти могут обращаться к вам за помощью?'
-							state={level_mentor}
+							state={level_mentor ? level_mentor : ''}
 							setState={setMentee_level}
 						/>
 						<div className='flex flex-col gap-y-[0.87rem] w-[30.38rem] mb-12'>

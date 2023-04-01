@@ -1,33 +1,15 @@
 import { getUser } from '@/redux/apiCalls'
 import Navbar from '@/components/navbar/Navbar'
 import SideBar from '@/components/sidebar'
-import { useAppSelector } from '@/hooks/hooks'
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 // import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { IUserReg } from '@/types/types'
 
-export interface IUser {
-	username: string
-	email: string
-	photo: string
-	position: string
-	place_of_work: string
-	about_me: string
-	help: string
-	level_mentor: string
-	experience: string
-	skills: string
-	status: string
-	price: string
-	language: string
-	registration_date: string
-	specialization: string[]
-	password: string
-	password_confirm: string
-}
 export interface IProps {
-	data: IUser
+	data: IUserReg
 }
 
 function MyProfile() {
@@ -35,19 +17,18 @@ function MyProfile() {
 
 	const [error, setError] = useState<boolean>(false)
 
-	const [user, setUser] = useState<IUser | null>(null)
-	const [userImage, setUserImage] = useState('')
-	const { tokens } = useAppSelector(state => state.user)
+	const dispatch = useAppDispatch()
+	const { tokens, currentUser } = useAppSelector(state => state.user)
 
 	useEffect(function () {
-		getUser(tokens?.access, setUser, setError)
+		getUser(dispatch, tokens?.access, setError)
 	}, [])
 
 	useEffect(() => {
 		if (error) {
 			router.push('/')
 		}
-	}, [user])
+	}, [currentUser])
 
 	return (
 		<div>
@@ -59,7 +40,7 @@ function MyProfile() {
 				<div className='w-[46.6rem] pb-44'>
 					<div className='flex gap-x-9 mb-9'>
 						<img
-							src={user?.photo}
+							src={currentUser?.photo}
 							alt=''
 							width='209'
 							height='149'
@@ -70,14 +51,14 @@ function MyProfile() {
 							<div className='flex flex-col items-start'>
 								<div className=''>
 									<h3 className='text-[#272343] text-2xl font-semibold mb-[0.63rem]'>
-										{user?.username}
+										{currentUser?.username}
 									</h3>
 									{/* <h5 className='text-[#485174] text-lg font-normal mb-6'>
 										QA Lead @Huspy (Dubai)
 									</h5> */}
 								</div>
 								<div className='w-96 pr-7 flex flex-wrap mb-14 gap-4'>
-									{user?.specialization.map(specialization => (
+									{currentUser?.specialization?.map(specialization => (
 										<p className='cursor-default px-[0.82rem] py-[0.40rem] font-semibold text-tertiary bg-[#2D334A] rounded-full text-center'>
 											{specialization}
 										</p>
@@ -85,17 +66,17 @@ function MyProfile() {
 								</div>
 							</div>
 							<ul className='w-40 mb-[1.13rem] flex flex-col gap-y-3'>
-								{user?.experience == 'Нет опыта' ? (
+								{currentUser?.experience == 'Нет опыта' ? (
 									<li className='list-disc text-xl'>
-										<strong>Опыт: </strong> {user?.experience}
+										<strong>Опыт: </strong> {currentUser?.experience}
 									</li>
 								) : (
 									<li className='list-disc text-xl'>
-										<strong>Опыт: </strong> {user?.experience} лет
+										<strong>Опыт: </strong> {currentUser?.experience} лет
 									</li>
 								)}
 								<li className='list-disc text-xl'>
-									<strong>Цена: </strong> {user?.price} сом
+									<strong>Цена: </strong> {currentUser?.price} сом
 								</li>
 								{/* <li className='list-disc text-xl'>
 									2 человека получили <br /> помощь
@@ -108,19 +89,19 @@ function MyProfile() {
 							<div className=''>
 								<h4 className='text-3xl text-paragraph '>О себе</h4>
 								<h5 className='text-little-text text-[1.2rem] my-7'>
-									{user?.about_me}
+									{currentUser?.about_me}
 								</h5>
 							</div>
 							<div className=''>
 								<h4 className='text-3xl text-paragraph '>С чем помогу</h4>
 								<h5 className='text-little-text text-[1.2rem] my-7'>
-									{user?.help}
+									{currentUser?.help}
 								</h5>
 							</div>
 							<div>
 								<h4 className='text-xl italic text-paragraph'>
 									<span className='text-2xl'>Компетенции:</span> <br /> <br />
-									{user?.specialization}
+									{currentUser?.specialization}
 								</h4>
 							</div>
 						</div>

@@ -38,13 +38,15 @@ import {
 	updateEmailStart,
 	updateEmailSuccess,
 	updateEmailFailure,
+	getStart,
+	getSuccess,
+	getFailure,
 } from './userSlice'
 
 import { writingStart, writingSuccess, writingFailure } from './mentorSlice'
 
-// import { toast } from 'react-hot-toast'
 import { Dispatch, SetStateAction } from 'react'
-import { IProps, IUser } from '@/pages/profile/my-profile'
+import { IProps } from '@/pages/profile/my-profile'
 import { toast } from 'react-hot-toast'
 
 export const API = 'https://mentorkgapi.pythonanywhere.com/'
@@ -267,11 +269,12 @@ export const logout = (dispatch: Dispatch<IDispatch>) => {
 }
 
 export const getUser = async (
+	dispatch: Dispatch<IDispatch>,
 	token: string | undefined,
-	setUser: Dispatch<SetStateAction<IUser | null>>,
-	setError: Dispatch<SetStateAction<boolean>>
+	setError?: Dispatch<SetStateAction<boolean>>
 ) => {
 	try {
+		dispatch(getStart())
 		const config = {
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -280,10 +283,11 @@ export const getUser = async (
 
 		const { data }: IProps = await publicReq(`base/personal-profile/`, config)
 
-		setUser(data)
+		dispatch(getSuccess(data))
 	} catch (err) {
+		dispatch(getFailure())
 		console.log(err)
-		setError(true)
+		setError ? setError(true) : null
 	}
 }
 

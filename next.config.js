@@ -25,6 +25,10 @@ const nextConfig = {
 				protocol: 'https',
 				hostname: 'getmentor.blob.core.windows.net',
 			},
+			{
+				protocol: 'https',
+				hostname: 'firebasestorage.googleapis.com',
+			},
 		],
 		domains: ['localhost:3000'],
 	},
