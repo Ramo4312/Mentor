@@ -119,3 +119,8 @@ export interface IMentee {
 	my_level: string
 	telegram: string
 }
+
+export interface IRequest {
+	accepted: boolean
+	denied: boolean
+}

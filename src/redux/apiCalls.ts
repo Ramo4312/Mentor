@@ -5,6 +5,7 @@ import {
 	INewPassword,
 	IPassToRestore,
 	IRefresh,
+	IRequest,
 	IUserLog,
 	IUserReg,
 } from '@/types/types'
@@ -379,6 +380,68 @@ export const writing = async (
 			},
 		})
 		dispatch(writingFailure())
+		console.log(err)
+	}
+}
+
+export const acceptRequest = async (
+	id: number | string,
+	request: IRequest,
+	token: string
+) => {
+	//////////////////////////////////
+	// const request: IRequest = {	//
+	// 	accepted: true,					  	//
+	// 	denied: false,							//
+	// }														//
+	//////////////////////////////////
+
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const res = await publicReq.patch(
+			`statement/update-delete/${id}/`,
+			request,
+			config
+		)
+
+		console.log('request accepted', res.status)
+	} catch (err) {
+		console.log(err)
+	}
+}
+
+export const deniedRequest = async (
+	id: number | string,
+	request: IRequest,
+	token: string
+) => {
+	//////////////////////////////////
+	// const request: IRequest = {	//
+	// 	accepted: false,						//
+	// 	denied: true,								//
+	// }														//
+	//////////////////////////////////
+
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const res = await publicReq.patch(
+			`statement/update-delete/${id}/`,
+			request,
+			config
+		)
+
+		console.log('request denied', res.status)
+	} catch (err) {
 		console.log(err)
 	}
 }
