@@ -19,7 +19,7 @@ const MentorList: FC<IMentorData> = ({ mentors }) => {
 		price: '',
 	})
 	const [data, setData] = useState(mentors)
-	const [limit, setLimit] = useState<number>(4)
+	const [limit, setLimit] = useState<number>(11)
 	const mentorsData = data.slice(1, limit)
 	// useEffect(() => {
 	// 	mentorsData = data.slice(1, limit)
@@ -145,10 +145,14 @@ const MentorList: FC<IMentorData> = ({ mentors }) => {
 			filteredMentors = filteredMentors.sort((a, b) => {
 				if (Number(a.price) < Number(b.price)) return 1
 				if (Number(a.price) > Number(b.price)) return -1
+				if (a.price === 'Бесплатно') return -1
+				if (a.price === 'По договоренности') return -1
 				return 0
 			})
 		} else if (sortMentorsSelect.price === 'По возрастанию') {
 			filteredMentors = filteredMentors.sort((a, b) => {
+				if (a.price === 'Бесплатно') return -1
+				if (a.price === 'По договоренности') return -1
 				if (Number(a.price) > Number(b.price)) return 1
 				if (Number(a.price) < Number(b.price)) return -1
 				return 0

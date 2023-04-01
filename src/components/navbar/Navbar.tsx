@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import Logo from '@/images/Logo.svg'
+import { useAppSelector } from '@/hooks/hooks'
 
 const Navbar = () => {
 	return (
@@ -9,12 +10,12 @@ const Navbar = () => {
 				<Image src={Logo} alt='logo' priority />
 			</div>
 			<div className='flex gap-x-9'>
-				<Link href={''}>
+				<Link href='/account/register/'>
 					<button className='font-medium text-title text-base px-3 py-2 rounded-xl text-dark-blue text-center bg-accent'>
 						Стать ментором
 					</button>
 				</Link>
-				<Link href={''}>
+				<Link href='/account/login/'>
 					<button className='font-medium px-8 py-2 rounded-xl text-black text-base text-center bg-tertiary'>
 						Войти
 					</button>

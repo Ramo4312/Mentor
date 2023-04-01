@@ -8,7 +8,7 @@ const MentorItem: FC<IMentorSingle> = ({ mentor }) => {
 
 	return (
 		<div
-			className={`bg-secondary w-[26rem] h-[33rem] p-[1.4rem] rounded-xl flex flex-col justify-between ${
+			className={`bg-secondary w-[26rem] h-[40rem] p-[1.4rem] rounded-xl flex flex-col justify-between ${
 				mentor.username == 'admin' ? 'hidden' : ''
 			}`}
 			onClick={() => router.push(`/mentor/${mentor.id}`)}
@@ -17,7 +17,7 @@ const MentorItem: FC<IMentorSingle> = ({ mentor }) => {
 				<Image
 					src={mentor.photo ? mentor.photo : ''}
 					alt='mentor'
-					className='w-full h-[12rem] mb-5 rounded-lg'
+					className='w-full h-[18rem] mb-5 rounded-lg object-cover'
 					width={368}
 					height={197}
 				/>

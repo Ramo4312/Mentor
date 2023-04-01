@@ -119,3 +119,20 @@ export interface IMentee {
 	my_level: string
 	telegram: string
 }
+
+export interface IUserStatus {
+	status: boolean
+}
+
+export interface IRequest {
+	id: number
+	my_level: string
+	name: string
+	email: string
+	telegram: string
+	description: string
+	create_at: string
+	accepted: string
+	denied: string
+	mentor_service: string
+}

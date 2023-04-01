@@ -1,4 +1,4 @@
-import { login } from '@/redux/apiCalls'
+import { getUser, login } from '@/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
 import { IUserLog } from '@/types/types'
 import Link from 'next/link'

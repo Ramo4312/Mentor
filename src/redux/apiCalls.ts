@@ -7,6 +7,7 @@ import {
 	IRefresh,
 	IUserLog,
 	IUserReg,
+	IUserStatus,
 } from '@/types/types'
 import {
 	loginFailure,
@@ -39,12 +40,18 @@ import {
 	updateEmailFailure,
 } from './userSlice'
 
-import { requestStart, requestSuccess, requestFailure } from './mentorSlice'
+import {
+	requestStart,
+	requestSuccess,
+	requestFailure,
+	getRequestSuccess,
+} from './mentorSlice'
 
 // import { toast } from 'react-hot-toast'
 import { Dispatch, SetStateAction } from 'react'
-import { IProps, IUser } from '@/pages/profile/my-profile'
+import { IPersonalProfile, IProps, IUser } from '@/pages/profile/my-profile'
 import { toast } from 'react-hot-toast'
+import { IRequest } from '@/types/mentor.interface'
 
 export const API = 'https://mentorkgapi.pythonanywhere.com/'
 
@@ -286,6 +293,26 @@ export const getUser = async (
 		setError(true)
 	}
 }
+export const getPersonalUser = async (
+	token: string | undefined,
+	setUser: Dispatch<SetStateAction<IPersonalProfile | null>>,
+	setError: Dispatch<SetStateAction<boolean>>
+) => {
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const { data }: IProps = await publicReq(`base/personal-profile/`, config)
+
+		setUser(data)
+	} catch (err) {
+		console.log(err)
+		setError(true)
+	}
+}
 
 export const userUpdate = async (
 	dispatch: Dispatch<IDispatch>,
@@ -380,6 +407,43 @@ export const request = async (
 			},
 		})
 		dispatch(requestFailure())
+		console.log(err)
+	}
+}
+
+export const getRequest = async (
+	token: string | undefined,
+	dispatch?: Dispatch<IDispatch>
+) => {
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+		const res = await publicReq(`statement/my-statement/`, config)
+		// dispatch(getRequestSuccess(res.data))
+		return res.data
+	} catch (err) {
+		console.log(err)
+	}
+}
+
+export const userStatusUpdate = async (
+	user: IUserStatus,
+	token: string | undefined
+) => {
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const res = await publicReq.patch(`account/update-user/`, user, config)
+
+		console.log('user updated', res.status)
+	} catch (err) {
 		console.log(err)
 	}
 }

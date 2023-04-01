@@ -1,3 +1,4 @@
+import { IRequest } from '@/types/mentor.interface'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface CounterState {
@@ -6,6 +7,7 @@ export interface CounterState {
 
 interface initialState {
 	isFetching: boolean
+	request: IRequest[]
 	error: boolean
 }
 
@@ -13,6 +15,7 @@ export const mentorSlice = createSlice({
 	name: 'user',
 	initialState: <initialState>{
 		isFetching: false,
+		request: [],
 		error: false,
 	},
 	reducers: {
@@ -28,9 +31,16 @@ export const mentorSlice = createSlice({
 			state.isFetching = false
 			state.error = true
 		},
+		getRequestSuccess: (state, action) => {
+			state.request = action.payload
+		},
 	},
 })
 
-export const { requestStart, requestSuccess, requestFailure } =
-	mentorSlice.actions
+export const {
+	requestStart,
+	requestSuccess,
+	requestFailure,
+	getRequestSuccess,
+} = mentorSlice.actions
 export default mentorSlice.reducer

@@ -63,7 +63,7 @@ const RegisterPage = () => {
 			!email.trim() ||
 			!password.trim() ||
 			!password_confirm.trim() ||
-			!image.trim() ||
+			// !image.trim() ||
 			!position.trim() ||
 			!place_of_work.trim() ||
 			!about_me.trim() ||

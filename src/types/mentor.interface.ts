@@ -22,3 +22,16 @@ export interface IMentorData {
 export interface IMentorSingle {
 	mentor: IMentor
 }
+
+export interface IRequest {
+	id: number
+	my_level: string
+	name: string
+	email: string
+	telegram: string
+	description: string
+	create_at: string
+	accepted: boolean
+	denied: boolean
+	mentor_service: string
+}

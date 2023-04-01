@@ -17,6 +17,7 @@ export const userSlice = createSlice({
 	initialState: <initialState>{
 		currentUser: {
 			email: '',
+			photo: '',
 		},
 		tokens: {
 			access: '',
