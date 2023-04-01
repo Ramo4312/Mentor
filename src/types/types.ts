@@ -121,7 +121,7 @@ export interface IMentee {
 }
 
 export interface IUserStatus {
-	status: boolean
+	telegram_status: boolean
 }
 
 export interface IRequest {

@@ -19,7 +19,7 @@ const MentorList: FC<IMentorData> = ({ mentors }) => {
 		price: '',
 	})
 	const [data, setData] = useState(mentors)
-	const [limit, setLimit] = useState<number>(11)
+	const [limit, setLimit] = useState<number>(10)
 	const mentorsData = data.slice(1, limit)
 	// useEffect(() => {
 	// 	mentorsData = data.slice(1, limit)

@@ -1,4 +1,6 @@
-import React, { FC } from 'react'
+import { userStatusUpdate } from '@/redux/apiCalls'
+import { useRouter } from 'next/router'
+import React, { FC, useState } from 'react'
 
 interface ITelegramModal {
 	setTelegramModal: (modal: boolean) => void
@@ -9,6 +11,11 @@ const TelegramModal: FC<ITelegramModal> = ({
 	setTelegramModal,
 	telegramModal,
 }) => {
+	const [input, setInput] = useState('')
+
+	// function handleClick(){
+	// 	userStatusUpdate()
+	// }
 	return (
 		<div
 			className={`${
@@ -35,14 +42,13 @@ const TelegramModal: FC<ITelegramModal> = ({
 					<input
 						type='text'
 						className='w-[47rem] h-14 rounded-[6px] px-3  bg-transparent border-[1px] border-gray-400'
+						onChange={e => setInput(e.target.value)}
 					/>
 				</div>
 
 				<button
 					className='text-white bg-little-text py-3 px-14 rounded-[10px] text-xl'
-					onClick={() => {
-						setTelegramModal(true)
-					}}
+					onClick={() => setTelegramModal(false)}
 				>
 					Продолжить
 				</button>

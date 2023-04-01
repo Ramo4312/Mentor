@@ -8,7 +8,7 @@ interface ILimit extends IChildren {
 const ButtonPrimary: FC<ILimit> = ({ children, onClick }) => {
 	return (
 		<button
-			onClick={() => onClick(1)}
+			onClick={() => onClick(3)}
 			className='bg-little-text py-2 rounded-[9px] px-5 text-white'
 		>
 			{children}
