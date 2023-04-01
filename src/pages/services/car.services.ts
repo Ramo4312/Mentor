@@ -14,4 +14,8 @@ export const MentorService = {
 		const { data } = await axios.get<IMentor>(`/base/public-profile/${id}`)
 		return data
 	},
+	async getUserByID(id: number) {
+		const { data } = await axios.get<any>(`/statement/statements/${id}`)
+		return data
+	},
 }

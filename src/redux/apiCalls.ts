@@ -293,6 +293,7 @@ export const getUser = async (
 		setError(true)
 	}
 }
+
 export const getPersonalUser = async (
 	token: string | undefined,
 	setUser: Dispatch<SetStateAction<IPersonalProfile | null>>,
@@ -443,6 +444,68 @@ export const userStatusUpdate = async (
 		const res = await publicReq.patch(`account/update-user/`, user, config)
 
 		console.log('user updated', res.status)
+	} catch (err) {
+		console.log(err)
+	}
+}
+
+export const acceptRequest = async (
+	id: number | string,
+	request: IRequest,
+	token: string
+) => {
+	//////////////////////////////////
+	// const request: IRequest = {  //
+	//   accepted: true,              //
+	//   denied: false,              //
+	// }                            //
+	//////////////////////////////////
+
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const res = await publicReq.patch(
+			`statement/update-delete/${id}/`,
+			request,
+			config
+		)
+
+		console.log('request accepted', res.status)
+	} catch (err) {
+		console.log(err)
+	}
+}
+
+export const deniedRequest = async (
+	id: number | string,
+	request: IRequest,
+	token: string
+) => {
+	//////////////////////////////////
+	// const request: IRequest = {  //
+	//   accepted: false,            //
+	//   denied: true,                //
+	// }                            //
+	//////////////////////////////////
+
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const res = await publicReq.patch(
+			`statement/update-delete/${id}/`,
+			request,
+			config
+		)
+
+		console.log('request denied', res.status)
 	} catch (err) {
 		console.log(err)
 	}

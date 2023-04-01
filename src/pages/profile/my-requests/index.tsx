@@ -8,6 +8,7 @@ import { IRequest } from '@/types/types'
 import WelcomeModal from '@/components/modal/WelcomeModal'
 import { IPersonalProfile } from '../my-profile'
 import TelegramModal from '@/components/modal/TelegramModal'
+import { useRouter } from 'next/router'
 
 const MyRequests = () => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
@@ -28,7 +29,7 @@ const MyRequests = () => {
 	)
 
 	const [telegramModal, setTelegramModal] = useState<boolean>(false)
-
+	const { push } = useRouter()
 	return (
 		<LayoutAccount>
 			{user?.telegram_status ? (
@@ -69,7 +70,10 @@ const MyRequests = () => {
 									<h2 className='text-center'>Нет новых заявок</h2>
 								)}
 								{requestsNew?.map(request => (
-									<div key={request.id}>
+									<div
+										key={request.id}
+										onClick={() => push(`/profile/my-requests/${request.id}`)}
+									>
 										<div className='w-full flex justify-between items-center cursor-pointer'>
 											<p className='text-accent text-lg'>New</p>
 											<div className='py-3 w-[25rem]'>
@@ -97,7 +101,10 @@ const MyRequests = () => {
 									<h2 className='text-center'>Нет принятых заявок</h2>
 								)}
 								{requestsAccepted?.map(request => (
-									<div key={request.id}>
+									<div
+										key={request.id}
+										onClick={() => push(`/profile/my-requests/${request.id}`)}
+									>
 										<div className='w-full flex justify-between items-center p-5 cursor-pointer'>
 											<div className='flex justify-between w-[17rem]'>
 												<p className='text-title text-lg'>{request.name}</p>

@@ -136,3 +136,12 @@ export interface IRequest {
 	denied: string
 	mentor_service: string
 }
+
+export interface IRequest2 {
+	my_level: string
+	name: string
+	email: string
+	telegram: string
+	description: string
+	mentor_service: string
+}
