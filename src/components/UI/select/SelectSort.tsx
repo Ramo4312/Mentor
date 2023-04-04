@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, SetStateAction } from 'react'
+import React, { FC } from 'react'
 import { ISortMentors } from '@/types/types'
 
 interface ISelectSortMentor {
@@ -18,7 +18,7 @@ const SelectSort: FC<ISelectSortMentor> = ({
 				<div className='relative' data-te-dropdown-ref>
 					<button
 						className='
-						 flex items-center justify-between whitespace-nowrap rounded-[12px] w-[11.5rem] px-6 py-3 text-base font-medium leading-normal text-title shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-title hover:text-white hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-title focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),
+						flex items-center justify-between whitespace-nowrap rounded-[12px] w-[11.5rem] px-6 py-3 text-base font-medium leading-normal text-title shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-title hover:text-white hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-title focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),
 							focus:text-white border-[1px] border-black
 							0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] motion-reduce:transition-none'
 						type='button'

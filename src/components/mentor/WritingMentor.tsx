@@ -11,7 +11,7 @@ import Select from 'react-select'
 import BigInputs from '../inputs/big'
 import DefaultInputs from '../inputs/default'
 import Layout from '../layout/Layout'
-import { useRouter } from 'next/router'
+import { NextRouter, useRouter } from 'next/router'
 
 interface IMenteeWriting extends IMentee {
 	mentor_service: number
@@ -28,7 +28,7 @@ const WritingMentor: FC<IMentorSingle> = ({ mentor }) => {
 
 	const dispatch = useAppDispatch()
 
-	const { push } = useRouter()
+	const router: NextRouter = useRouter()
 
 	function handleSend() {
 		if (
@@ -59,7 +59,7 @@ const WritingMentor: FC<IMentorSingle> = ({ mentor }) => {
 			mentor_service: mentor.id,
 		}
 
-		writing(dispatch, mentee, setModal, push)
+		writing(dispatch, mentee, setModal, router)
 	}
 
 	const getValue = () => {

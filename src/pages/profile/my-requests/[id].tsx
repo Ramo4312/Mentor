@@ -1,5 +1,5 @@
 import { useAppSelector } from '@/hooks/hooks'
-import { MentorService } from '@/pages/services/mentor.services'
+import MentorService from '@/services/mentor.services'
 import { acceptRequest, deniedRequest } from '@/redux/apiCalls'
 import { IRequest } from '@/types/mentor.interface'
 import { GetStaticPaths, GetStaticProps } from 'next'

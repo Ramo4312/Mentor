@@ -1,7 +1,7 @@
 import { publicReq } from '@/redux/apiCalls'
 import { IMentor, IRequest } from '@/types/mentor.interface'
 
-export const MentorService = {
+const MentorService = {
 	async getAll() {
 		const { data } = await publicReq<IMentor[]>('base/mentors')
 		return data
@@ -19,3 +19,5 @@ export const MentorService = {
 		return data
 	},
 }
+
+export default MentorService

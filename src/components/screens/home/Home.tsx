@@ -6,14 +6,13 @@ import HowItWork3 from '@/images/HowItWork3.svg'
 // import MentorItem from '@/components/mentor/MentorItem'
 import Layout from '@/components/layout/Layout'
 import HowItWork2 from '@/images/HowItWork2.svg'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { IMentorData } from '@/types/mentor.interface'
 import MentorList from '@/components/mentor/MentorList'
 import Button from '@/components/UI/button/Button'
 import FAQ from '@/components/UI/FAQ'
 import FooterImageRight from '@/images/FooterImage.svg'
 import FooterImageLeft from '@/images/FooterImage2.svg'
-import Link from 'next/link'
 
 const Home: FC<IMentorData> = ({ mentors }) => {
 	return (

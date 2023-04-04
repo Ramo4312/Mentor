@@ -3,7 +3,7 @@ import { IMentorSingle } from '@/types/mentor.interface'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import React from 'react'
-import { MentorService } from '../services/mentor.services'
+import MentorService from '../../services/mentor.services'
 
 const MentorPage: NextPage<IMentorSingle> = ({ mentor }) => {
 	return <MentorDetail mentor={mentor} />

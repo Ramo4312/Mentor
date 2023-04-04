@@ -1,4 +1,4 @@
-import { IFullUser, IToken, IUser, IUserReg } from '@/types/types'
+import { IFullUser, IToken, IUserReg } from '@/types/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface CounterState {

@@ -9,7 +9,7 @@ const RequestsTrash = () => {
 	const [requests, setRequests] = useState<IRequest[]>([])
 	useEffect(() => {
 		getRequest(token.access).then(data => setRequests(data))
-	}, [])
+	}, [token.access])
 	const requestsTrash: IRequest[] = requests.filter(request => request.denied)
 	console.log(requests)
 	return (

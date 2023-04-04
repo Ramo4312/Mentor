@@ -1,4 +1,4 @@
-import { getUser, login } from '@/redux/apiCalls'
+import { login } from '@/redux/apiCalls'
 import AbsoluteImages from '@/components/absoluteImages'
 import { IUserLog } from '@/types/types'
 import Link from 'next/link'
@@ -31,16 +31,6 @@ const LoginPage = () => {
 
 		login(dispatch, user, router)
 	}
-
-	// function handleRefresh() {
-	// 	if (tokens) {
-	// 		const token: { refresh: string } = {
-	// 			refresh: tokens.refresh,
-	// 		}
-
-	// 		tokenRefresh(dispatch, token)
-	// 	}
-	// }
 
 	return (
 		<Layout>

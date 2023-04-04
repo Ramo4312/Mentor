@@ -9,7 +9,7 @@ const MentorStatus = () => {
 
 	useEffect(() => {
 		getPersonalUser(tokens?.access, setUser)
-	}, [])
+	}, [tokens.access])
 
 	function changeStatus() {
 		if (user?.status) {

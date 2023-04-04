@@ -11,12 +11,10 @@ const SideBar = () => {
 	const [requests, setRequests] = useState<IRequest[]>([])
 	const token = useAppSelector(state => state.user.tokens)
 
-	const tokens = useAppSelector(state => state.user.tokens)
-
 	const { pathname, push } = useRouter()
 	useEffect(() => {
 		getRequest(token.access).then(data => setRequests(data))
-	}, [])
+	}, [token.access])
 
 	function handleLogout() {
 		setModal(true)
@@ -41,7 +39,7 @@ const SideBar = () => {
 							className='flex justify-between items-center py-[0.44rem] pr-5 cursor-pointer'
 							onClick={() => {
 								if (item.text == 'Мои данные') {
-									push(`${item.path}?t=${tokens.access}`)
+									push(`${item.path}?t=${token.access}`)
 								} else {
 									push(item.path)
 									if (item.text == 'Выйти') {

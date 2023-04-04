@@ -3,20 +3,26 @@ import Image from 'next/image'
 import Logo from '@/images/Logo.svg'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import { getUser, logout } from '@/redux/apiCalls'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 const Navbar = () => {
 	const { tokens, currentUser } = useAppSelector(state => state.user)
 	const dispatch = useAppDispatch()
 
+	const [error, setError] = useState<boolean>(false)
+
 	const { push } = useRouter()
 
 	useEffect(() => {
-		getUser(dispatch, tokens.access)
-	}, [])
+		getUser(dispatch, tokens.access, setError)
+	}, [tokens.access, dispatch])
 
-	console.log(currentUser.email)
+	useEffect(() => {
+		if (error) {
+			logout(dispatch)
+		}
+	}, [error, dispatch])
 
 	return (
 		<nav className='w-full desktop:w-[1440px] m-auto py-8 flex justify-between px-20 my-4'>

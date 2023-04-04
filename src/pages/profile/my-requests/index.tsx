@@ -19,7 +19,7 @@ const MyRequests = () => {
 	useEffect(() => {
 		getRequest(token.access).then(data => setRequests(data))
 		getPersonalUser(token.access, setUser)
-	}, [])
+	}, [token.access])
 	const requestsNew: IRequest[] = requests.filter(
 		request => !request.accepted && !request.denied
 	)

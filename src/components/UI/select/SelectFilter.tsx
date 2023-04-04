@@ -1,5 +1,5 @@
 import { ISpecializationsFilter } from '@/types/types'
-import React, { FC, useRef, useState } from 'react'
+import React, { FC } from 'react'
 
 type THandleCategorySelect = (category: string) => void
 

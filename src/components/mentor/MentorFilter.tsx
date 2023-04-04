@@ -1,9 +1,6 @@
-import { IMentor, IMentorData, IMentorSingle } from '@/types/mentor.interface'
-import { useEffect, useState } from 'react'
+import { IMentor } from '@/types/mentor.interface'
+import { useState } from 'react'
 import { specializations } from '@/arrays/arrays'
-
-// import { Mentor } from '../types/Mentor'
-// import { fetchMentors } from '../api/mentors'
 
 interface IMentorFilter {
 	mentors: IMentor[]

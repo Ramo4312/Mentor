@@ -7,7 +7,6 @@ import {
 	INewPassword,
 	IPassToRestore,
 	IRefresh,
-	IRequest,
 	IUserLog,
 	IUserReg,
 	IUserStatus,
@@ -52,6 +51,7 @@ import { writingStart, writingSuccess, writingFailure } from './mentorSlice'
 import { Dispatch, SetStateAction } from 'react'
 import { toast } from 'react-hot-toast'
 import { IMentor } from '@/types/mentor.interface'
+import { NextRouter } from 'next/router'
 export interface IProps {
 	data: IUserReg
 }
@@ -100,7 +100,7 @@ export const register = async (
 export const login = async (
 	dispatch: Dispatch<IDispatch>,
 	user: IUserLog,
-	router: any
+	router: NextRouter
 ) => {
 	dispatch(loginStart())
 	try {
@@ -294,7 +294,7 @@ export const getUser = async (
 	} catch (err) {
 		dispatch(getFailure())
 		console.log(err)
-		setError ? setError(true) : null
+		setError && setError(true)
 	}
 }
 
@@ -383,7 +383,7 @@ export const writing = async (
 	dispatch: Dispatch<IDispatch>,
 	mentee: IMentee,
 	setModal: Dispatch<SetStateAction<boolean>>,
-	push: any
+	router: NextRouter
 ) => {
 	dispatch(writingStart())
 	try {
@@ -400,7 +400,7 @@ export const writing = async (
 		dispatch(writingSuccess())
 		console.log(res.data)
 		setModal(true)
-		push('/')
+		router.push('/')
 	} catch (err) {
 		toast.error('Произошла ошибка и ваша заявка не была отправлена', {
 			style: {

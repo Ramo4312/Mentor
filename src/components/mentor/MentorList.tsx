@@ -1,8 +1,4 @@
-import {
-	specializations,
-	specializationsFilter,
-	sortMentors,
-} from '@/arrays/arrays'
+import { specializationsFilter, sortMentors } from '@/arrays/arrays'
 import { IMentorData } from '@/types/mentor.interface'
 import React, { FC, useEffect, useState } from 'react'
 import ButtonPrimary from '../UI/button/ButtonPrimary'
@@ -10,10 +6,16 @@ import SelectFilter from '../UI/select/SelectFilter'
 import SelectSort from '../UI/select/SelectSort'
 import MentorItem from './MentorItem'
 
+interface ISort {
+	expirience: string
+	language: string
+	price: string
+}
+
 const MentorList: FC<IMentorData> = ({ mentors }) => {
 	const [query, setQuery] = useState('')
 	const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-	const [sortMentorsSelect, setSortMentorsSelect] = useState({
+	const [sortMentorsSelect, setSortMentorsSelect] = useState<ISort>({
 		expirience: '',
 		language: '',
 		price: '',
@@ -160,7 +162,7 @@ const MentorList: FC<IMentorData> = ({ mentors }) => {
 		}
 
 		setData(filteredMentors)
-	}, [selectedCategories, query, sortMentorsSelect])
+	}, [selectedCategories, query, sortMentorsSelect, mentors])
 
 	function handleCategorySelect(category: string) {
 		setSelectedCategories(prevSelectedCategories => {
@@ -207,7 +209,7 @@ const MentorList: FC<IMentorData> = ({ mentors }) => {
 						<SelectSort
 							sortMentor={sortMentors[0]}
 							selectedSort={sortMentorsSelect.language}
-							onClick={(selectedSort: any) =>
+							onClick={(selectedSort: string) =>
 								setSortMentorsSelect({
 									...sortMentorsSelect,
 									language: selectedSort,
@@ -217,7 +219,7 @@ const MentorList: FC<IMentorData> = ({ mentors }) => {
 						<SelectSort
 							sortMentor={sortMentors[2]}
 							selectedSort={sortMentorsSelect.expirience}
-							onClick={(selectedSort: any) =>
+							onClick={(selectedSort: string) =>
 								setSortMentorsSelect({
 									...sortMentorsSelect,
 									expirience: selectedSort,
@@ -227,7 +229,7 @@ const MentorList: FC<IMentorData> = ({ mentors }) => {
 						<SelectSort
 							sortMentor={sortMentors[1]}
 							selectedSort={sortMentorsSelect.price}
-							onClick={(selectedSort: any) =>
+							onClick={(selectedSort: string) =>
 								setSortMentorsSelect({
 									...sortMentorsSelect,
 									price: selectedSort,
