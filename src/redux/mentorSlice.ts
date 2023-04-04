@@ -1,5 +1,5 @@
 import { IRequest } from '@/types/mentor.interface'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 export interface CounterState {
 	value: number

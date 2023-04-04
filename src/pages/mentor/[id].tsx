@@ -1,5 +1,4 @@
 import MentorDetail from '@/components/mentor/MentorDetail'
-import { useAppSelector } from '@/hooks/hooks'
 import { IMentorSingle } from '@/types/mentor.interface'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { ParsedUrlQuery } from 'querystring'

@@ -1,19 +1,30 @@
 import { pages } from '@/arrays/arrays'
-// import { useAppDispatch } from '@/hooks/hooks'
-import Image from 'next/image'
-import { usePathname, useRouter } from 'next/navigation'
-import React, { useState } from 'react'
-import LogoutModal from './logoutModal'
+import React, { useEffect, useState } from 'react'
+import { useAppSelector } from '@/hooks/hooks'
+import { useRouter } from 'next/router'
+import LogoutModal from './modal/logoutModal'
+import { getRequest } from '@/redux/apiCalls'
+import { IRequest } from '@/types/types'
 
 const SideBar = () => {
 	const [modal, setModal] = useState<boolean>(false)
+	const [requests, setRequests] = useState<IRequest[]>([])
+	const token = useAppSelector(state => state.user.tokens)
 
-	const pathname = usePathname()
-	const router = useRouter()
+	const tokens = useAppSelector(state => state.user.tokens)
+
+	const { pathname, push } = useRouter()
+	useEffect(() => {
+		getRequest(token.access).then(data => setRequests(data))
+	}, [])
 
 	function handleLogout() {
 		setModal(true)
 	}
+
+	const requestsNew: IRequest[] = requests.filter(
+		request => !request.accepted && !request.denied
+	)
 
 	return (
 		<>
@@ -29,21 +40,34 @@ const SideBar = () => {
 							key={item.id}
 							className='flex justify-between items-center py-[0.44rem] pr-5 cursor-pointer'
 							onClick={() => {
-								item.text !== 'Выйти' ? router.push(item.path) : handleLogout()
+								if (item.text == 'Мои данные') {
+									push(`${item.path}?t=${tokens.access}`)
+								} else {
+									push(item.path)
+									if (item.text == 'Выйти') {
+										handleLogout()
+									}
+								}
 							}}
 						>
 							<div
 								className={`${
-									pathname !== item.path ? 'pl-6' : ''
+									pathname == item.path || pathname == item.path2 ? '' : 'pl-6'
 								} flex gap-x-4`}
 							>
 								<div
 									className={`${
-										pathname == item.path ? '' : 'hidden'
+										pathname == item.path || pathname == item.path2
+											? ''
+											: 'hidden'
 									} w-2 h-7 bg-paragraph rounded-r-lg`}
 								></div>
 								<img
-									src={pathname == item.path ? item.image2 : item.image}
+									src={
+										pathname == item.path || pathname == item.path2
+											? item.image2
+											: item.image
+									}
 									alt={item.text}
 									className={`${
 										item.image == '/trash.svg' || item.image2 == '/r/trash.svg'
@@ -53,19 +77,23 @@ const SideBar = () => {
 								/>
 								<p
 									className={`${
-										pathname == item.path ? 'text-paragraph' : 'text-[#737373]'
+										pathname == item.path || pathname == item.path2
+											? 'text-paragraph'
+											: 'text-[#737373]'
 									} hover:text-[#485174] text-xl font-normal hover:font-medium`}
 								>
 									{item.text}
 								</p>
 							</div>
-							<p
-								className={`${
-									item.notifications !== 0 ? '' : 'hidden'
-								} rounded-full text-tertiary bg-little-text text-xs font-bold py-1 px-[5px] flex items-center justify-center`}
-							>
-								{item.notifications}
-							</p>
+							{requestsNew.length !== 0 && item.text == 'Заявки' ? (
+								<p
+									className={`rounded-full text-tertiary bg-little-text text-xs font-bold py-1 px-[5px] flex items-center justify-center`}
+								>
+									{requestsNew.length}
+								</p>
+							) : (
+								<></>
+							)}
 						</li>
 					))}
 				</ul>

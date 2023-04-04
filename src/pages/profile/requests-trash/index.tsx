@@ -11,6 +11,7 @@ const RequestsTrash = () => {
 		getRequest(token.access).then(data => setRequests(data))
 	}, [])
 	const requestsTrash: IRequest[] = requests.filter(request => request.denied)
+	console.log(requests)
 	return (
 		<LayoutAccount>
 			<div className='flex flex-col items-center'>

@@ -1,8 +1,9 @@
 // import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 import '@/styles/globals.css'
-import { store } from '@/redux/store'
+import { persistor, store } from '@/redux/store'
 import '@/styles/custom-select.scss'
 
 import { Poppins } from 'next/font/google'
@@ -25,9 +26,11 @@ export default function App({ Component, pageProps }: AppProps) {
 			<Head>
 				<title>MentorKG</title>
 			</Head>
-			<Provider store={store}>
-				<Component {...pageProps} />
-			</Provider>
+			<PersistGate loading={null} persistor={persistor}>
+				<Provider store={store}>
+					<Component {...pageProps} />
+				</Provider>
+			</PersistGate>
 		</main>
 	)
 }

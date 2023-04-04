@@ -1,4 +1,5 @@
 export interface IMentor {
+	telegram_status?: boolean
 	id: number
 	username: string
 	photo: string
@@ -9,7 +10,7 @@ export interface IMentor {
 	level_mentor: string
 	experience: string
 	skills: string
-	status: string
+	status: boolean
 	price: string
 	language: string
 	specialization: string[]

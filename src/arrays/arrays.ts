@@ -72,7 +72,6 @@ export const pages: IPages[] = [
 		text: 'Заявки',
 		image: '/images/trending_arrow.svg',
 		path: '/profile/my-requests',
-		notifications: 12,
 		image2: '/images/r/trending_arrow.svg',
 	},
 	{
@@ -80,7 +79,7 @@ export const pages: IPages[] = [
 		text: 'Мои данные',
 		image: '/images/star.svg',
 		path: '/profile/my-profile',
-		notifications: 0,
+		path2: '/profile/my-profile/edit',
 		image2: '/images/r/star.svg',
 	},
 	{
@@ -88,15 +87,13 @@ export const pages: IPages[] = [
 		text: 'Корзина',
 		image: '/images/trash.svg',
 		path: '/profile/requests-trash',
-		notifications: 0,
-		image2: '/images/r/star.svg',
+		image2: '/images/r/trash.svg',
 	},
 	{
 		id: 4,
 		text: 'Настройки',
 		image: '/images/settings.svg',
 		path: '/profile/settings',
-		notifications: 0,
 		image2: '/images/r/settings.svg',
 	},
 	{
@@ -104,7 +101,6 @@ export const pages: IPages[] = [
 		text: 'Выйти',
 		path: '',
 		image: '/images/exit.svg',
-		notifications: 0,
 		image2: '/images/r/exit.svg',
 	},
 ]
@@ -156,7 +152,7 @@ export const languages: ILanguage[] = [
 
 export const devLvl: IOption[] = [
 	{ value: 'junior', label: 'junior ' },
-	{ value: 'strong junior', label: 'strong junior' },
+	{ value: 'junior+', label: 'junior+' },
 	{ value: 'middle', label: 'middle' },
 	{ value: 'middle+', label: 'middle+' },
 	{ value: 'senior', label: 'senior' },

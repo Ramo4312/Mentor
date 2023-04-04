@@ -2,24 +2,23 @@
 import LayoutAccount from '@/components/layout/LayoutAccount'
 import MentorStatus from '@/components/mentor/MentorStatus'
 import React, { useEffect, useState } from 'react'
-import { getPersonalUser, getRequest, getUser } from '@/redux/apiCalls'
+import { getPersonalUser, getRequest } from '@/redux/apiCalls'
 import { useAppSelector } from '@/hooks/hooks'
 import { IRequest } from '@/types/types'
 import WelcomeModal from '@/components/modal/WelcomeModal'
-import { IPersonalProfile } from '../my-profile'
 import TelegramModal from '@/components/modal/TelegramModal'
 import { useRouter } from 'next/router'
+import { IMentor } from '@/types/mentor.interface'
 
 const MyRequests = () => {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const [flag, setFlag] = useState<boolean>(true)
 	const token = useAppSelector(state => state.user.tokens)
 	const [requests, setRequests] = useState<IRequest[]>([])
-	const [user, setUser] = useState<IPersonalProfile | null>(null)
-	const [error, setError] = useState(true)
+	const [user, setUser] = useState<IMentor | null>(null)
 	useEffect(() => {
 		getRequest(token.access).then(data => setRequests(data))
-		getPersonalUser(token.access, setUser, setError)
+		getPersonalUser(token.access, setUser)
 	}, [])
 	const requestsNew: IRequest[] = requests.filter(
 		request => !request.accepted && !request.denied

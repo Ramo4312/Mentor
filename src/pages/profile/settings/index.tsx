@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import { INewPassword, IUserLog } from '@/types/types'
 import { NextPage } from 'next'
 import { useState } from 'react'
-import DeleteModal from './modal'
+import DeleteModal from '@/components/modal/settingsModal'
 
 import { toast, Toaster } from 'react-hot-toast'
 // import Image from 'next/image'

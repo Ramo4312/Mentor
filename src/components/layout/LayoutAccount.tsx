@@ -1,14 +1,18 @@
-import { usePathname } from 'next/navigation'
 import React, { FC, PropsWithChildren } from 'react'
-import Navbar from '../navbar/Navbar'
 import SideBar from '../sidebar'
+import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
+
+const DynamicSidebarWithNoSSR = dynamic(() => import('../navbar/Navbar'), {
+	ssr: false,
+})
 
 const LayoutAccount: FC<PropsWithChildren<unknown>> = ({ children }) => {
-	const pathname = usePathname()
-	console.log(pathname)
+	const { pathname } = useRouter()
+
 	return (
 		<>
-			<Navbar />
+			<DynamicSidebarWithNoSSR />
 			<div
 				className={`flex ${
 					pathname === '/profile/my-requests' ? '' : 'gap-x-28'

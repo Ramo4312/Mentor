@@ -1,5 +1,7 @@
 import axios from 'axios'
 import {
+	IAccepted,
+	IDenied,
 	IDispatch,
 	IMentee,
 	INewPassword,
@@ -8,6 +10,7 @@ import {
 	IUserLog,
 	IUserReg,
 	IUserStatus,
+	IUserToEdit,
 } from '@/types/types'
 import {
 	loginFailure,
@@ -38,15 +41,19 @@ import {
 	updateEmailStart,
 	updateEmailSuccess,
 	updateEmailFailure,
+	getStart,
+	getSuccess,
+	getFailure,
 } from './userSlice'
 
 import { writingStart, writingSuccess, writingFailure } from './mentorSlice'
 
-// import { toast } from 'react-hot-toast'
 import { Dispatch, SetStateAction } from 'react'
-import { IPersonalProfile, IProps, IUser } from '@/pages/profile/my-profile'
 import { toast } from 'react-hot-toast'
-import { IRequest } from '@/types/mentor.interface'
+import { IMentor } from '@/types/mentor.interface'
+export interface IProps {
+	data: IUserReg
+}
 
 export const API = 'https://mentorkgapi.pythonanywhere.com/'
 
@@ -98,7 +105,7 @@ export const login = async (
 	try {
 		const res = await publicReq.post(`account/login/`, user)
 		console.log('login', res.status)
-		console.log(res.data)
+		console.log(res.data.access)
 		toast.success('Вы успешно вошли', {
 			style: {
 				borderRadius: '6px',
@@ -109,7 +116,7 @@ export const login = async (
 			},
 		})
 		dispatch(loginSuccess({ ...res.data, email: user.email }))
-		router.push('/profile/my-profile/')
+		router.push(`/profile/my-profile?t=${res.data.access}`)
 	} catch (err) {
 		dispatch(loginFailure())
 		toast.error('Ошибка входа', {
@@ -268,11 +275,12 @@ export const logout = (dispatch: Dispatch<IDispatch>) => {
 }
 
 export const getUser = async (
+	dispatch: Dispatch<IDispatch>,
 	token: string | undefined,
-	setUser: Dispatch<SetStateAction<IUser | null>>,
-	setError: Dispatch<SetStateAction<boolean>>
+	setError?: Dispatch<SetStateAction<boolean>>
 ) => {
 	try {
+		dispatch(getStart())
 		const config = {
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -281,17 +289,17 @@ export const getUser = async (
 
 		const { data }: IProps = await publicReq(`base/personal-profile/`, config)
 
-		setUser(data)
+		dispatch(getSuccess(data))
 	} catch (err) {
+		dispatch(getFailure())
 		console.log(err)
-		setError(true)
+		setError ? setError(true) : null
 	}
 }
 
 export const getPersonalUser = async (
 	token: string | undefined,
-	setUser: Dispatch<SetStateAction<IPersonalProfile | null>>,
-	setError: Dispatch<SetStateAction<boolean>>
+	setUser: Dispatch<SetStateAction<IMentor | null>>
 ) => {
 	try {
 		const config = {
@@ -300,18 +308,17 @@ export const getPersonalUser = async (
 			},
 		}
 
-		const { data }: IProps = await publicReq(`base/personal-profile/`, config)
+		const { data } = await publicReq(`base/personal-profile/`, config)
 
 		setUser(data)
 	} catch (err) {
 		console.log(err)
-		setError(true)
 	}
 }
 
 export const userUpdate = async (
 	dispatch: Dispatch<IDispatch>,
-	user: IUserReg,
+	user: IUserToEdit,
 	token: string | undefined
 ) => {
 	dispatch(updateStart())
@@ -373,7 +380,8 @@ export const updateEmail = async (
 export const writing = async (
 	dispatch: Dispatch<IDispatch>,
 	mentee: IMentee,
-	setModal: Dispatch<SetStateAction<boolean>>
+	setModal: Dispatch<SetStateAction<boolean>>,
+	push: any
 ) => {
 	dispatch(writingStart())
 	try {
@@ -387,10 +395,10 @@ export const writing = async (
 				fontSize: '20px',
 			},
 		})
-
 		dispatch(writingSuccess())
 		console.log(res.data)
 		setModal(true)
+		push('/')
 	} catch (err) {
 		toast.error('Произошла ошибка и ваша заявка не была отправлена', {
 			style: {
@@ -406,9 +414,71 @@ export const writing = async (
 	}
 }
 
+export const acceptRequest = async (
+	id: number | string,
+	request: IAccepted,
+	token: string
+) => {
+	//////////////////////////////////
+	// const request: IRequest = {	//
+	// 	accepted: true,					  	//
+	// 	denied: false,							//
+	// }														//
+	//////////////////////////////////
+
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const res = await publicReq.patch(
+			`statement/update-delete/${id}/`,
+			request,
+			config
+		)
+
+		console.log('request accepted', res.status)
+	} catch (err) {
+		console.log(err)
+	}
+}
+
+export const deniedRequest = async (
+	id: number | string,
+	request: IDenied,
+	token: string
+) => {
+	//////////////////////////////////
+	// const request: IRequest = {	//
+	// 	accepted: false,						//
+	// 	denied: true,								//
+	// }														//
+	//////////////////////////////////
+
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const res = await publicReq.patch(
+			`statement/update-delete/${id}/`,
+			request,
+			config
+		)
+
+		console.log('request denied', res.status)
+	} catch (err) {
+		console.log(err)
+	}
+}
+
 export const getRequest = async (
-	token: string | undefined,
-	dispatch?: Dispatch<IDispatch>
+	token: string | undefined
+	// dispatch?: Dispatch<IDispatch>
 ) => {
 	try {
 		const config = {
@@ -438,68 +508,6 @@ export const userStatusUpdate = async (
 		const res = await publicReq.patch(`account/update-user/`, user, config)
 
 		console.log('user updated', res.status)
-	} catch (err) {
-		console.log(err)
-	}
-}
-
-export const acceptRequest = async (
-	id: number | string,
-	request: IRequest,
-	token: string
-) => {
-	//////////////////////////////////
-	// const request: IRequest = {  //
-	//   accepted: true,              //
-	//   denied: false,              //
-	// }                            //
-	//////////////////////////////////
-
-	try {
-		const config = {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		}
-
-		const res = await publicReq.patch(
-			`statement/update-delete/${id}/`,
-			request,
-			config
-		)
-
-		console.log('request accepted', res.status)
-	} catch (err) {
-		console.log(err)
-	}
-}
-
-export const deniedRequest = async (
-	id: number | string,
-	request: IRequest,
-	token: string
-) => {
-	//////////////////////////////////
-	// const request: IRequest = {  //
-	//   accepted: false,            //
-	//   denied: true,                //
-	// }                            //
-	//////////////////////////////////
-
-	try {
-		const config = {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		}
-
-		const res = await publicReq.patch(
-			`statement/update-delete/${id}/`,
-			request,
-			config
-		)
-
-		console.log('request denied', res.status)
 	} catch (err) {
 		console.log(err)
 	}

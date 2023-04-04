@@ -38,7 +38,7 @@ export interface IOption {
 }
 
 export interface IDispatch {
-	payload: undefined | string | IFullUser
+	payload: undefined | string | IFullUser | IUserReg
 	type: string
 }
 
@@ -47,8 +47,8 @@ export interface IPages {
 	text: string
 	image: string
 	path: string
-	notifications?: number
 	image2: string
+	path2?: string
 }
 
 export interface ILanguage {
@@ -65,13 +65,9 @@ export interface IPhoto {
 	webkitRelativePath: string
 }
 
-export interface IUserReg {
+export interface IUserToEdit {
 	username: string
-	email: string
-	password: string
-	password_confirm: string
-	image?: any
-	photo?: string
+	photo: any
 	position: string
 	place_of_work: string
 	about_me: string
@@ -82,6 +78,12 @@ export interface IUserReg {
 	skills: string
 	price: string
 	language: string
+}
+
+export interface IUserReg extends IUserToEdit {
+	email: string
+	password: string
+	password_confirm: string
 }
 
 export interface ISpec extends IOption {
@@ -137,11 +139,12 @@ export interface IRequest {
 	mentor_service: string
 }
 
-export interface IRequest2 {
-	my_level: string
-	name: string
-	email: string
-	telegram: string
-	description: string
-	mentor_service: string
+export interface IAccepted {
+	accepted: boolean
+	denied: boolean
+}
+
+export interface IDenied {
+	accepted: boolean
+	denied: boolean
 }

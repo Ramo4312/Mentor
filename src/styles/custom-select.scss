@@ -44,7 +44,9 @@
 	&__option {
 		cursor: pointer !important;
 		&--is-focused {
+			transition: 0.2s;
 			background-color: lighten(#656565, 8%) !important;
+			color: lighten(#fff, 8%) !important;
 		}
 	}
 

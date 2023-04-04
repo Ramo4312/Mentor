@@ -1,55 +1,41 @@
 import { useAppSelector } from '@/hooks/hooks'
-import { MentorService } from '@/pages/services/car.services'
+import { MentorService } from '@/pages/services/mentor.services'
 import { acceptRequest, deniedRequest } from '@/redux/apiCalls'
-import { IMentorSingle } from '@/types/mentor.interface'
-import { IRequest } from '@/types/types'
+import { IRequest } from '@/types/mentor.interface'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
 
-interface IModal {
-	modal: boolean
-	setModal: Dispatch<SetStateAction<boolean>>
+interface IProps {
+	user: IRequest
 }
 
-const UserModal: FC = ({ mentor }: any) => {
-	const [modal, setModal] = useState<boolean>(true)
-	console.log(mentor)
-	const user = {
-		name: 'Евгений Леонтьев',
-		email: 'evgeniy00Leon@gmail.com',
-		telegram: '@Gfdugarrd',
-		description:
-			'Помогите разобраться с тем, как искать работу, куда ходить, куда не ходить, что спросить, перед тем как согласиться, про карьерные треки, возможности и прочие HR штуки.',
-		my_level: 'Junior',
-	}
+type TRequest = {
+	accepted: boolean
+	denied: boolean
+}
 
+const UserModal = ({ user }: IProps) => {
 	const access = useAppSelector(state => state.user.tokens.access)
 
 	function handleClick() {
-		const request: any = {
+		const request: TRequest = {
 			accepted: true,
 			denied: false,
 		}
-		acceptRequest(mentor.id, request, access)
+		acceptRequest(user.id, request, access)
 	}
 
 	function handleClick2() {
-		const request: any = {
-			accepted: true,
-			denied: false,
+		const request: TRequest = {
+			accepted: false,
+			denied: true,
 		}
-		deniedRequest(mentor.id, request, access)
+		deniedRequest(user.id, request, access)
 	}
 
 	return (
 		<div
-			className={`${
-				modal
-					? 'z-1 opacity-100 backdrop-blur-[9px] duration-200'
-					: '-z-1 opacity-0'
-			} w-full h-full bg-[rgb(227,246,245,.9)] fixed top-0 flex duration-200 justify-center items-center`}
-			// onClick={() => setModal(false)}
+			className={`w-full h-full bg-tertiary fixed top-0 flex duration-200 justify-center items-center`}
 		>
 			<div className='w-3/4 py-[4.5rem] px-[13.875rem] bg-white rounded-2xl flex flex-col items-center'>
 				<div className='flex flex-col gap-y-3 text-center mb-8'>
@@ -87,11 +73,11 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
-	const mentors = await MentorService.getAll()
+	const users = await MentorService.getAllUser()
 	return {
-		paths: mentors.map(mentor => ({
+		paths: users.map(user => ({
 			params: {
-				id: String(mentor.id),
+				id: String(user.id),
 			},
 		})),
 
@@ -99,11 +85,11 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 	}
 }
 
-export const getStaticProps: GetStaticProps<any> = async ({ params }) => {
-	const mentor = await MentorService.getUserByID(Number(params?.id))
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+	const user = await MentorService.getUserByID(Number(params?.id))
 
 	return {
-		props: { mentor },
+		props: { user },
 	}
 }
 
