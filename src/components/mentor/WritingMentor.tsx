@@ -1,6 +1,6 @@
 import { devLvl } from '@/arrays/arrays'
 import { useAppDispatch } from '@/hooks/hooks'
-import RequestModal from '@/pages/writing/modal'
+import RequestModal from '@/components/modal/writingModal'
 import { writing } from '@/redux/apiCalls'
 import { IMentorSingle } from '@/types/mentor.interface'
 import { IMentee } from '@/types/types'
@@ -11,6 +11,7 @@ import Select from 'react-select'
 import BigInputs from '../inputs/big'
 import DefaultInputs from '../inputs/default'
 import Layout from '../layout/Layout'
+import { useRouter } from 'next/router'
 
 interface IMenteeWriting extends IMentee {
 	mentor_service: number
@@ -26,6 +27,8 @@ const WritingMentor: FC<IMentorSingle> = ({ mentor }) => {
 	const [telegram, setTelegram] = useState('')
 
 	const dispatch = useAppDispatch()
+
+	const { push } = useRouter()
 
 	function handleSend() {
 		if (
@@ -56,7 +59,7 @@ const WritingMentor: FC<IMentorSingle> = ({ mentor }) => {
 			mentor_service: mentor.id,
 		}
 
-		writing(dispatch, mentee, setModal)
+		writing(dispatch, mentee, setModal, push)
 	}
 
 	const getValue = () => {

@@ -10,7 +10,7 @@ const MentorDetail: FC<IMentorSingle> = ({ mentor }) => {
 	return (
 		<Layout>
 			<div className='mt-20 w-full max-w-[1440px] px-[11.3125rem] mb-44'>
-				<div className='flex gap-x-28 mb-20'>
+				<div className='flex gap-x-28 mb-20 items-start'>
 					<Image
 						src={`${mentor.photo}`}
 						alt=''
@@ -24,13 +24,20 @@ const MentorDetail: FC<IMentorSingle> = ({ mentor }) => {
 								{mentor.username}
 							</h3>
 							<h5 className='text-[#485174] text-xl font-normal mb-6'>
-								QA Lead @Huspy (Dubai)
+								{mentor.position} {mentor.place_of_work}
 							</h5>
 						</div>
-						<div className=''>
-							<p className='px-[0.82rem] py-[0.40rem] font-semibold text-tertiary bg-[#2D334A] rounded-full text-center mb-14'>
-								{mentor.specialization}
-							</p>
+						<div className='w-96 pr-7 flex flex-wrap mb-14 gap-4'>
+							{mentor.specialization?.map(
+								(specialization: string, index: number) => (
+									<p
+										key={index}
+										className='cursor-default px-[0.82rem] py-[0.40rem] font-semibold text-tertiary bg-[#2D334A] rounded-full text-center'
+									>
+										{specialization}
+									</p>
+								)
+							)}
 						</div>
 						<ul className='mb-[1.13rem] flex flex-col gap-y-3'>
 							<li>

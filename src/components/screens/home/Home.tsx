@@ -13,6 +13,7 @@ import Button from '@/components/UI/button/Button'
 import FAQ from '@/components/UI/FAQ'
 import FooterImageRight from '@/images/FooterImage.svg'
 import FooterImageLeft from '@/images/FooterImage2.svg'
+import Link from 'next/link'
 
 const Home: FC<IMentorData> = ({ mentors }) => {
 	return (
@@ -33,7 +34,9 @@ const Home: FC<IMentorData> = ({ mentors }) => {
 						делиться знаниями и опытом. <br /> Единая площадка для наставников и
 						учеников, чтобы облегчить им поиск друг друга.
 					</p>
-					<Button>Найти ментора</Button>
+					<a href='#mentors' className='w-full flex justify-center'>
+						<Button>Найти ментора</Button>
+					</a>
 				</div>
 				<Image
 					src={rightImage}
@@ -92,7 +95,10 @@ const Home: FC<IMentorData> = ({ mentors }) => {
 			<div className='w-container py-[4.5rem] m-auto'>
 				<div className='mb-[11.5rem]'>
 					<div className='flex flex-col items-center'>
-						<h2 className='text-5xl text-title font-bold tracking-widest mb-24'>
+						<h2
+							id='mentors'
+							className='text-5xl text-title font-bold tracking-widest mb-24'
+						>
 							Наши менторы
 						</h2>
 					</div>

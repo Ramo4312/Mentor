@@ -26,15 +26,6 @@ export default function RequestModal({ modal, setModal }: StateProps) {
 					Уведомление о приеме/отказе, вашей заявки <br /> ментором придет на
 					почту. <br />
 				</p>
-				{/* <button
-					onClick={() => {
-						setModal(!true)
-						window.open('https://t.me/GetMentorKG_bot')
-					}}
-					className='bg-little-text px-14 py-3 rounded-[0.63rem] text-xl text-[#fffffe] hover:bg-tertiary hover:text-little-text active:bg-active hover:duration-150 duration-200'
-				>
-					Start
-				</button> */}
 			</div>
 		</div>
 	)

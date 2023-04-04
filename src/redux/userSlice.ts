@@ -7,7 +7,7 @@ export interface CounterState {
 
 interface initialState {
 	email: string
-	currentUser: IUserReg | null
+	currentUser: IUserReg
 	tokens: IToken
 	isFetching: boolean
 	error: boolean
@@ -16,8 +16,10 @@ interface initialState {
 export const userSlice = createSlice({
 	name: 'user',
 	initialState: <initialState>{
-		email: '',
-		currentUser: null,
+		currentUser: {
+			email: '',
+			photo: '',
+		},
 		tokens: {
 			access: '',
 			refresh: '',

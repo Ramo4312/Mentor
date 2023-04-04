@@ -29,8 +29,11 @@ const nextConfig = {
 				protocol: 'https',
 				hostname: 'firebasestorage.googleapis.com',
 			},
+			{
+				protocol: 'http',
+				hostname: 'cdn.shopify.com',
+			},
 		],
-		domains: ['localhost:3000'],
 	},
 }
 

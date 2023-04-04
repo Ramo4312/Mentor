@@ -4,10 +4,13 @@ import Logo from '@/images/Logo.svg'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import { getUser } from '@/redux/apiCalls'
 import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const Navbar = () => {
 	const { tokens, currentUser } = useAppSelector(state => state.user)
 	const dispatch = useAppDispatch()
+
+	const { push } = useRouter()
 
 	useEffect(() => {
 		getUser(dispatch, tokens.access)
@@ -16,16 +19,23 @@ const Navbar = () => {
 	return (
 		<nav className='w-full desktop:w-[1440px] m-auto py-8 flex justify-between px-20 my-4'>
 			<div className=''>
-				<Image src={Logo} alt='logo' priority />
+				<Image
+					src={Logo}
+					alt='logo'
+					className='cursor-pointer'
+					priority
+					onClick={() => push('/')}
+				/>
 			</div>
 			{currentUser ? (
 				<Image
-					src={currentUser?.photo ? currentUser.photo : Logo}
+					src={currentUser?.photo ? currentUser.photo : ''}
 					alt={currentUser?.email ? currentUser.email[0].toUpperCase() : 'Logo'}
-					className='object-cover rounded-full w-16 h-16'
+					className='object-cover rounded-full w-16 h-16 cursor-pointer'
 					width={64}
 					height={64}
 					priority
+					onClick={() => push(`/profile/my-profile?t=${tokens.access}`)}
 				/>
 			) : (
 				<div className='flex gap-x-9'>

@@ -8,7 +8,7 @@ const MentorItem: FC<IMentorSingle> = ({ mentor }) => {
 
 	return (
 		<div
-			className={`bg-secondary w-[26rem] h-[33rem] p-[1.4rem] rounded-xl flex flex-col justify-between ${
+			className={`bg-secondary w-[26rem] h-[40rem] p-[1.4rem] rounded-xl flex flex-col justify-between ${
 				mentor.username == 'admin' ? 'hidden' : ''
 			}`}
 			onClick={() => router.push(`/mentor/${mentor.id}`)}

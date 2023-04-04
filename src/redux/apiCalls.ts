@@ -1,13 +1,16 @@
 import axios from 'axios'
 import {
+	IAccepted,
+	IDenied,
 	IDispatch,
 	IMentee,
 	INewPassword,
 	IPassToRestore,
 	IRefresh,
-	IRequest,
 	IUserLog,
 	IUserReg,
+	IUserStatus,
+	IUserToEdit,
 } from '@/types/types'
 import {
 	loginFailure,
@@ -46,8 +49,11 @@ import {
 import { writingStart, writingSuccess, writingFailure } from './mentorSlice'
 
 import { Dispatch, SetStateAction } from 'react'
-import { IProps } from '@/pages/profile/my-profile'
 import { toast } from 'react-hot-toast'
+import { IMentor } from '@/types/mentor.interface'
+export interface IProps {
+	data: IUserReg
+}
 
 export const API = 'https://mentorkgapi.pythonanywhere.com/'
 
@@ -99,7 +105,7 @@ export const login = async (
 	try {
 		const res = await publicReq.post(`account/login/`, user)
 		console.log('login', res.status)
-		console.log(res.data)
+		console.log(res.data.access)
 		toast.success('Вы успешно вошли', {
 			style: {
 				borderRadius: '6px',
@@ -110,7 +116,7 @@ export const login = async (
 			},
 		})
 		dispatch(loginSuccess({ ...res.data, email: user.email }))
-		router.push('/profile/my-profile/')
+		router.push(`/profile/my-profile?t=${res.data.access}`)
 	} catch (err) {
 		dispatch(loginFailure())
 		toast.error('Ошибка входа', {
@@ -291,9 +297,28 @@ export const getUser = async (
 	}
 }
 
+export const getPersonalUser = async (
+	token: string | undefined,
+	setUser: Dispatch<SetStateAction<IMentor | null>>
+) => {
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const { data } = await publicReq(`base/personal-profile/`, config)
+
+		setUser(data)
+	} catch (err) {
+		console.log(err)
+	}
+}
+
 export const userUpdate = async (
 	dispatch: Dispatch<IDispatch>,
-	user: IUserReg,
+	user: IUserToEdit,
 	token: string | undefined
 ) => {
 	dispatch(updateStart())
@@ -355,7 +380,8 @@ export const updateEmail = async (
 export const writing = async (
 	dispatch: Dispatch<IDispatch>,
 	mentee: IMentee,
-	setModal: Dispatch<SetStateAction<boolean>>
+	setModal: Dispatch<SetStateAction<boolean>>,
+	push: any
 ) => {
 	dispatch(writingStart())
 	try {
@@ -369,10 +395,10 @@ export const writing = async (
 				fontSize: '20px',
 			},
 		})
-
 		dispatch(writingSuccess())
 		console.log(res.data)
 		setModal(true)
+		push('/')
 	} catch (err) {
 		toast.error('Произошла ошибка и ваша заявка не была отправлена', {
 			style: {
@@ -390,7 +416,7 @@ export const writing = async (
 
 export const acceptRequest = async (
 	id: number | string,
-	request: IRequest,
+	request: IAccepted,
 	token: string
 ) => {
 	//////////////////////////////////
@@ -421,7 +447,7 @@ export const acceptRequest = async (
 
 export const deniedRequest = async (
 	id: number | string,
-	request: IRequest,
+	request: IDenied,
 	token: string
 ) => {
 	//////////////////////////////////
@@ -445,6 +471,43 @@ export const deniedRequest = async (
 		)
 
 		console.log('request denied', res.status)
+	} catch (err) {
+		console.log(err)
+	}
+}
+
+export const getRequest = async (
+	token: string | undefined
+	// dispatch?: Dispatch<IDispatch>
+) => {
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+		const res = await publicReq(`statement/my-statement/`, config)
+		// dispatch(getRequestSuccess(res.data))
+		return res.data
+	} catch (err) {
+		console.log(err)
+	}
+}
+
+export const userStatusUpdate = async (
+	user: IUserStatus,
+	token: string | undefined
+) => {
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		}
+
+		const res = await publicReq.patch(`account/update-user/`, user, config)
+
+		console.log('user updated', res.status)
 	} catch (err) {
 		console.log(err)
 	}

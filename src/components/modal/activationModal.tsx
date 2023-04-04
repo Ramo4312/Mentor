@@ -1,11 +1,10 @@
 import DefaultInputs from '@/components/inputs/default'
-import { API, login, publicReq } from '@/redux/apiCalls'
+import { API, login } from '@/redux/apiCalls'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { toast, Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
-import { StateProps } from '../writing/modal'
 
 interface IProps {
 	modal: boolean
@@ -16,7 +15,6 @@ interface IProps {
 
 const ActivationModal: FC<IProps> = ({ modal, setModal, email, password }) => {
 	const [code, setCode] = useState<string>('')
-	const [error, setError] = useState<boolean>(true)
 
 	const dispatch = useDispatch()
 
@@ -40,7 +38,6 @@ const ActivationModal: FC<IProps> = ({ modal, setModal, email, password }) => {
 
 		try {
 			await axios.post(`${API}account/activate/${code}/`)
-			setError(false)
 			setModal(false)
 			setTimeout(() => {
 				const user = {

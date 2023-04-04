@@ -1,6 +1,6 @@
 import { register } from '@/redux/apiCalls'
 import { useAppDispatch } from '@/hooks/hooks'
-import { ILanguage, IOption, IPhoto, IUserReg } from '@/types/types'
+import { ILanguage, IOption, IUserReg } from '@/types/types'
 import React, { useState, useId } from 'react'
 import Select, { OnChangeValue } from 'react-select'
 import makeAnimated from 'react-select/animated'
@@ -12,12 +12,11 @@ import {
 } from '@/arrays/arrays'
 import Image from 'next/image'
 import AbsoluteImages from '@/components/absoluteImages'
-import CreatableSelect from 'react-select/creatable'
 
 import DefaultInputs from '@/components/inputs/default'
 import PasswordInputs from '@/components/inputs/password'
 import BigInputs from '@/components/inputs/big'
-import ActivationModal from '../../components/activationModal'
+import ActivationModal from '@/components/modal/activationModal'
 import Layout from '@/components/layout/Layout'
 
 import {
@@ -31,6 +30,7 @@ import { toast, Toaster } from 'react-hot-toast'
 
 const RegisterPage = () => {
 	const [modal, setModal] = useState<boolean>(false)
+	const [focus, setFocus] = useState(false)
 
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
 	const [isVisPassConf, setIsVisPassConf] = useState<boolean>(false)
@@ -85,6 +85,7 @@ const RegisterPage = () => {
 			})
 			return
 		}
+		console.log(loaded)
 		const fileName = new Date().getTime() + image.name
 		const storage = getStorage(app)
 		const storageRef = ref(storage, fileName)
@@ -155,14 +156,6 @@ const RegisterPage = () => {
 		setSpec((newValue as IOption[]).map(v => v.value))
 		// setSpecId((newValue as ISpec[]).map(v => v.id))
 	}
-
-	const onChange4 = (newValue: any) => {
-		// if (price !== null) {
-		// }
-		setPrice(newValue.value!)
-	}
-
-	console.log(price)
 
 	return (
 		<Layout>
@@ -341,27 +334,43 @@ const RegisterPage = () => {
 						</div>
 						<div className='flex flex-col gap-y-[0.87rem] w-[30.38rem] mb-14'>
 							<label htmlFor='' className='flex flex-col gap-y-1 w-[89%]'>
-								<span className='mb-[1.63rem] leading-[1.63rem] text-xl text-paragraph font-medium'>
-									Стоимость консультации
-								</span>{' '}
-								<p className='font-light leading-5 text-base'>
-									Во сколько вы оцениваете час консультации. Если цена зависит
-									от случая, выберите “По договорённости”
-								</p>
+								Стоимость консультации
 							</label>
-							<CreatableSelect
-								instanceId={useId()}
-								classNamePrefix='custom-select2'
-								onChange={onChange4}
-								// value={getValue4()}
-								options={prices}
-								placeholder=''
-								components={animatedComponents}
-								className='reg-select h-14'
-								isClearable={true}
-								isSearchable={true}
-								closeMenuOnSelect={true}
-							/>
+
+							<div className='relative'>
+								<input
+									type='text'
+									className='reg-inputs bg-tertiary mb-3'
+									value={price}
+									onClick={e => {
+										e.stopPropagation()
+									}}
+									onChange={e => setPrice(e.target.value)}
+									onFocus={() => setFocus(!focus)}
+								/>
+								<ul
+									className={`bg-tertiary absolute duration-500 w-full rounded-xl overflow-y-hidden ${
+										focus
+											? 'h-[5.5rem] duration-300 shadow-[3px_2.4px_5.8px_#485174]'
+											: 'h-0 duration-300'
+									}`}
+									onClick={() => setFocus(true)}
+								>
+									{prices.map((price, i) => (
+										<li
+											className='py-2 text-xl hover:bg-[#656565] cursor-pointer hover:text-white hover:duration-150 duration-150 pl-3'
+											onClick={e => {
+												e.stopPropagation()
+												setFocus(false)
+												setPrice(price.value)
+											}}
+											key={i}
+										>
+											{price.value}
+										</li>
+									))}
+								</ul>
+							</div>
 						</div>
 						<div className='flex flex-col gap-y-[0.87rem] mb-32'>
 							<label htmlFor='label-in-register'>

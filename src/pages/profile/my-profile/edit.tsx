@@ -1,11 +1,6 @@
-import Navbar from '@/components/navbar/Navbar'
-import SideBar from '@/components/sidebar'
-// import { useAppDispatch } from '@/hooks/hooks'
 import Image from 'next/image'
-// import { useRouter } from 'next/navigation'
-import React, { useState, useId, useEffect } from 'react'
+import React, { useState, useId } from 'react'
 import makeAnimated from 'react-select/animated'
-import CreatableSelect from 'react-select/creatable'
 import Select, { OnChangeValue } from 'react-select'
 import {
 	experiences,
@@ -13,11 +8,11 @@ import {
 	prices,
 	specializations,
 } from '@/arrays/arrays'
-import { getUser, userUpdate } from '@/redux/apiCalls'
+import { publicReq, userUpdate } from '@/redux/apiCalls'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
 import DefaultInputs from '@/components/inputs/default'
 import BigInputs from '@/components/inputs/big'
-import { ILanguage, IOption, IUserReg } from '@/types/types'
+import { ILanguage, IOption, IUserReg, IUserToEdit } from '@/types/types'
 
 import {
 	getStorage,
@@ -26,39 +21,36 @@ import {
 	getDownloadURL,
 } from 'firebase/storage'
 import app from '@/firebase'
+import LayoutAccount from '@/components/layout/LayoutAccount'
+import { useRouter } from 'next/router'
 
-const ProfileEdit = () => {
-	const { currentUser, tokens } = useAppSelector(state => state.user)
+interface IProps {
+	mentor: IUserReg
+}
 
-	const [username, setFull_name] = useState(currentUser?.username)
-	const [email, setEmail] = useState(currentUser?.email)
-	const [password, setPassword] = useState(currentUser?.password)
-	const [password_confirm, setPassword_confirm] = useState(
-		currentUser?.password_confirm
-	)
-	const [photo, setImage] = useState<any>(currentUser?.photo)
-	const [position, setPost] = useState(currentUser?.position)
-	const [place_of_work, setPlace_of_work] = useState(currentUser?.place_of_work)
-	const [about_me, setBio] = useState(currentUser?.about_me)
-	const [help, setHelp] = useState(currentUser?.help)
-	const [level_mentor, setMentee_level] = useState(currentUser?.level_mentor)
-	const [experience, setExp] = useState(currentUser?.experience)
-	const [specialization, setSpec] = useState<string[]>([''])
-	const [skills, setSkill] = useState(currentUser?.skills)
-	const [price, setPrice] = useState(currentUser?.price)
-	const [language, setLanguage] = useState(currentUser?.language)
+const ProfileEdit = ({ mentor }: IProps) => {
+	const { tokens } = useAppSelector(state => state.user)
+
+	const [focus, setFocus] = useState(false)
+
+	const [username, setFull_name] = useState(mentor.username)
+	const [photo, setImage] = useState(mentor.photo)
+	const [position, setPost] = useState(mentor.position)
+	const [place_of_work, setPlace_of_work] = useState(mentor.place_of_work)
+	const [about_me, setBio] = useState(mentor.about_me)
+	const [help, setHelp] = useState(mentor.help)
+	const [level_mentor, setMentee_level] = useState(mentor.level_mentor)
+	const [experience, setExp] = useState(mentor.experience)
+	const [specialization, setSpec] = useState(mentor.specialization)
+	const [skills, setSkill] = useState(mentor.skills)
+	const [price, setPrice] = useState(mentor.price)
+	const [language, setLanguage] = useState(mentor.language)
 
 	const [loaded, setLoaded] = useState('Сохранить изменения')
 
-	// const router = useRouter()
-	// const dispatch = useAppDispatch()
 	const animatedComponents = makeAnimated()
 
 	const dispatch = useAppDispatch()
-
-	useEffect(() => {
-		getUser(dispatch, tokens?.access)
-	}, [])
 
 	const getValue1 = () => {
 		return experience ? experiences.find(c => c.value === experience) : ''
@@ -79,15 +71,12 @@ const ProfileEdit = () => {
 		setSpec((newValue as IOption[]).map(v => v.value))
 	}
 
-	const onChange4 = (newValue: any) => {
-		setPrice(newValue.value)
-	}
-
 	function handleEdit() {
 		const fileName = new Date().getTime() + photo.name
 		const storage = getStorage(app)
 		const storageRef = ref(storage, fileName)
 		const uploadTask = uploadBytesResumable(storageRef, photo)
+		console.log(loaded)
 
 		uploadTask.on(
 			'state_changed',
@@ -110,11 +99,8 @@ const ProfileEdit = () => {
 			},
 			() => {
 				getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
-					const user: IUserReg = {
+					const user: IUserToEdit = {
 						username,
-						email,
-						password,
-						password_confirm,
 						photo: downloadURL,
 						position,
 						place_of_work,
@@ -133,15 +119,15 @@ const ProfileEdit = () => {
 		)
 	}
 
+	const router = useRouter()
+	console.log(router)
+
 	return (
-		<div>
-			<Navbar />
-			<div className='flex gap-x-28 items-start mt-16'>
-				<div className='w-72'>
-					<SideBar />
-				</div>
+		<LayoutAccount>
+			<div className='flex gap-x-28 items-start'>
 				<div className='w-[46.6rem] pb-44'>
 					<form
+						onClick={() => setFocus(false)}
 						onSubmit={e => e.preventDefault()}
 						className='flex flex-col gap-y-5 mx-auto w-[46.88rem]'
 					>
@@ -194,32 +180,32 @@ const ProfileEdit = () => {
 								</div>
 							</div>
 							<p className='text[#485174B2] '>(пожалуйста, не более 2Мб)</p>
+							<DefaultInputs
+								label='Должность'
+								state={position ? position : ''}
+								setState={setPost}
+							/>
+							<DefaultInputs
+								label='Место работы'
+								state={place_of_work ? place_of_work : ''}
+								setState={setPlace_of_work}
+							/>
+							<BigInputs
+								label='О себе'
+								state={about_me ? about_me : ''}
+								setState={setBio}
+							/>
+							<BigInputs
+								label='С чем вы можете помочь?'
+								state={help ? help : ''}
+								setState={setHelp}
+							/>
+							<BigInputs
+								label='Какого уровня менти могут обращаться к вам за помощью?'
+								state={level_mentor ? level_mentor : ''}
+								setState={setMentee_level}
+							/>
 						</div>
-						<DefaultInputs
-							label='Должность'
-							state={position ? position : ''}
-							setState={setPost}
-						/>
-						<DefaultInputs
-							label='Место работы'
-							state={place_of_work ? place_of_work : ''}
-							setState={setPlace_of_work}
-						/>
-						<BigInputs
-							label='О себе'
-							state={about_me ? about_me : ''}
-							setState={setBio}
-						/>
-						<BigInputs
-							label='С чем вы можете помочь?'
-							state={help ? help : ''}
-							setState={setHelp}
-						/>
-						<BigInputs
-							label='Какого уровня менти могут обращаться к вам за помощью?'
-							state={level_mentor ? level_mentor : ''}
-							setState={setMentee_level}
-						/>
 						<div className='flex flex-col gap-y-[0.87rem] w-[30.38rem] mb-12'>
 							<label htmlFor='' className='label-in-register'>
 								Опыт
@@ -268,23 +254,39 @@ const ProfileEdit = () => {
 							<label htmlFor='' className='flex flex-col gap-y-1 w-[89%]'>
 								Стоимость консультации
 							</label>
-							<div className='relative '>
-								<label className='w-full h-full absolute left-5 top-1 inline-block cursor-pointer'>
-									{price}
-								</label>
-								<CreatableSelect
-									instanceId={useId()}
-									classNamePrefix='custom-select2 price-select'
-									onChange={onChange4}
-									// value={price}
-									options={prices}
-									placeholder=''
-									components={animatedComponents}
-									className='reg-select h-14'
-									isClearable={true}
-									isSearchable={true}
-									closeMenuOnSelect={true}
+							<div className='relative'>
+								<input
+									type='text'
+									className='reg-inputs bg-tertiary mb-3'
+									value={price}
+									onClick={e => {
+										e.stopPropagation()
+									}}
+									onChange={e => setPrice(e.target.value)}
+									onFocus={() => setFocus(!focus)}
 								/>
+								<ul
+									className={`bg-tertiary absolute duration-500 w-full rounded-xl overflow-y-hidden ${
+										focus
+											? 'h-[5.5rem] duration-300 shadow-[3px_2.4px_5.8px_#485174]'
+											: 'h-0 duration-300'
+									}`}
+									onClick={() => setFocus(true)}
+								>
+									{prices.map((price, i) => (
+										<li
+											className='py-2 text-xl hover:bg-[#656565] cursor-pointer hover:text-white hover:duration-150 duration-150 pl-3'
+											onClick={e => {
+												e.stopPropagation()
+												setFocus(false)
+												setPrice(price.value)
+											}}
+											key={i}
+										>
+											{price.value}
+										</li>
+									))}
+								</ul>
 							</div>
 						</div>
 						<div className='flex flex-col gap-y-[0.87rem] mb-32'>
@@ -331,8 +333,29 @@ const ProfileEdit = () => {
 					</form>
 				</div>
 			</div>
-		</div>
+		</LayoutAccount>
 	)
+}
+
+interface IToken {
+	t: string
+}
+interface IQuery {
+	query: IToken
+}
+
+export const getServerSideProps = async ({ query }: IQuery) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${query.t}`,
+		},
+	}
+
+	const { data } = await publicReq(`base/personal-profile/`, config)
+
+	return {
+		props: { mentor: data },
+	}
 }
 
 export default ProfileEdit

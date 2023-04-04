@@ -47,8 +47,8 @@ export interface IPages {
 	text: string
 	image: string
 	path: string
-	notifications?: number
 	image2: string
+	path2?: string
 }
 
 export interface ILanguage {
@@ -65,23 +65,25 @@ export interface IPhoto {
 	webkitRelativePath: string
 }
 
-export interface IUserReg {
-	username: string | undefined
-	email: string | undefined
-	password: string | undefined
-	password_confirm: string | undefined
-	image?: any
-	photo?: string | undefined
-	position: string | undefined
-	place_of_work: string | undefined
-	about_me: string | undefined
-	help: string | undefined
-	level_mentor: string | undefined
-	experience: string | undefined
-	specialization: string[] | undefined
-	skills: string | undefined
-	price: string | undefined
-	language: string | undefined
+export interface IUserToEdit {
+	username: string
+	photo: any
+	position: string
+	place_of_work: string
+	about_me: string
+	help: string
+	level_mentor: string
+	experience: string
+	specialization: string[]
+	skills: string
+	price: string
+	language: string
+}
+
+export interface IUserReg extends IUserToEdit {
+	email: string
+	password: string
+	password_confirm: string
 }
 
 export interface ISpec extends IOption {
@@ -120,7 +122,29 @@ export interface IMentee {
 	telegram: string
 }
 
+export interface IUserStatus {
+	status: boolean
+}
+
 export interface IRequest {
+	id: number
+	my_level: string
+	name: string
+	email: string
+	telegram: string
+	description: string
+	create_at: string
+	accepted: string
+	denied: string
+	mentor_service: string
+}
+
+export interface IAccepted {
+	accepted: boolean
+	denied: boolean
+}
+
+export interface IDenied {
 	accepted: boolean
 	denied: boolean
 }
