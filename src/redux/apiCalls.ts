@@ -7,6 +7,7 @@ import {
 	INewPassword,
 	IPassToRestore,
 	IRefresh,
+	IRequest,
 	IUserLog,
 	IUserReg,
 	IUserStatus,
