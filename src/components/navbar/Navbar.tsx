@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Logo from '@/images/Logo.svg'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
-import { getUser } from '@/redux/apiCalls'
+import { getUser, logout } from '@/redux/apiCalls'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
@@ -16,6 +16,8 @@ const Navbar = () => {
 		getUser(dispatch, tokens.access)
 	}, [])
 
+	console.log(currentUser.email)
+
 	return (
 		<nav className='w-full desktop:w-[1440px] m-auto py-8 flex justify-between px-20 my-4'>
 			<div className=''>
@@ -27,9 +29,9 @@ const Navbar = () => {
 					onClick={() => push('/')}
 				/>
 			</div>
-			{currentUser ? (
+			{currentUser.email ? (
 				<Image
-					src={currentUser?.photo ? currentUser.photo : ''}
+					src={currentUser.photo}
 					alt={currentUser?.email ? currentUser.email[0].toUpperCase() : 'Logo'}
 					className='object-cover rounded-full w-16 h-16 cursor-pointer'
 					width={64}
@@ -39,7 +41,7 @@ const Navbar = () => {
 				/>
 			) : (
 				<div className='flex gap-x-9'>
-					<Link href={''}>
+					<Link href={'/account/register/'}>
 						<button className='font-medium text-title text-base px-3 py-2 rounded-xl text-dark-blue text-center bg-accent'>
 							Стать ментором
 						</button>
