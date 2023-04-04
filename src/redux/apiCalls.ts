@@ -313,6 +313,7 @@ export const getPersonalUser = async (
 
 		setUser(data)
 	} catch (err) {
+		// dispatch(getFailure())
 		console.log(err)
 	}
 }
