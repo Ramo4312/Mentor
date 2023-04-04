@@ -89,7 +89,7 @@ const WritingMentor: FC<IMentorSingle> = ({ mentor }) => {
 							{mentor.username}
 						</h3>
 						<h5 className='text-[#485174] text-xl font-normal mb-6'>
-							QA Lead @Huspy (Dubai)
+							{mentor.position} {mentor.place_of_work}
 						</h5>
 						<ul>
 							<li>Опыт: {mentor.experience} лет</li>
