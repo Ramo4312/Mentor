@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { toast, Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
-import { StateProps } from '../profile/request/modal'
+import { StateProps } from '../writing/modal'
 
 interface IProps {
 	modal: boolean

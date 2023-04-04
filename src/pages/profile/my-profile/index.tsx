@@ -55,8 +55,6 @@ function MyProfile() {
 		}
 	}, [user])
 
-	console.log(user?.photo)
-
 	return (
 		<LayoutAccount>
 			{/* <Navbar />

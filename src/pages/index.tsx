@@ -1,7 +1,7 @@
 import Home from '@/components/screens/home/Home'
 import { IMentorData } from '@/types/mentor.interface'
 import { GetStaticProps, NextPage } from 'next'
-import { MentorService } from './services/car.services'
+import { MentorService } from './services/mentor.services'
 
 const HomePage: NextPage<IMentorData> = ({ mentors }) => {
 	return <Home mentors={mentors} />

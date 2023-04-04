@@ -7,7 +7,7 @@ const Footer = () => {
 
 	return (
 		<div
-			className={`mt-44 w-full flex flex-col py-[3.63rem] justify-center items-center
+			className={`w-full flex flex-col py-[3.63rem] justify-center items-center
 			${pathname !== '/' ? 'bg-[#E3F6F5]' : 'bg-white'}`}
 		>
 			<p className='text-center text-little-text mb-[4.4rem]'>

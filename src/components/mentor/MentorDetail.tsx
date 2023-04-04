@@ -9,7 +9,7 @@ const MentorDetail: FC<IMentorSingle> = ({ mentor }) => {
 
 	return (
 		<Layout>
-			<div className='mt-20 w-full max-w-[1440px] px-[11.3125rem] '>
+			<div className='mt-20 w-full max-w-[1440px] px-[11.3125rem] mb-44'>
 				<div className='flex gap-x-28 mb-20'>
 					<Image
 						src={`${mentor.photo}`}
@@ -54,7 +54,7 @@ const MentorDetail: FC<IMentorSingle> = ({ mentor }) => {
 						</div>
 						<button
 							onClick={() => {
-								push(`/profile/request/${mentor.id}`)
+								push(`/writing/${mentor.id}`)
 							}}
 							className='bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200 rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'
 						>
@@ -84,7 +84,7 @@ const MentorDetail: FC<IMentorSingle> = ({ mentor }) => {
 					</div>
 					<button
 						onClick={() => {
-							push('/profile/request')
+							push(`/writing/${mentor.id}`)
 						}}
 						className='bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200 rounded-lg py-[1.57rem] px-14 text-lg font-medium text-[#2D334A]'
 					>

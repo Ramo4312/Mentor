@@ -2,7 +2,7 @@ import { logout } from '@/redux/apiCalls'
 import { useAppDispatch } from '@/hooks/hooks'
 import { useRouter } from 'next/navigation'
 import React from 'react'
-import { StateProps } from '@/pages/profile/request/modal'
+import { StateProps } from '@/pages/writing/modal'
 
 const LogoutModal = ({ modal, setModal }: StateProps) => {
 	const dispatch = useAppDispatch()

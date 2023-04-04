@@ -44,7 +44,7 @@ const LoginPage = () => {
 
 	return (
 		<Layout>
-			<div className='relative overflow-hidden text-center'>
+			<div className='relative overflow-hidden text-center mb-44'>
 				<AbsoluteImages />
 				<div className=''>
 					<h1>Добро пожаловать</h1>
@@ -62,7 +62,7 @@ const LoginPage = () => {
 						/>
 						<Link
 							href={'/account/password/restore'}
-							className='mb-[4.5rem] font-semibold underline hover:text-sky-600 inline-block text-left'
+							className='mb-[4.5rem] font-semibold underline hover:text-sky-600 w-36 text-left'
 						>
 							забыли пароль?
 						</Link>
@@ -73,17 +73,15 @@ const LoginPage = () => {
 								}}
 								className='px-[4.8rem] py-4 rounded-xl text-white text-xl text-center bg-little-text hover:text-little-text hover:bg-tertiary active:bg-active hover:duration-150 duration-200'
 							>
-								{/* Войти */}
 								Войти
 							</button>
 							<Link
-								href={''}
+								href={'/account/register'}
 								// onClick={e => {
 								// 	handleLogin(e)
 								// }}
 								className='px-[4.8rem] py-4 rounded-xl text-dark-blue text-xl text-center bg-accent hover:bg-tertiary active:bg-active hover:duration-150 duration-200'
 							>
-								{/* Войти */}
 								Стать ментором
 							</Link>
 						</div>

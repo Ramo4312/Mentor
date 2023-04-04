@@ -63,7 +63,6 @@ const RegisterPage = () => {
 			!email.trim() ||
 			!password.trim() ||
 			!password_confirm.trim() ||
-			// !image.trim() ||
 			!position.trim() ||
 			!place_of_work.trim() ||
 			!about_me.trim() ||
@@ -168,7 +167,7 @@ const RegisterPage = () => {
 	return (
 		<Layout>
 			<Toaster />
-			<div className='relative overflow-hidden'>
+			<div className='relative overflow-hidden mb-44'>
 				<AbsoluteImages />
 				<ActivationModal
 					modal={modal}
@@ -190,12 +189,6 @@ const RegisterPage = () => {
 						onSubmit={e => e.preventDefault()}
 						className='flex flex-col gap-y-5 mx-auto w-[46.88rem]'
 					>
-						<input
-							type='text'
-							className='reg-inputs'
-							autoComplete='true'
-							aria-autocomplete='none'
-						/>
 						<DefaultInputs
 							label='ФИО'
 							state={username}
