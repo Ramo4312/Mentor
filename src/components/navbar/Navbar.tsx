@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Logo from '@/images/Logo.svg'
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks'
-import { getUser, logout } from '@/redux/apiCalls'
+import { getUser, tokenRefresh } from '@/redux/apiCalls'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
@@ -10,19 +10,26 @@ const Navbar = () => {
 	const { tokens, currentUser } = useAppSelector(state => state.user)
 	const dispatch = useAppDispatch()
 
+	const [status, setStatus] = useState(0)
 	const [error, setError] = useState<boolean>(false)
 
 	const { push } = useRouter()
 
 	useEffect(() => {
-		getUser(dispatch, tokens.access, setError)
-	}, [tokens.access, dispatch])
+		getUser(dispatch, tokens.access, setError, setStatus)
+	}, [dispatch, tokens.access])
+
+	// useEffect(() => {
+	// 	if (error) {
+	// 		logout(dispatch)
+	// 	}
+	// }, [error, dispatch])
 
 	useEffect(() => {
-		if (error) {
-			logout(dispatch)
+		if (status == 401) {
+			tokenRefresh(dispatch, { refresh: tokens.refresh }, setStatus)
 		}
-	}, [error, dispatch])
+	}, [dispatch, status, tokens.refresh])
 
 	return (
 		<nav className='w-full desktop:w-[1440px] m-auto py-8 flex justify-between px-20 my-4'>
@@ -35,10 +42,10 @@ const Navbar = () => {
 					onClick={() => push('/')}
 				/>
 			</div>
-			{currentUser.email ? (
+			{currentUser ? (
 				<Image
 					src={currentUser.photo}
-					alt={currentUser?.email ? currentUser.email[0].toUpperCase() : 'Logo'}
+					alt={currentUser.email ? currentUser.email[0].toUpperCase() : 'Logo'}
 					className='object-cover rounded-full w-16 h-16 cursor-pointer'
 					width={64}
 					height={64}

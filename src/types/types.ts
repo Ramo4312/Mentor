@@ -15,8 +15,13 @@ export interface IRefresh {
 	refresh: string
 }
 
-export interface IToken extends IRefresh {
+export interface IAccess {
 	access: string
+}
+
+export interface IToken {
+	access: string
+	refresh: string
 }
 
 export interface IPassToRestore {
@@ -38,7 +43,7 @@ export interface IOption {
 }
 
 export interface IDispatch {
-	payload: undefined | string | IFullUser | IUserReg
+	payload: undefined | string | IFullUser | IUserReg | IToken
 	type: string
 }
 
