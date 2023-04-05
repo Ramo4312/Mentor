@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import { pages } from '@/arrays/arrays'
 import React, { useEffect, useState } from 'react'
 import { useAppSelector } from '@/hooks/hooks'
@@ -9,20 +10,24 @@ import { IRequest } from '@/types/types'
 const SideBar = () => {
 	const [modal, setModal] = useState<boolean>(false)
 	const [requests, setRequests] = useState<IRequest[]>([])
-	const token = useAppSelector(state => state.user.tokens)
+	const { tokens } = useAppSelector(state => state.user)
 
 	const { pathname, push } = useRouter()
 	useEffect(() => {
-		getRequest(token.access).then(data => setRequests(data))
-	}, [token.access])
+		getRequest(tokens.access).then(data => setRequests(data))
+	}, [tokens.access])
 
 	function handleLogout() {
 		setModal(true)
 	}
 
-	const requestsNew: IRequest[] = requests.filter(
-		request => !request.accepted && !request.denied
-	)
+	let requestsNew: IRequest[] = []
+
+	requests?.length !== 0
+		? (requestsNew = requests?.filter(
+				request => !request.accepted && !request.denied
+		  ))
+		: null
 
 	return (
 		<>
@@ -39,13 +44,13 @@ const SideBar = () => {
 							className='flex justify-between items-center py-[0.44rem] pr-5 cursor-pointer'
 							onClick={() => {
 								if (item.text == 'Мои данные') {
-									push(`${item.path}?t=${token.access}`)
+									push(`${item.path}?t=${tokens.access}`)
 								} else {
-									push(item.path)
 									if (item.text == 'Выйти') {
 										handleLogout()
 									}
 								}
+								push(item.path)
 							}}
 						>
 							<div
@@ -83,11 +88,11 @@ const SideBar = () => {
 									{item.text}
 								</p>
 							</div>
-							{requestsNew.length !== 0 && item.text == 'Заявки' ? (
+							{requestsNew?.length !== 0 && item.text == 'Заявки' ? (
 								<p
 									className={`rounded-full text-tertiary bg-little-text text-xs font-bold py-1 px-[5px] flex items-center justify-center`}
 								>
-									{requestsNew.length}
+									{requestsNew?.length}
 								</p>
 							) : (
 								<></>

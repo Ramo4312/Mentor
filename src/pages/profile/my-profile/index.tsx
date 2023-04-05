@@ -25,6 +25,7 @@ function MyProfile({ mentor }: IProps) {
 							width='209'
 							height='149'
 							loading='eager'
+							priority
 						/>
 						<div className='flex gap-x-10'>
 							<div className='flex flex-col items-start'>
@@ -109,11 +110,17 @@ export const getServerSideProps = async ({ query }: IQuery) => {
 			Authorization: `Bearer ${query.t}`,
 		},
 	}
+	try {
+		const { data } = await publicReq(`base/personal-profile/`, config)
 
-	const { data } = await publicReq(`base/personal-profile/`, config)
-
-	return {
-		props: { mentor: data },
+		return {
+			props: { mentor: data },
+		}
+	} catch (err) {
+		console.log(err)
+		return {
+			props: { mentor: '' },
+		}
 	}
 }
 

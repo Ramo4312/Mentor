@@ -1,6 +1,11 @@
+import { Dispatch, SetStateAction } from 'react'
+import { NextRouter } from 'next/router'
 import axios from 'axios'
+import { toast } from 'react-hot-toast'
+
 import {
 	IAccepted,
+	IAccess,
 	IDenied,
 	IDispatch,
 	IMentee,
@@ -12,6 +17,8 @@ import {
 	IUserStatus,
 	IUserToEdit,
 } from '@/types/types'
+import { IMentor } from '@/types/mentor.interface'
+
 import {
 	loginFailure,
 	loginStart,
@@ -45,13 +52,8 @@ import {
 	getSuccess,
 	getFailure,
 } from './userSlice'
-
 import { writingStart, writingSuccess, writingFailure } from './mentorSlice'
 
-import { Dispatch, SetStateAction } from 'react'
-import { toast } from 'react-hot-toast'
-import { IMentor } from '@/types/mentor.interface'
-import { NextRouter } from 'next/router'
 export interface IProps {
 	data: IUserReg
 }
@@ -257,17 +259,31 @@ export const deleteAccount = async (
 	}
 }
 
+interface IData {
+	data: IAccess
+	status: number
+}
+
 export const tokenRefresh = async (
 	dispatch: Dispatch<IDispatch>,
-	token: IRefresh
+	token: IRefresh,
+	setStatus: Dispatch<SetStateAction<number>>
 ) => {
 	dispatch(refreshStart())
-
 	try {
-		const res = await publicReq.post(`account/token/refresh/`, token)
-		dispatch(refreshSuccess(res.data))
+		const { data, status }: IData = await publicReq.post(
+			`account/token/refresh/`,
+			token
+		)
+		const tokens = {
+			access: data.access,
+			refresh: token.refresh,
+		}
+		dispatch(refreshSuccess(tokens))
+		setStatus(status)
 	} catch (err) {
 		dispatch(refreshFailure())
+		console.log(err)
 	}
 }
 
@@ -278,7 +294,8 @@ export const logout = (dispatch: Dispatch<IDispatch>) => {
 export const getUser = async (
 	dispatch: Dispatch<IDispatch>,
 	token: string | undefined,
-	setError?: Dispatch<SetStateAction<boolean>>
+	setError?: Dispatch<SetStateAction<boolean>>,
+	setStatus?: Dispatch<SetStateAction<number>>
 ) => {
 	try {
 		dispatch(getStart())
@@ -291,9 +308,10 @@ export const getUser = async (
 		const { data }: IProps = await publicReq(`base/personal-profile/`, config)
 
 		dispatch(getSuccess(data))
-	} catch (err) {
+	} catch (err: any) {
 		dispatch(getFailure())
 		console.log(err)
+		setStatus && setStatus(err.response.status)
 		setError && setError(true)
 	}
 }
@@ -478,10 +496,7 @@ export const deniedRequest = async (
 	}
 }
 
-export const getRequest = async (
-	token: string | undefined
-	// dispatch?: Dispatch<IDispatch>
-) => {
+export const getRequest = async (token: string) => {
 	try {
 		const config = {
 			headers: {
@@ -489,7 +504,6 @@ export const getRequest = async (
 			},
 		}
 		const res = await publicReq(`statement/my-statement/`, config)
-		// dispatch(getRequestSuccess(res.data))
 		return res.data
 	} catch (err) {
 		console.log(err)
