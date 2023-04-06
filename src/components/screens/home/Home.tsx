@@ -33,8 +33,8 @@ const Home: FC<IMentorData> = ({ mentors }) => {
 						делиться знаниями и опытом. <br /> Единая площадка для наставников и
 						учеников, чтобы облегчить им поиск друг друга.
 					</p>
-					<a href='#mentors' className='w-full mb-52 flex justify-center'>
-						<button className='accent-btn'>Найти ментора</Button>
+					<a href='#mentors' className='w-full flex justify-center mb-52'>
+						<button className='accent-btn'>Найти ментора</button>
 					</a>
 				</div>
 				<Image
