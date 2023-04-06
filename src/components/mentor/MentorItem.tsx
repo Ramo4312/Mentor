@@ -24,8 +24,21 @@ const MentorItem: FC<IMentorSingle> = ({ mentor }) => {
 				<h6 className='text-xl mb-5'>{mentor.username}</h6>
 				<p className='text-base text-little-text mb-5'>{mentor.position}</p>
 				<div className='text-lg space-y-1'>
-					<p>😎 {mentor.experience}</p>
-					<p>💰 {mentor.price}</p>
+					<p>
+						😎{' '}
+						{mentor.experience == 'Нет опыта'
+							? mentor.experience
+							: `${mentor.experience} лет`}
+					</p>
+					<p>
+						💰{' '}
+						{mentor.price == 'Бесплатно' ||
+						mentor.price == 'По договоренности' ? (
+							<p>💰 {mentor.price}</p>
+						) : (
+							<p>💰 {mentor.price} руб</p>
+						)}
+					</p>
 					<p>{mentor.status ? '🟢 Активна' : '🔵 Не активен'}</p>
 				</div>
 			</div>

@@ -41,7 +41,12 @@ const MentorDetail: FC<IMentorSingle> = ({ mentor }) => {
 						</div>
 						<ul className='mb-[1.13rem] flex flex-col gap-y-3'>
 							<li>
-								<p>😎 {mentor.experience} лет опыта</p>
+								<p>
+									😎{' '}
+									{mentor.experience == 'Нет опыта'
+										? mentor.experience
+										: `${mentor.experience} лет`}
+								</p>
 							</li>
 							<li>
 								{mentor.price == 'Бесплатно' ||
