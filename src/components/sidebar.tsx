@@ -46,11 +46,8 @@ const SideBar = () => {
 								if (item.text == 'Мои данные') {
 									push(`${item.path}?t=${tokens.access}`)
 								} else {
-									if (item.text == 'Выйти') {
-										handleLogout()
-									}
+									push(item.path)
 								}
-								push(item.path)
 							}}
 						>
 							<div
@@ -99,6 +96,18 @@ const SideBar = () => {
 							)}
 						</li>
 					))}
+					<li
+						className='flex justify-between items-center py-[0.44rem] pr-5 cursor-pointer'
+						onClick={handleLogout}
+					>
+						<div className='pl-6 flex gap-x-4'>
+							<div className='hidden w-2 h-7 bg-paragraph rounded-r-lg'></div>
+							<img src='/images/exit.svg' alt='Выйти' />
+							<p className='text-[#737373] hover:text-[#485174] text-xl font-normal hover:font-medium'>
+								Выйти
+							</p>
+						</div>
+					</li>
 				</ul>
 			</div>
 		</>

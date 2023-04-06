@@ -96,13 +96,6 @@ export const pages: IPages[] = [
 		path: '/profile/settings',
 		image2: '/images/r/settings.svg',
 	},
-	{
-		id: 5,
-		text: 'Выйти',
-		path: '',
-		image: '/images/exit.svg',
-		image2: '/images/r/exit.svg',
-	},
 ]
 
 export const sortMentors: ISortMentors[] = [
