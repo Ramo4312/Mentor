@@ -16,9 +16,9 @@ import { toast, Toaster } from 'react-hot-toast'
 // import Image from 'next/image'
 
 const Settings: NextPage = () => {
-	const { tokens, error, currentUser } = useAppSelector(state => state.user)
+	const { tokens, error, email } = useAppSelector(state => state.user)
 
-	const [email, setEmail] = useState<string>(currentUser.email)
+	const [mail, setEmail] = useState<string>(email)
 	const [password, setPassword] = useState<string>('')
 	const [isVisPass, setIsVisPass] = useState<boolean>(false)
 
@@ -83,7 +83,7 @@ const Settings: NextPage = () => {
 		}
 
 		const user: IUserLog = {
-			email,
+			email: mail,
 			password,
 		}
 
@@ -111,7 +111,7 @@ const Settings: NextPage = () => {
 							<DefaultInput
 								isEdit={isEdit}
 								setState={setEmail}
-								state={email}
+								state={mail}
 								label='Email'
 							/>
 							<PasswordInput
