@@ -31,7 +31,6 @@ const MentorItem: FC<IMentorSingle> = ({ mentor }) => {
 							: `${mentor.experience} лет`}
 					</p>
 					<p>
-						💰{' '}
 						{mentor.price == 'Бесплатно' ||
 						mentor.price == 'По договоренности' ? (
 							<p>💰 {mentor.price}</p>
