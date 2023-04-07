@@ -80,7 +80,8 @@ const WritingMentor: FC<IMentorSingle> = ({ mentor }) => {
 					<Image
 						src={`${mentor.photo}`}
 						alt=''
-						className='rounded-lg'
+						className='rounded-lg h-auto w-auto'
+						priority
 						width={189}
 						height={159}
 					/>
@@ -96,9 +97,9 @@ const WritingMentor: FC<IMentorSingle> = ({ mentor }) => {
 							<li>
 								{mentor.price == 'Бесплатно' ||
 								mentor.price == 'По договоренности' ? (
-									<p>💰 {mentor.price}</p>
+									<p>Цена: {mentor.price}</p>
 								) : (
-									<p>💰 {mentor.price} руб</p>
+									<p>Цена: {mentor.price} руб</p>
 								)}
 							</li>
 						</ul>

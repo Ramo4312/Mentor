@@ -7,6 +7,10 @@
 		box-shadow: none !important;
 	}
 
+	&__menu::-webkit-scrollbar {
+		display: none !important;
+	}
+
 	&__menu {
 		background-color: #e3f6f5 !important;
 		color: rgba(#000000, 0.6) !important;
@@ -90,6 +94,10 @@
 		border-radius: 15px !important ;
 		overflow-y: scroll;
 		overflow-x: hidden;
+	}
+
+	&__menu::-webkit-scrollbar {
+		display: none !important;
 	}
 }
 
