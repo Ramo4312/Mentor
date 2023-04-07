@@ -1,6 +1,6 @@
 import { useAppSelector } from '@/hooks/hooks'
 import { userStatusUpdate } from '@/redux/apiCalls'
-import { IUserStatus } from '@/types/types'
+import { IUserStatus2 } from '@/types/types'
 import React, { FC, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
@@ -31,7 +31,7 @@ const TelegramModal: FC<ITelegramModal> = ({
 			return
 		}
 
-		const user: IUserStatus = {
+		const user: IUserStatus2 = {
 			telegram: input,
 			telegram_status: true,
 		}

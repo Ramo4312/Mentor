@@ -15,6 +15,7 @@ import {
 	IUserLog,
 	IUserReg,
 	IUserStatus,
+	IUserStatus2,
 	IUserToEdit,
 } from '@/types/types'
 import { IMentor } from '@/types/mentor.interface'
@@ -515,7 +516,10 @@ export const getRequest = async (token: string) => {
 	}
 }
 
-export const userStatusUpdate = async (user: IUserStatus, token: string) => {
+export const userStatusUpdate = async (
+	user: IUserStatus | IUserStatus2,
+	token: string
+) => {
 	try {
 		const config = {
 			headers: {

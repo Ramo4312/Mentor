@@ -128,8 +128,11 @@ export interface IMentee {
 }
 
 export interface IUserStatus {
-	telegram: string
 	telegram_status: boolean
+}
+
+export interface IUserStatus2 extends IUserStatus {
+	telegram: string
 }
 
 export interface IRequest {
