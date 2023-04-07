@@ -1,4 +1,8 @@
+import { useAppSelector } from '@/hooks/hooks'
+import { userStatusUpdate } from '@/redux/apiCalls'
+import { IUserStatus } from '@/types/types'
 import React, { FC, useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 interface ITelegramModal {
 	setTelegramModal: (modal: boolean) => void
@@ -11,10 +15,30 @@ const TelegramModal: FC<ITelegramModal> = ({
 }) => {
 	const [input, setInput] = useState('')
 
+	const { access } = useAppSelector(state => state.user.tokens)
+
 	function handleClick() {
-		// userStatusUpdate()
-		console.log(input)
+		if (!input.trim()) {
+			toast.error('Некоторые поля пусты', {
+				style: {
+					borderRadius: '6px',
+					background: '#333',
+					color: '#fff',
+					padding: '20px auto',
+					fontSize: '20px',
+				},
+			})
+			return
+		}
+
+		const user: IUserStatus = {
+			telegram: input,
+			telegram_status: true,
+		}
+
+		userStatusUpdate(user, access)
 	}
+
 	return (
 		<div
 			className={`${
@@ -40,6 +64,7 @@ const TelegramModal: FC<ITelegramModal> = ({
 					<label className='text-xl text-title mb-3'>Введите код</label>
 					<input
 						type='text'
+						value={input}
 						className='w-[47rem] h-14 rounded-[6px] px-3  bg-transparent border-[1px] border-gray-400'
 						onChange={e => setInput(e.target.value)}
 					/>

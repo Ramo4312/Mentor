@@ -31,9 +31,10 @@ const WelcomeModal: FC<ITelegramModal> = ({ setTelegramModal }) => {
 					onClick={() => {
 						setModal(false)
 						setTelegramModal(true)
+						window.open('https://t.me/GetMentorKG_bot')
 					}}
 				>
-					<a href='https://t.me/GetMentorKG_bot'>Start</a>
+					Start
 				</button>
 				<div className='flex justify-center gap-x-12'></div>
 			</div>

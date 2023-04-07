@@ -419,16 +419,21 @@ export const writing = async (
 		console.log(res.data)
 		setModal(true)
 		router.push('/')
-	} catch (err) {
-		toast.error('Произошла ошибка и ваша заявка не была отправлена', {
-			style: {
-				borderRadius: '6px',
-				background: '#333',
-				color: '#fff',
-				padding: '20px auto',
-				fontSize: '20px',
-			},
-		})
+	} catch (err: any) {
+		toast.error(
+			err.response.data.email
+				? `Ошибка ${err.response.data.email}`
+				: `Произошла ошибка и ваша заявка не была отправлена`,
+			{
+				style: {
+					borderRadius: '6px',
+					background: '#333',
+					color: '#fff',
+					padding: '20px auto',
+					fontSize: '20px',
+				},
+			}
+		)
 		dispatch(writingFailure())
 		console.log(err)
 	}
@@ -510,10 +515,7 @@ export const getRequest = async (token: string) => {
 	}
 }
 
-export const userStatusUpdate = async (
-	user: IUserStatus,
-	token: string | undefined
-) => {
+export const userStatusUpdate = async (user: IUserStatus, token: string) => {
 	try {
 		const config = {
 			headers: {

@@ -128,6 +128,7 @@ export interface IMentee {
 }
 
 export interface IUserStatus {
+	telegram: string
 	telegram_status: boolean
 }
 
