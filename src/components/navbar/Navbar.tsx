@@ -26,11 +26,9 @@ const Navbar = () => {
 	// }, [error, dispatch])
 
 	useEffect(() => {
-		if (status == 401) {
-			if (!tokens.refresh.trim()) {
-				console.log(error)
-				tokenRefresh(dispatch, { refresh: tokens.refresh }, setStatus)
-			}
+		if (status == 401 && tokens.refresh.trim()) {
+			console.log(error)
+			tokenRefresh(dispatch, { refresh: tokens.refresh }, setStatus)
 		}
 	}, [dispatch, status, tokens.refresh, error])
 
